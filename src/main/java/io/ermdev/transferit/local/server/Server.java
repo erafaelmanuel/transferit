@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Server {
 
     private int port;
-
     private ServerSocket serverSocket;
     private Socket socket;
 
@@ -19,32 +18,40 @@ public class Server {
     public void openConnection() {
         try {
             System.out.println("Waiting ...");
+
             serverSocket = new ServerSocket(port);
             socket = serverSocket.accept();
+
             System.out.println("Connected!");
-            receivedFile();
+            System.out.print("Accept a file? (y/n) ");
+            if(new Scanner(System.in).next().equalsIgnoreCase("y")) {
+                receivedFile(true);
+            } else {
+                receivedFile(false);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void receivedFile() throws Exception {
-        final String FILE_NAME;
-        System.out.print("ENTER FILE NAME : ");
-        FILE_NAME = new Scanner(System.in).next();
+    private void receivedFile(boolean accept) throws Exception {
+        final String FILE_NAME = "sample.mp4";
+        if(accept) {
+            File file = new File(FILE_NAME);
+            byte buffer[] = new byte[8192];
 
-        byte buffer[] = new byte[4303444];
-        File file = new File(FILE_NAME);
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
 
-        FileOutputStream fos = new FileOutputStream(file);
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
-        BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
-
-        int n;
-        while((n = bis.read(buffer, 0, buffer.length)) != -1) {
-            bos.write(buffer, 0, n);
+            int size;
+            while ((size = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, size);
+                System.out.println(size);
+            }
+            bos.flush();
+            bos.close();
         }
-        bos.flush();
-        bos.close();
+        serverSocket.close();
     }
 }

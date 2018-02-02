@@ -29,14 +29,19 @@ public class Server {
     }
 
     public void receivedFile() throws Exception {
-        int n;
+        final String FILE_NAME;
+        System.out.print("ENTER FILE NAME : ");
+        FILE_NAME = new Scanner(System.in).next();
+
         byte buffer[] = new byte[4303444];
-        File file = new File("produce.mp3");
+        File file = new File(FILE_NAME);
+
         FileOutputStream fos = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
 
-        while((n = bis.read(buffer, 0, buffer.length)) != 1) {
+        int n;
+        while((n = bis.read(buffer, 0, buffer.length)) != -1) {
             bos.write(buffer, 0, n);
         }
         bos.flush();

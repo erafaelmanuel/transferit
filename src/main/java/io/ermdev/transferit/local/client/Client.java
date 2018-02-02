@@ -9,31 +9,34 @@ import java.util.Scanner;
 
 public class Client {
 
-    public Client() {
-    }
-
     public void findConnection() {
         try {
-            Socket socket = new Socket("localhost", 23411);
+            final String HOST;
+            final String FILE_NAME;
 
-            File file = new File("sample.mp3");
+            System.out.print("ENTER HOST : ");
+            HOST = new Scanner(System.in).next();
 
-            System.out.println("File is exist : " + file.exists());
+            System.out.print("ENTER FILE NAME : ");
+            FILE_NAME = new Scanner(System.in).next();
 
-            byte buffer[] = new byte[(int) file.length()];
+            File file = new File(FILE_NAME);
 
-            System.out.println(buffer.length);
+            if(file.exists()) {
+                Socket socket = new Socket(HOST, 23411);
+                byte buffer[] = new byte[(int) file.length()];
 
-            FileInputStream fis = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            int tae = bis.read(buffer, 0, buffer.length);
+                FileInputStream fis = new FileInputStream(file);
+                BufferedInputStream bis = new BufferedInputStream(fis);
+                bis.read(buffer, 0, buffer.length);
 
-            System.out.println(tae);
-
-            BufferedOutputStream writer = new BufferedOutputStream(socket.getOutputStream());
-            writer.write(buffer, 0, buffer.length);
-            writer.flush();
-            writer.close();
+                BufferedOutputStream writer = new BufferedOutputStream(socket.getOutputStream());
+                writer.write(buffer, 0, buffer.length);
+                writer.flush();
+                writer.close();
+            } else {
+                System.out.println("Invalid file!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package io.ermdev.transferit;
 import io.ermdev.transferit.local.client.Client;
 import io.ermdev.transferit.local.server.Server;
 import io.ermdev.transferit.ui.stage.MainStage;
+import io.ermdev.transferit.ui.stage.WelcomeStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -26,7 +27,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MainStage mainStage = new MainStage();
-        mainStage.show();
+        WelcomeStage welcomeStage = new WelcomeStage();
+        welcomeStage.show();
     }
 }

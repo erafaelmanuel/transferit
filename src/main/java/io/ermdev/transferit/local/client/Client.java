@@ -5,25 +5,27 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
 
+    private String HOST;
+    private String FILE_NAME = "File.xyz";
+
+    private Socket socket;
+
+    public Client(String HOST) {
+        try {
+            this.HOST = HOST;
+            socket = new Socket(HOST, 23411);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void findConnection() {
         try {
-            final String HOST;
-            final String FILE_NAME;
-
-            System.out.print("ENTER HOST : ");
-            HOST = new Scanner(System.in).next();
-
-            System.out.print("ENTER FILE NAME : ");
-            FILE_NAME = new Scanner(System.in).next();
-
             File file = new File(FILE_NAME);
-
-            if(file.exists()) {
-                Socket socket = new Socket(HOST, 23411);
+            if (file.exists()) {
                 byte buffer[] = new byte[(int) file.length()];
 
                 FileInputStream fis = new FileInputStream(file);
@@ -40,5 +42,9 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }

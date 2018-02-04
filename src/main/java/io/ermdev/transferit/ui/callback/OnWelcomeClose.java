@@ -1,4 +1,4 @@
-package io.ermdev.transferit.ui.listener;
+package io.ermdev.transferit.ui.callback;
 
 @FunctionalInterface
 public interface OnWelcomeClose {

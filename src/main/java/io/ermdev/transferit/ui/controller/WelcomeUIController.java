@@ -1,19 +1,23 @@
 package io.ermdev.transferit.ui.controller;
 
+import io.ermdev.transferit.ui.stage.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 
 public class WelcomeUIController {
 
     @FXML
     public void onActionSend(ActionEvent event) {
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
+        stage.close();
+        stage.getOnWelcomeClose().onClose(false);
     }
 
     @FXML
     public void onActionReceive(ActionEvent event) {
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
+        stage.close();
+        stage.getOnWelcomeClose().onClose(true);
     }
 }

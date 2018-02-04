@@ -1,5 +1,6 @@
 package io.ermdev.transferit.ui.stage;
 
+import io.ermdev.transferit.ui.callback.OnWelcomeClose;
 import io.ermdev.transferit.ui.controller.WelcomeUIController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +12,14 @@ import java.net.URL;
 public class WelcomeStage extends Stage {
 
     private WelcomeUIController welcomeUIController;
+    private OnWelcomeClose onWelcomeClose;
 
-    public WelcomeStage() {
+    public WelcomeStage(OnWelcomeClose onWelcomeClose) {
+        this.onWelcomeClose = onWelcomeClose;
+        createWelcomeStage();
+    }
+
+    private void createWelcomeStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             URL location = this.getClass().getResource("/fxml/welcome_ui.fxml");
@@ -34,5 +41,9 @@ public class WelcomeStage extends Stage {
 
     public void setWelcomeUIController(WelcomeUIController welcomeUIController) {
         this.welcomeUIController = welcomeUIController;
+    }
+
+    public OnWelcomeClose getOnWelcomeClose() {
+        return onWelcomeClose;
     }
 }

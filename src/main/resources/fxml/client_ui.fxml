@@ -18,8 +18,8 @@
                         <Label text="Drag files here" textFill="#5e5c5c" />
                     </children>
                 </StackPane>
-                <Button layoutX="238.0" layoutY="184.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Send" />
-                <Button layoutX="148.0" layoutY="184.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="New File" />
+                <Button layoutX="238.0" layoutY="184.0" mnemonicParsing="false" onAction="#onActionSend" prefHeight="25.0" prefWidth="85.0" text="Send" />
+                <Button layoutX="148.0" layoutY="184.0" mnemonicParsing="false" onAction="#onActionBrowse" prefHeight="25.0" prefWidth="85.0" text="New File" />
             </children>
         </AnchorPane>
     </children>

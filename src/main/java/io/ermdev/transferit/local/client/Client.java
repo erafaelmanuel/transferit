@@ -1,33 +1,20 @@
 package io.ermdev.transferit.local.client;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
 
-    private String HOST;
-    private String FILE_NAME = "File.xyz";
-
     private Socket socket;
 
-    public Client(String HOST) {
-        try {
-            this.HOST = HOST;
-            socket = new Socket(HOST, 23411);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Client(final String host, final int port) throws IOException {
+        socket = new Socket(host, port);
     }
 
-    public void findConnection() {
+    public void send(File file) {
         try {
-            File file = new File(FILE_NAME);
             if (file.exists()) {
                 byte buffer[] = new byte[(int) file.length()];
-
                 FileInputStream fis = new FileInputStream(file);
                 BufferedInputStream bis = new BufferedInputStream(fis);
                 bis.read(buffer, 0, buffer.length);

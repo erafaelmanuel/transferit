@@ -1,11 +1,12 @@
 package io.ermdev.transferit.ui.controller;
 
 import io.ermdev.transferit.local.client.Client;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import javax.swing.*;
 
 public class ClientUIController {
 
@@ -19,21 +20,14 @@ public class ClientUIController {
     @FXML
     public void onActionConnect(ActionEvent event) {
         try {
-            if(btnCDC.getText().equalsIgnoreCase("Connect")) {
-                if (txHost.getText().trim().isEmpty()) {
-                    String host = "localhost";
-                    client = new Client(host);
-                } else {
-                    String host = txHost.getText().trim();
-                    client = new Client(host);
-                }
+            client = new Client(txHost.getText(), 23411);
+            if (btnCDC.getText().equals("Connect")) {
                 btnCDC.setText("Disconnect");
             } else {
-                client.getSocket().close();
                 btnCDC.setText("Connect");
             }
         } catch (Exception e) {
-            Platform.runLater(()->btnCDC.setText("Connect"));
+            JOptionPane.showMessageDialog(null, "Unable to connect.");
         }
     }
 }

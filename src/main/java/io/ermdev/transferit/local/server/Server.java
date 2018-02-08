@@ -3,6 +3,8 @@ package io.ermdev.transferit.local.server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Server {
@@ -39,18 +41,22 @@ public class Server {
     private void receivedFile(boolean accept) throws Exception {
         final String FILE_NAME = "sample.mp4";
         if(accept) {
-            File file = new File(FILE_NAME);
-            byte buffer[] = new byte[8192];
-            FileOutputStream fos = new FileOutputStream(file);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
+//            File file = new File(FILE_NAME);
+//            byte buffer[] = new byte[8192];
+//            FileOutputStream fos = new FileOutputStream(file);
+//            BufferedOutputStream bos = new BufferedOutputStream(fos);
 
             BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
-            int size;
-            while ((size = bis.read(buffer)) != -1) {
-                bos.write(buffer, 0, size);
-                System.out.println(size);
-            }
-            bos.flush();
+            DataInputStream dis = new DataInputStream(bis);
+            String fileName = dis.readUTF();
+            Files.copy(dis, Paths.get(fileName));
+            dis.close();
+//            int size;
+//            while ((size = bis.read(buffer)) != -1) {
+//                bos.write(buffer, 0, size);
+//                System.out.println(size);
+//            }
+//            bos.flush();
             //bos.close();
         }
     }

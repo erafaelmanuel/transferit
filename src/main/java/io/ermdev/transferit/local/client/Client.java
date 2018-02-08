@@ -22,7 +22,7 @@ public class Client {
                 BufferedOutputStream writer = new BufferedOutputStream(socket.getOutputStream());
                 writer.write(buffer, 0, buffer.length);
                 writer.flush();
-                writer.close();
+                //writer.close();
             } else {
                 System.out.println("Invalid file!");
             }

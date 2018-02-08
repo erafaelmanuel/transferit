@@ -24,10 +24,12 @@ public class Server {
 
             System.out.println("Connected!");
             System.out.print("Accept a file? (y/n) ");
-            if(new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                receivedFile(true);
-            } else {
-                receivedFile(false);
+            while (true) {
+                if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
+                    receivedFile(true);
+                } else {
+                    receivedFile(false);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,19 +41,17 @@ public class Server {
         if(accept) {
             File file = new File(FILE_NAME);
             byte buffer[] = new byte[8192];
-
             FileOutputStream fos = new FileOutputStream(file);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
-            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
 
+            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
             int size;
             while ((size = bis.read(buffer)) != -1) {
                 bos.write(buffer, 0, size);
                 System.out.println(size);
             }
             bos.flush();
-            bos.close();
+            //bos.close();
         }
-        serverSocket.close();
     }
 }

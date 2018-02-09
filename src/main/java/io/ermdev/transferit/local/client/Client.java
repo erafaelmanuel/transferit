@@ -2,7 +2,6 @@ package io.ermdev.transferit.local.client;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
 
 public class Client {
 
@@ -21,9 +20,9 @@ public class Client {
                 bis.read(buffer, 0, buffer.length);
                 BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
 
-//                bos.write(buffer, 0, buffer.length);
-//                bos.flush();
-//                bos.close();
+                bos.write(buffer, 0, buffer.length);
+                bos.flush();
+                bos.close();
             } else {
                 System.out.println("Invalid file!");
             }

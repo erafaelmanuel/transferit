@@ -1,60 +1,75 @@
 package io.ermdev.transferit.local.server;
 
-import java.io.*;
+import io.ermdev.transferit.local.Signature;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Server {
 
     private int port;
     private ServerSocket serverSocket;
-    private Socket socket;
+    private Signature sender;
 
     public Server(int port) {
         this.port = port;
     }
 
-    public void openConnection() {
-        try {
-            System.out.println("Waiting ...");
+    public void channeling() throws Exception {
+        serverSocket = new ServerSocket(port);
+        while (true) {
+            try {
+                System.out.println("Waiting ...");
+                Socket socket = serverSocket.accept();
 
-            serverSocket = new ServerSocket(port);
-            socket = serverSocket.accept();
+                if (sender == null || !sender.isEnabled()) {
+                    System.out.println("Someone want to connect!");
+                    System.out.println("Accept? (y/n) ");
 
-            System.out.println("Connected!");
-            System.out.print("Accept a file? (y/n) ");
-            while (true) {
-                if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                    receivedFile(true);
-                } else {
-                    receivedFile(false);
+                    if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
+                        System.out.println(socket.getInetAddress().getCanonicalHostName());
+                        System.out.println(socket.getInetAddress().getHostAddress());
+                        System.out.println(socket.getInetAddress().getHostName());
+                        sender = new Signature(socket.getInetAddress().getHostAddress(), true);
+                    }
                 }
+                if (sender != null && sender.isEnabled()) {
+                    String fileName = ((int) (Math.random() * 100)) + ".mp3";
+                    File file = new File(fileName);
+                    openSession(socket, file);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    private void receivedFile(boolean accept) throws Exception {
-        final String FILE_NAME = "sample.mp4";
-        if(accept) {
-            byte buffer[] = new byte[8192];
-            File file = new File(FILE_NAME);
-
-            FileOutputStream fos = new FileOutputStream(file);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-
-            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
-            int length;
-            while ((length = bis.read(buffer)) != -1) {
-                bos.write(buffer, 0, length);
-                System.out.println(length);
-            }
-            bos.flush();
-            bos.close();
+    public void openSession(Socket socket, File file) throws Exception {
+        if (socket != null && !socket.isClosed()) {
+            receivedFile(socket, file);
+            if (!socket.isClosed())
+                socket.close();
         }
+    }
+
+    public void receivedFile(Socket socket, File file) throws Exception {
+        FileOutputStream fos = new FileOutputStream(file);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
+        byte buffer[] = new byte[8192];
+        int length;
+
+        while ((length = bis.read(buffer)) != -1) {
+            bos.write(buffer, 0, length);
+            System.out.println(length);
+        }
+        bos.flush();
+        bos.close();
     }
 }

@@ -6,15 +6,26 @@ import java.util.List;
 
 public class MyProtocol {
 
-    private String header;
-    private List<File> body = new ArrayList<>();
-    private int size;
+    private List<File> files = new ArrayList<>();
+
+    public void addFile(File file) {
+        files.add(file);
+    }
 
     public String getHeader() {
-        return header;
+        final int size = files.size();
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append(size);
+        builder.append(":");
+        for(File file : files) {
+            builder.append(file.getName());
+            builder.append("#");
+        }
+        return builder.toString();
     }
 
     public List<File> getBody() {
-        return body;
+        return files;
     }
 }

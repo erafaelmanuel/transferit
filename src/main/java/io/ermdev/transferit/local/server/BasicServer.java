@@ -32,9 +32,6 @@ public class BasicServer {
                     System.out.println("Accept? (y/n) ");
 
                     if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                        System.out.println(socket.getInetAddress().getCanonicalHostName());
-                        System.out.println(socket.getInetAddress().getHostAddress());
-                        System.out.println(socket.getInetAddress().getHostName());
                         sender = new Signature(socket.getInetAddress().getHostAddress(), true);
                     }
                 }

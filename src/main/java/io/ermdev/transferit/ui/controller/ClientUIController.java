@@ -1,5 +1,6 @@
 package io.ermdev.transferit.ui.controller;
 
+import io.ermdev.transferit.local.client.BasicClient;
 import io.ermdev.transferit.local.client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ClientUIController {
 
-    private Client client;
+    private BasicClient client;
     private final List<File> FILES = new ArrayList<>();
 
     @FXML
@@ -27,7 +28,7 @@ public class ClientUIController {
             if(client != null) {
                 client.getSocket().close();
             }
-            client = new Client(txHost.getText(), 23411);
+            client = new BasicClient(txHost.getText(), 23411);
 
             if (btnCDC.getText().equals("Connect")) {
                 btnCDC.setText("Disconnect");

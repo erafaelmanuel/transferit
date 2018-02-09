@@ -4,11 +4,10 @@ public class Transaction {
 
     private int number;
     private String filename;
-    private int transfer;
+    private double transfer;
+    private String percentage;
 
-
-
-    public Transaction(int number, String filename, int transfer) {
+    public Transaction(int number, String filename, double transfer) {
         this.number = number;
         this.filename = filename;
         this.transfer = transfer;
@@ -30,15 +29,22 @@ public class Transaction {
         this.filename = filename;
     }
 
-    public int getTransfer() {
+    public double getTransfer() {
         return transfer;
     }
 
-    public void setTransfer(int transfer) {
+    public void setTransfer(double transfer) {
         this.transfer = transfer;
     }
 
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
+    }
     public String getPercentage() {
-        return transfer + "%";
+        if(percentage == null) {
+            return String.format("%.2f", transfer) + "%";
+        } else {
+            return percentage;
+        }
     }
 }

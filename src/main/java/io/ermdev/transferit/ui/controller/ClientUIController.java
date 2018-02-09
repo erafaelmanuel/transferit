@@ -74,8 +74,8 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
         c2.setMaxWidth(450);
         c2.setSortable(false);
 
-        TableColumn<Transaction, Integer> c3 = new TableColumn<>("Transfer");
-        c3.setCellValueFactory(new PropertyValueFactory<>("transfer"));
+        TableColumn<Transaction, Double> c3 = new TableColumn<>("Transfer");
+        c3.setCellValueFactory(new PropertyValueFactory<>("percentage"));
         c3.setPrefWidth(80);
         c3.setMaxWidth(80);
         c3.setSortable(false);
@@ -87,7 +87,7 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
 
     private void setTableData(TableView<Transaction> tableView) {
         tableView.getItems().clear();
-        for(Transaction transaction : transactions) {
+        for (Transaction transaction : transactions) {
             tableView.getItems().add(transaction);
         }
     }
@@ -112,24 +112,24 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
 
     @FXML
     public void onActionSend() {
-//        Thread thread = new Thread(() -> {
-//            if (client != null && files.size() > 0) {
-//                for (int ctr=1; ctr<=files.size(); ctr++) {
-//                    try {
-//                        cn=ctr;
-//                        client.openTransaction(files.get(ctr-1));
-//                        System.out.println(files.get(ctr-1).getName());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        files.clear();
-//                        break;
-//                    }
-//                }
-//                files.clear();
-//            }
-//        });
-//        thread.start();
-        tblfiles.getItems().get(0).setTransfer(10);
+        Thread thread = new Thread(() -> {
+            if (client != null && files.size() > 0) {
+                for (int ctr = 1; ctr <= files.size(); ctr++) {
+                    try {
+                        cn = ctr;
+                        client.openTransaction(files.get(ctr - 1));
+                        transactions.get(ctr - 1).setPercentage("Completed");
+                        setTableData(tblfiles);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        files.clear();
+                        break;
+                    }
+                }
+                files.clear();
+            }
+        });
+        thread.start();
     }
 
     @FXML
@@ -139,17 +139,18 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
         if (newFiles != null && newFiles.size() > 0) {
             files.addAll(newFiles);
             transactions.clear();
-            for(int ctr=1; ctr<= files.size(); ctr++) {
-                transactions.add(new Transaction(ctr, files.get(ctr-1).getName(), 0));
+            for (int ctr = 1; ctr <= files.size(); ctr++) {
+                transactions.add(new Transaction(ctr, files.get(ctr - 1).getName(), 0));
             }
             setTableData(tblfiles);
-           tblfiles.getItems().get(0).setTransfer(5);
         }
     }
 
     @Override
-    public void onTransferUpdate(int transfer) {
-        tblfiles.getItems().get(0).setTransfer(10);
-        System.out.println(transfer);
+    public void onTransferUpdate(double transfer) {
+        Platform.runLater(() -> {
+            transactions.get(cn - 1).setTransfer(transfer);
+            setTableData(tblfiles);
+        });
     }
 }

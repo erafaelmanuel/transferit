@@ -41,6 +41,7 @@ public class BasicClient {
     private void sendBasic(Socket socket, File file) throws Exception {
         byte buffer[] = new byte[8192];
         int length = (int) file.length();
+        int count = 0;
 
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
@@ -53,7 +54,8 @@ public class BasicClient {
             int n;
             while ((n = bis.read(buffer)) != -1) {
                 dos.write(buffer, 0, n);
-                clientListener.onTransferUpdate(n);
+                count += n;
+                clientListener.onTransferUpdate((100.0 / length) * (double) count);
             }
         } else {
             int n;
@@ -73,6 +75,6 @@ public class BasicClient {
 
     @FunctionalInterface
     public interface ClientListener {
-        void onTransferUpdate(int transfer);
+        void onTransferUpdate(double transfer);
     }
 }

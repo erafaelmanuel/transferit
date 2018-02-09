@@ -25,7 +25,7 @@ public class ClientStage extends Stage {
             URL location = this.getClass().getResource("/fxml/client_ui.fxml");
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 337, 235);
+            Scene scene = new Scene(root, 600, 400);
 
             setTitle("Transferit v1.0");
             setScene(scene);

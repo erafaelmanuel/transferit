@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.ui.controller.ClientUIController">
-    <children>
-        <AnchorPane prefHeight="235.0" prefWidth="337.0">
-            <children>
-                <Label layoutX="20.0" layoutY="26.0" text="Host : " />
-                <TextField fx:id="txHost" layoutX="56.0" layoutY="22.0" prefHeight="25.0" prefWidth="172.0" promptText="localhost" />
-                <Button fx:id="btnCDC" layoutX="238.0" layoutY="22.0" mnemonicParsing="false" onAction="#onActionConnect" prefHeight="25.0" prefWidth="85.0" text="Connect" />
-                <StackPane layoutX="20.0" layoutY="55.0" prefHeight="118.0" prefWidth="303.0" style="-fx-border-color: #f1c40f;">
-                    <children>
-                        <Label text="Drag files here" textFill="#5e5c5c" />
-                    </children>
-                </StackPane>
-                <Button layoutX="238.0" layoutY="184.0" mnemonicParsing="false" onAction="#onActionSend" prefHeight="25.0" prefWidth="85.0" text="Send" />
-                <Button layoutX="148.0" layoutY="184.0" mnemonicParsing="false" onAction="#onActionBrowse" prefHeight="25.0" prefWidth="85.0" text="New File" />
-            </children>
-        </AnchorPane>
-    </children>
-</StackPane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.ui.controller.ClientUIController">
+   <center>
+      <TableView fx:id="tblfiles" prefHeight="157.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Host : " />
+            <TextField fx:id="txHost" prefHeight="25.0" prefWidth="172.0" promptText="localhost" />
+            <Button fx:id="btnCDC" mnemonicParsing="false" onAction="#onActionConnect" prefHeight="25.0" prefWidth="85.0" text="Connect">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="44.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onActionBrowse" prefHeight="25.0" prefWidth="85.0" text="New File">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnSend" mnemonicParsing="false" onAction="#onActionSend" prefHeight="25.0" prefWidth="85.0" text="Send">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

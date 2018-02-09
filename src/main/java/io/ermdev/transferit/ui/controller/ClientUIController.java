@@ -24,7 +24,11 @@ public class ClientUIController {
     @FXML
     public void onActionConnect() {
         try {
+            if(client != null) {
+                client.getSocket().close();
+            }
             client = new Client(txHost.getText(), 23411);
+
             if (btnCDC.getText().equals("Connect")) {
                 btnCDC.setText("Disconnect");
             } else {
@@ -47,6 +51,7 @@ public class ClientUIController {
             }
             FILES.clear();
         }
+        btnCDC.setText("Connect");
     }
 
     @FXML

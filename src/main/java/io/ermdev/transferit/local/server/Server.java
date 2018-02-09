@@ -49,7 +49,7 @@ public class Server {
         }
     }
 
-    public void openSession(Socket socket, File file) throws Exception {
+    private void openSession(Socket socket, File file) throws Exception {
         if (socket != null && !socket.isClosed()) {
             receivedFile(socket, file);
             if (!socket.isClosed())
@@ -57,7 +57,7 @@ public class Server {
         }
     }
 
-    public void receivedFile(Socket socket, File file) throws Exception {
+    private void receivedFile(Socket socket, File file) throws Exception {
         FileOutputStream fos = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
 

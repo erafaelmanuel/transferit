@@ -6,6 +6,8 @@ public class Transaction {
     private String filename;
     private int transfer;
 
+
+
     public Transaction(int number, String filename, int transfer) {
         this.number = number;
         this.filename = filename;

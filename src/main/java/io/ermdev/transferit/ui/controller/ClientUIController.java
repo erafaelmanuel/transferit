@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientUIController implements Subscriber, Initializable {
+public class ClientUIController implements Subscriber, Initializable, BasicClient.ClientListener {
 
     private BasicClient client;
     private List<File> files = new ArrayList<>();
     private List<Transaction> transactions = new ArrayList<>();
     private Receiver receiver = new Receiver();
+    private int cn;
 
     @FXML
     private TextField txHost;
@@ -37,55 +38,11 @@ public class ClientUIController implements Subscriber, Initializable {
     @FXML
     private TableView<Transaction> tblfiles;
 
-    @FXML
-    public void onActionConnect() {
-        try {
-            if (btnCDC.getText().equals("Connect")) {
-                receiver.subscribe(this);
-                receiver.setHost(txHost.getText());
-                receiver.setPort(23411);
-                receiver.setConnected(true);
-                client = new BasicClient(receiver);
-            } else {
-                receiver.setConnected(false);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect.");
-        }
-    }
-
-    @FXML
-    public void onActionSend() {
-        Thread thread = new Thread(() -> {
-            if (client != null && files.size() > 0) {
-                for (File file : files) {
-                    try {
-                        client.openTransaction(file);
-                        System.out.println(file.getName());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        files.clear();
-                        break;
-                    }
-                }
-                files.clear();
-            }
-        });
-        thread.start();
-    }
-
-    @FXML
-    public void onActionBrowse() {
-        FileChooser fileChooser = new FileChooser();
-        List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
-        if (newFiles != null && newFiles.size() > 0) {
-            files.addAll(newFiles);
-            transactions.clear();
-            for(int ctr=1; ctr<= files.size(); ctr++) {
-                transactions.add(new Transaction(ctr, files.get(ctr-1).getName(), 0));
-            }
-            setTableData(tblfiles);
-        }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        btnSend.setDisable(true);
+        tblfiles.getColumns().clear();
+        setTableColumn(tblfiles);
     }
 
     @Override
@@ -102,13 +59,6 @@ public class ClientUIController implements Subscriber, Initializable {
             });
         });
         thread.start();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        btnSend.setDisable(true);
-        tblfiles.getColumns().clear();
-        setTableColumn(tblfiles);
     }
 
     private void setTableColumn(TableView<Transaction> tableView) {
@@ -135,46 +85,71 @@ public class ClientUIController implements Subscriber, Initializable {
         tableView.getColumns().add(c3);
     }
 
-
     private void setTableData(TableView<Transaction> tableView) {
         tableView.getItems().clear();
         for(Transaction transaction : transactions) {
             tableView.getItems().add(transaction);
         }
     }
-//
-//        TableColumn<Object, String> uPass = new TableColumn<>("Password");
-//        uPass.setCellValueFactory(new PropertyValueFactory<>("password"));
-//        uPass.setPrefWidth(200);
-//        uPass.setSortable(false);
-//
-//        TableColumn<Object, String> uType = new TableColumn<>("Type");
-//        uType.setCellValueFactory(new PropertyValueFactory<>("userType"));
-//        uType.setPrefWidth(200);
-//        uType.setSortable(false);
-//
-//        TableColumn<Object, String> uIA = new TableColumn<>("Activated");
-//        uIA.setCellValueFactory(new PropertyValueFactory<>("activated"));
-//        uIA.setPrefWidth(200);
-//        uIA.setSortable(false);
-//
-//        TableColumn<Object, String> uDate = new TableColumn<>("Registration Date");
-//        uDate.setCellValueFactory(new PropertyValueFactory<>("registrationDate"));
-//        uDate.setPrefWidth(200);
-//        uDate.setSortable(false);
-//
-//        tblData.getColumns().add(uId);
-//        tblData.getColumns().add(uUser);
-//        tblData.getColumns().add(uPass);
-//        tblData.getColumns().add(uType);
-//        tblData.getColumns().add(uIA);
-//        tblData.getColumns().add(uDate);
-//
-//        USER_LIST.clear();
-//        for (UserDetail userDetail : userDetailDao.getUserDetailList()) {
-//            userDetail.setActivated(userDetail.isActivated() ? "YES":"NO");
-//            tblData.getItems().add(userDetail);
-//            USER_LIST.add(userDetail);
-//        }
 
+    @FXML
+    public void onActionConnect() {
+        try {
+            if (btnCDC.getText().equals("Connect")) {
+                receiver.subscribe(this);
+                receiver.setHost(txHost.getText());
+                receiver.setPort(23411);
+                receiver.setConnected(true);
+                client = new BasicClient(receiver);
+                client.setClientListener(this);
+            } else {
+                receiver.setConnected(false);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unable to connect.");
+        }
+    }
+
+    @FXML
+    public void onActionSend() {
+//        Thread thread = new Thread(() -> {
+//            if (client != null && files.size() > 0) {
+//                for (int ctr=1; ctr<=files.size(); ctr++) {
+//                    try {
+//                        cn=ctr;
+//                        client.openTransaction(files.get(ctr-1));
+//                        System.out.println(files.get(ctr-1).getName());
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        files.clear();
+//                        break;
+//                    }
+//                }
+//                files.clear();
+//            }
+//        });
+//        thread.start();
+        tblfiles.getItems().get(0).setTransfer(10);
+    }
+
+    @FXML
+    public void onActionBrowse() {
+        FileChooser fileChooser = new FileChooser();
+        List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
+        if (newFiles != null && newFiles.size() > 0) {
+            files.addAll(newFiles);
+            transactions.clear();
+            for(int ctr=1; ctr<= files.size(); ctr++) {
+                transactions.add(new Transaction(ctr, files.get(ctr-1).getName(), 0));
+            }
+            setTableData(tblfiles);
+           tblfiles.getItems().get(0).setTransfer(5);
+        }
+    }
+
+    @Override
+    public void onTransferUpdate(int transfer) {
+        tblfiles.getItems().get(0).setTransfer(10);
+        System.out.println(transfer);
+    }
 }

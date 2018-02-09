@@ -41,23 +41,20 @@ public class Server {
     private void receivedFile(boolean accept) throws Exception {
         final String FILE_NAME = "sample.mp4";
         if(accept) {
-//            File file = new File(FILE_NAME);
-//            byte buffer[] = new byte[8192];
-//            FileOutputStream fos = new FileOutputStream(file);
-//            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            byte buffer[] = new byte[8192];
+            File file = new File(FILE_NAME);
+
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
 
             BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
-            DataInputStream dis = new DataInputStream(bis);
-            String fileName = dis.readUTF();
-            Files.copy(dis, Paths.get(fileName));
-            dis.close();
-//            int size;
-//            while ((size = bis.read(buffer)) != -1) {
-//                bos.write(buffer, 0, size);
-//                System.out.println(size);
-//            }
-//            bos.flush();
-            //bos.close();
+            int length;
+            while ((length = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+                System.out.println(length);
+            }
+            bos.flush();
+            bos.close();
         }
     }
 }

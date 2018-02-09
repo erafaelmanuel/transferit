@@ -1,7 +1,7 @@
 package io.ermdev.transferit.ui.controller;
 
 import io.ermdev.transferit.local.client.BasicClient;
-import io.ermdev.transferit.local.client.Client;
+import io.ermdev.transferit.local.client.Receiver;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -25,11 +25,11 @@ public class ClientUIController {
     @FXML
     public void onActionConnect() {
         try {
-            if(client != null) {
-                client.getSocket().close();
-            }
-            client = new BasicClient(txHost.getText(), 23411);
+            Receiver receiver = new Receiver();
+            receiver.setHost(txHost.getText());
+            receiver.setPort(23411);
 
+            client = new BasicClient(receiver);
             if (btnCDC.getText().equals("Connect")) {
                 btnCDC.setText("Disconnect");
             } else {
@@ -42,26 +42,28 @@ public class ClientUIController {
 
     @FXML
     public void onActionSend() {
-        if (client != null && FILES.size() > 0) {
-            for (File file : FILES) {
-                try {
-                    client.send(file);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        Thread thread = new Thread(()->{
+            if (client != null && FILES.size() > 0) {
+                for (File file : FILES) {
+                    try {
+                        client.openTransaction(file);
+                        System.out.println(file.getName());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                FILES.clear();
             }
-            FILES.clear();
-        }
-        btnCDC.setText("Connect");
+        });
+        thread.start();
     }
 
     @FXML
     public void onActionBrowse() {
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(null);
-        if(file != null) {
-            FILES.add(file);
-            System.out.println(file.getName());
+        List<File> files = fileChooser.showOpenMultipleDialog(null);
+        if (files != null && files.size() > 0) {
+            FILES.addAll(files);
         }
     }
 }

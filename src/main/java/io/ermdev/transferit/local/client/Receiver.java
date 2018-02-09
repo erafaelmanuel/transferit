@@ -1,0 +1,32 @@
+package io.ermdev.transferit.local.client;
+
+public class Receiver {
+
+    private String host;
+    private int port;
+    private boolean connected;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+}

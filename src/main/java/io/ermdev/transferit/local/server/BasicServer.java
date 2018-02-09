@@ -1,7 +1,5 @@
 package io.ermdev.transferit.local.server;
 
-import io.ermdev.transferit.local.Signature;
-
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.net.ServerSocket;
@@ -14,7 +12,7 @@ public class BasicServer {
 
     private int port;
     private ServerSocket serverSocket;
-    private Signature sender;
+    private Sender sender;
 
     public BasicServer(int port) {
         this.port = port;
@@ -32,7 +30,9 @@ public class BasicServer {
                     System.out.println("Accept? (y/n) ");
 
                     if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                        sender = new Signature(socket.getInetAddress().getHostAddress(), true);
+                        final String address = socket.getInetAddress().getHostAddress();
+                        final boolean enabled = true;
+                        sender = new Sender(address, enabled);
                     }
                 }
                 if (sender != null && sender.isEnabled()) {

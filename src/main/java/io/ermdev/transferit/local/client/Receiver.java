@@ -1,10 +1,18 @@
 package io.ermdev.transferit.local.client;
 
-public class Receiver {
+import io.ermdev.transferit.util.Publisher;
+import io.ermdev.transferit.util.Subscriber;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Receiver implements Publisher {
 
     private String host;
     private int port;
     private boolean connected;
+
+    private List<Subscriber> subscribers = new ArrayList<>();
 
     public String getHost() {
         return host;
@@ -28,5 +36,23 @@ public class Receiver {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
+        notifySubscriber();
+    }
+
+    @Override
+    public void subscribe(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    @Override
+    public void notifySubscriber() {
+        for (Subscriber subscriber : subscribers) {
+            subscriber.update(connected);
+        }
     }
 }

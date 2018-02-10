@@ -1,10 +1,9 @@
 package io.ermdev.transferit.local.client;
 
-import io.ermdev.transferit.util.TransactionSubscriber;
+import io.ermdev.transferit.exception.TransferitException;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
 
 public class BasicClient {
 
@@ -17,19 +16,18 @@ public class BasicClient {
         this.receiver = receiver;
     }
 
-    public void connect() {
+    public void connect() throws TransferitException {
         try {
             connection = new Socket(receiver.getHost(), receiver.getPort());
             receiver.setConnected(true);
         } catch (Exception e) {
-            e.printStackTrace();
-            receiver.setConnected(false);
+            throw new TransferitException("Unable to connect!");
         }
     }
 
     public void disconnect() {
         try {
-            if(connection != null && !connection.isClosed()) {
+            if (connection != null && !connection.isClosed()) {
                 connection.close();
                 receiver.setConnected(false);
             }
@@ -42,8 +40,7 @@ public class BasicClient {
     public void openTransaction(File file) {
         try {
             Socket socket = new Socket(receiver.getHost(), receiver.getPort());
-            receiver.setConnected(true);
-            sendBasic(socket, file);
+            send(socket, file);
             if (!socket.isClosed()) {
                 socket.close();
             }
@@ -54,14 +51,6 @@ public class BasicClient {
     }
 
     private void send(Socket socket, File file) throws Exception {
-        BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
-        DataOutputStream dos = new DataOutputStream(bos);
-        dos.writeUTF(file.getName());
-        Files.copy(file.toPath(), dos);
-        dos.close();
-    }
-
-    private void sendBasic(Socket socket, File file) throws Exception {
         byte buffer[] = new byte[8192];
         int length = (int) file.length();
         int count = 0;

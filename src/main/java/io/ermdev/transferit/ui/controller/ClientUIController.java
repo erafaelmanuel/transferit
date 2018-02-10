@@ -1,5 +1,6 @@
 package io.ermdev.transferit.ui.controller;
 
+import io.ermdev.transferit.exception.TransferitException;
 import io.ermdev.transferit.local.client.BasicClient;
 import io.ermdev.transferit.local.client.Receiver;
 import io.ermdev.transferit.local.client.Transaction;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -107,8 +109,8 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
             } else {
                 client.disconnect();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (TransferitException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             client.disconnect();
         }
     }

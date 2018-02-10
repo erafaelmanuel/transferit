@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
-import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -96,17 +95,21 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
     public void onActionConnect() {
         try {
             if (btnCDC.getText().equals("Connect")) {
+
                 receiver.subscribe(this);
                 receiver.setHost(txHost.getText());
                 receiver.setPort(23411);
-                receiver.setConnected(true);
+
                 client = new BasicClient(receiver);
                 client.setClientListener(this);
+
+                client.connect();
             } else {
-                receiver.setConnected(false);
+                client.disconnect();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect.");
+            e.printStackTrace();
+            client.disconnect();
         }
     }
 

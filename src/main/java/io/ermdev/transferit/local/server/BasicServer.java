@@ -21,26 +21,27 @@ public class BasicServer {
     public void channeling() throws Exception {
         serverSocket = new ServerSocket(port);
         while (true) {
-            try {
-                System.out.println("Waiting ...");
-                Socket socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
+            new Thread(()-> {
+                try {
+                    System.out.println("Waiting ...");
+                    if (sender == null || !sender.isEnabled()) {
+                        System.out.println("Someone want to connect!");
+                        System.out.println("Accept? (y/n) ");
 
-                if (sender == null || !sender.isEnabled()) {
-                    System.out.println("Someone want to connect!");
-                    System.out.println("Accept? (y/n) ");
-
-                    if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                        final String address = socket.getInetAddress().getHostAddress();
-                        final boolean enabled = true;
-                        sender = new Sender(address, enabled);
+                        if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
+                            final String address = socket.getInetAddress().getHostAddress();
+                            final boolean enabled = true;
+                            sender = new Sender(address, enabled);
+                        }
                     }
+                    if (sender != null && sender.isEnabled()) {
+                        openSession(socket);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                if (sender != null && sender.isEnabled()) {
-                    openSession(socket);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            }).start();
         }
     }
 

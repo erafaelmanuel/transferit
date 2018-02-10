@@ -1,6 +1,7 @@
 package io.ermdev.transferit;
 
 import io.ermdev.transferit.local.server.BasicServer;
+import io.ermdev.transferit.local.server.Sender;
 import io.ermdev.transferit.ui.callback.OnWelcomeClose;
 import io.ermdev.transferit.ui.stage.ClientStage;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
@@ -24,6 +25,7 @@ public class Main extends Application implements OnWelcomeClose {
         if (isServer) {
             try {
                 BasicServer server = new BasicServer(23411);
+                server.setConnection(new Sender());
                 server.channeling();
             } catch (Exception e) {
                 e.printStackTrace();

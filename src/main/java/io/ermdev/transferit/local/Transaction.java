@@ -1,4 +1,4 @@
-package io.ermdev.transferit.local.client;
+package io.ermdev.transferit.local;
 
 public class Transaction {
 

@@ -3,7 +3,7 @@ package io.ermdev.transferit.ui.controller;
 import io.ermdev.transferit.exception.TransferitException;
 import io.ermdev.transferit.local.client.BasicClient;
 import io.ermdev.transferit.local.client.Receiver;
-import io.ermdev.transferit.local.client.Transaction;
+import io.ermdev.transferit.local.Transaction;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +107,7 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
                 client.setClientListener(this);
 
                 client.connect();
+                client.keepAlive();
             } else {
                 client.disconnect();
             }

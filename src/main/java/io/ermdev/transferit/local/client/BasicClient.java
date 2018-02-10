@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class BasicClient {
 
-    private Receiver receiver;
+    private volatile Receiver receiver;
     private ClientListener clientListener;
 
     private Socket connection;
@@ -29,12 +29,38 @@ public class BasicClient {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                receiver.setConnected(false);
             }
+            receiver.setConnected(false);
         } catch (Exception e) {
             e.printStackTrace();
             receiver.setConnected(false);
         }
+    }
+
+    public void keepAlive() {
+        new Thread(() -> {
+            try {
+                boolean isConnected = true;
+                while (isConnected) {
+
+                    InputStream is = connection.getInputStream();
+                    int n;
+                    StringBuilder stringBuilder = new StringBuilder();
+                    while ((n = is.read()) != -1) {
+                        stringBuilder.append((char) n);
+                    }
+
+                    if (stringBuilder.toString().equalsIgnoreCase("close")) {
+                        is.close();
+                        isConnected = false;
+                        disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                disconnect();
+            }
+        }).start();
     }
 
     public void openTransaction(File file) {

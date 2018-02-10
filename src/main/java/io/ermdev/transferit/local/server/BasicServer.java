@@ -1,55 +1,78 @@
 package io.ermdev.transferit.local.server;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class BasicServer {
 
-    private int port;
+    private int port = 23411;
     private ServerSocket serverSocket;
+    private Socket connection;
     private Sender sender;
 
     public BasicServer(int port) {
-        this.port = port;
+        try {
+            this.port = port;
+            serverSocket = new ServerSocket(port);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setConnection(Sender sender) {
+        try {
+            this.sender = sender;
+            boolean isNotConnected = true;
+            while (isNotConnected) {
+                System.out.println("Finding a connection...");
+                connection = serverSocket.accept();
+                System.out.println("Someone want to connect!");
+                System.out.println("Accept? (y/n) ");
+                if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
+                    sender.setHost(connection.getInetAddress().getHostAddress());
+                    sender.setEnabled(true);
+                    isNotConnected = false;
+                } else {
+                    OutputStream os = connection.getOutputStream();
+                    os.write("close".getBytes(StandardCharsets.UTF_8));
+                    os.flush();
+                    os.close();
+                    connection.close();
+                    isNotConnected = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void channeling() throws Exception {
-        serverSocket = new ServerSocket(port);
         while (true) {
-            Socket socket = serverSocket.accept();
-            new Thread(()-> {
-                try {
-                    System.out.println("Waiting ...");
-                    if (sender == null || !sender.isEnabled()) {
-                        System.out.println("Someone want to connect!");
-                        System.out.println("Accept? (y/n) ");
-
-                        if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                            final String address = socket.getInetAddress().getHostAddress();
-                            final boolean enabled = true;
-                            sender = new Sender(address, enabled);
-                        }
-                    }
-                    if (sender != null && sender.isEnabled()) {
-                        openSession(socket);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+            try {
+                System.out.println("Channeling ...");
+                Socket socket = serverSocket.accept();
+                if (sender != null && sender.isEnabled()) {
+                    openSession(socket);
+                } else {
+                    socket.close();
                 }
-            }).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void openSession(Socket socket) throws Exception {
         if (socket != null && !socket.isClosed()) {
             receivedFile(socket);
-            if (!socket.isClosed())
+            if (!socket.isClosed()) {
                 socket.close();
+            }
         }
     }
 

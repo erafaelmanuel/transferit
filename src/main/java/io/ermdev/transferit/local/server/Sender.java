@@ -2,20 +2,20 @@ package io.ermdev.transferit.local.server;
 
 public class Sender {
 
-    private String address;
+    private String host;
     private boolean enabled;
 
-    public Sender(String address, boolean enabled) {
-        this.address = address;
+    public Sender(String host, boolean enabled) {
+        this.host = host;
         this.enabled = enabled;
     }
 
-    public String getAddress() {
-        return address;
+    public String getHost() {
+        return host;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public boolean isEnabled() {

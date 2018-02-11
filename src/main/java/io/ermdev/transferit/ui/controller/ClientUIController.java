@@ -1,9 +1,9 @@
 package io.ermdev.transferit.ui.controller;
 
 import io.ermdev.transferit.exception.TransferitException;
+import io.ermdev.transferit.local.Transaction;
 import io.ermdev.transferit.local.client.BasicClient;
 import io.ermdev.transferit.local.client.Receiver;
-import io.ermdev.transferit.local.Transaction;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -17,7 +17,6 @@ import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
 
     @Override
     public void update(boolean status) {
-        Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() ->
             Platform.runLater(() -> {
                 if (status) {
                     btnCDC.setText("Disconnect");
@@ -58,8 +57,8 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
                     btnCDC.setText("Connect");
                     btnSend.setDisable(true);
                 }
-            });
-        });
+            })
+        );
         thread.start();
     }
 
@@ -118,6 +117,27 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
     }
 
     @FXML
+    public void onActionBrowse() {
+        FileChooser fileChooser = new FileChooser();
+        List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
+        if (newFiles != null && newFiles.size() > 0) {
+            for(File file : newFiles) {
+                boolean isExists = files.parallelStream()
+                        .anyMatch(f ->  f.getName().equals(file.getName()));
+                if(!isExists) {
+                    files.add(file);
+                }
+            }
+            transactions.clear();
+            for (int ctr = 1; ctr <= files.size(); ctr++) {
+                transactions.add(new Transaction(ctr, files.get(ctr - 1).getName(), 0));
+            }
+            setTableData(tblfiles);
+        }
+    }
+
+
+    @FXML
     public void onActionSend() {
         Thread thread = new Thread(() -> {
             if (client != null && files.size() > 0) {
@@ -137,20 +157,6 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
             }
         });
         thread.start();
-    }
-
-    @FXML
-    public void onActionBrowse() {
-        FileChooser fileChooser = new FileChooser();
-        List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
-        if (newFiles != null && newFiles.size() > 0) {
-            files.addAll(newFiles);
-            transactions.clear();
-            for (int ctr = 1; ctr <= files.size(); ctr++) {
-                transactions.add(new Transaction(ctr, files.get(ctr - 1).getName(), 0));
-            }
-            setTableData(tblfiles);
-        }
     }
 
     @Override

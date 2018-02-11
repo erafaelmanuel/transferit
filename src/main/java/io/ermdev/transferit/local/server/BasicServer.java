@@ -1,6 +1,9 @@
 package io.ermdev.transferit.local.server;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -81,7 +84,10 @@ public class BasicServer {
         DataInputStream dis = new DataInputStream(bis);
 
         String fileName = dis.readUTF();
-        Files.copy(dis, Paths.get(fileName));
+        File file = new File(fileName);
+        if (!file.exists() || file.delete()) {
+            Files.copy(dis, Paths.get(fileName));
+        }
         dis.close();
     }
 }

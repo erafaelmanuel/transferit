@@ -1,4 +1,4 @@
-package io.ermdev.transferit.local.server;
+package io.ermdev.transferit.server;
 
 import io.ermdev.transferit.local.Signature;
 

@@ -1,4 +1,4 @@
-package io.ermdev.transferit.local.client;
+package io.ermdev.transferit.client;
 
 import io.ermdev.transferit.util.Publisher;
 import io.ermdev.transferit.util.Subscriber;

@@ -2,8 +2,8 @@ package io.ermdev.transferit.ui.controller;
 
 import io.ermdev.transferit.exception.TransferitException;
 import io.ermdev.transferit.local.Transaction;
-import io.ermdev.transferit.local.client.BasicClient;
-import io.ermdev.transferit.local.client.Receiver;
+import io.ermdev.transferit.client.BasicClient;
+import io.ermdev.transferit.client.Receiver;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

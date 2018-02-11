@@ -42,6 +42,7 @@
                     <MenuItem mnemonicParsing="false" onAction="#onActionBrowse" text="New File" />
                         <MenuItem mnemonicParsing="false" onAction="#onActionOpenFolder" text="Open Folder" />
                         <MenuItem mnemonicParsing="false" text="Receive File" />
+                        <MenuItem mnemonicParsing="false" onAction="#onActionClear" text="Clear" />
                         <MenuItem mnemonicParsing="false" onAction="#onActionClose" text="Close" />
                   </items>
                 </Menu>

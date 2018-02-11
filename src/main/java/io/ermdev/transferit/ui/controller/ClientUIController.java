@@ -96,6 +96,13 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
     }
 
     @FXML
+    public void onActionClear() {
+        files.clear();
+        transactions.clear();
+        setTableData(tblfiles);
+    }
+
+    @FXML
     public void onActionClose(ActionEvent event) {
         System.exit(0);
     }

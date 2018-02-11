@@ -6,14 +6,18 @@ import io.ermdev.transferit.local.client.BasicClient;
 import io.ermdev.transferit.local.client.Receiver;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
@@ -49,15 +53,15 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
     @Override
     public void update(boolean status) {
         Thread thread = new Thread(() ->
-            Platform.runLater(() -> {
-                if (status) {
-                    btnCDC.setText("Disconnect");
-                    btnSend.setDisable(false);
-                } else {
-                    btnCDC.setText("Connect");
-                    btnSend.setDisable(true);
-                }
-            })
+                Platform.runLater(() -> {
+                    if (status) {
+                        btnCDC.setText("Disconnect");
+                        btnSend.setDisable(false);
+                    } else {
+                        btnCDC.setText("Connect");
+                        btnSend.setDisable(true);
+                    }
+                })
         );
         thread.start();
     }
@@ -94,6 +98,11 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
     }
 
     @FXML
+    public void onActionClose(ActionEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
     public void onActionConnect() {
         try {
             if (btnCDC.getText().equals("Connect")) {
@@ -121,10 +130,10 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         if (newFiles != null && newFiles.size() > 0) {
-            for(File file : newFiles) {
+            for (File file : newFiles) {
                 boolean isExists = files.parallelStream()
-                        .anyMatch(f ->  f.getName().equals(file.getName()));
-                if(!isExists) {
+                        .anyMatch(f -> f.getName().equals(file.getName()));
+                if (!isExists) {
                     files.add(file);
                 }
             }
@@ -136,6 +145,25 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
         }
     }
 
+    @FXML
+    public void onActionOpenFolder() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File folder = directoryChooser.showDialog(null);
+        File subFiles[] = folder.listFiles();
+        if (subFiles != null) {
+            files.clear();
+            for (File file : subFiles) {
+                if (file.isFile()) {
+                    files.add(file);
+                }
+            }
+            transactions.clear();
+            for (int ctr = 1; ctr <= files.size(); ctr++) {
+                transactions.add(new Transaction(ctr, files.get(ctr - 1).getName(), 0));
+            }
+            setTableData(tblfiles);
+        }
+    }
 
     @FXML
     public void onActionSend() {

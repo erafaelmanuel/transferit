@@ -109,25 +109,25 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
 
     @FXML
     public void onActionConnect() {
-        try {
-            if (btnCDC.getText().equals("Connect")) {
+        new Thread(()-> {
+            try {
+                if (btnCDC.getText().equals("Connect")) {
+                    receiver.subscribe(this);
+                    receiver.setHost(txHost.getText());
+                    receiver.setPort(23411);
 
-                receiver.subscribe(this);
-                receiver.setHost(txHost.getText());
-                receiver.setPort(23411);
-
-                client = new BasicClient(receiver);
-                client.setClientListener(this);
-
-                client.connect();
-                client.keepAlive();
-            } else {
+                    client = new BasicClient(receiver);
+                    client.setClientListener(this);
+                    client.connect();
+                    client.keepAlive();
+                } else {
+                    client.disconnect();
+                }
+            } catch (TransferitException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
                 client.disconnect();
             }
-        } catch (TransferitException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            client.disconnect();
-        }
+        }).start();
     }
 
     @FXML

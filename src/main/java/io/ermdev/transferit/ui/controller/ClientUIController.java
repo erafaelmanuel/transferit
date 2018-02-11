@@ -109,7 +109,7 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
 
     @FXML
     public void onActionConnect() {
-        new Thread(()-> {
+        Thread thread = new Thread(() -> {
             try {
                 if (btnCDC.getText().equals("Connect")) {
                     receiver.subscribe(this);
@@ -127,7 +127,8 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 client.disconnect();
             }
-        }).start();
+        });
+        thread.start();
     }
 
     @FXML

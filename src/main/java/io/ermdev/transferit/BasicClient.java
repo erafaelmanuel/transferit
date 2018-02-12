@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class BasicClient {
 
-    private Receiver receiver;
+    private final Receiver receiver;
 
     private ClientListener clientListener;
 
@@ -21,32 +21,50 @@ public class BasicClient {
     public void connect() throws TransferitException {
         try {
             connection = new Socket(receiver.getHost(), receiver.getPort());
-            if(isConnectionAccepted()) {
-                receiver.setConnected(true);
-            } else {
-                receiver.setConnected(false);
-            }
+            talkToServer();
         } catch (Exception e) {
             throw new TransferitException("Unable to connect!");
         }
     }
 
     public void disconnect() {
-        receiver.setConnected(false);
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
+        synchronized (receiver) {
+            receiver.setConnected(false);
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    private boolean isConnectionAccepted() {
-        InitialConnection initialConnection = new InitialConnection();
-        Thread thread = new Thread(initialConnection);
+    private void talkToServer() {
+        Thread thread = new Thread(() -> {
+            try {
+                synchronized (receiver) {
+                    while (true) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        int n;
+                        while ((n = connection.getInputStream().read()) != -1) {
+                            stringBuilder.append((char) n);
+                        }
+                        if (stringBuilder.toString().equalsIgnoreCase("close")) {
+                            connection.close();
+                            receiver.setConnected(false);
+                            return;
+                        }
+                        if (stringBuilder.toString().equalsIgnoreCase("start")) {
+                            receiver.setConnected(true);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                disconnect();
+            }
+        });
         thread.start();
-        return initialConnection.getValue();
     }
 
     @Deprecated
@@ -120,36 +138,5 @@ public class BasicClient {
 
     public void setClientListener(ClientListener clientListener) {
         this.clientListener = clientListener;
-    }
-
-    class InitialConnection implements Runnable {
-
-        private volatile boolean value;
-
-        @Override
-        public void run() {
-            try {
-                while (true) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    int n;
-                    while ((n = connection.getInputStream().read()) != -1) {
-                        stringBuilder.append((char) n);
-                    }
-                    if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                        value = false;
-                        break;
-                    } else if (stringBuilder.toString().equalsIgnoreCase("start")) {
-                        value = true;
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                value = false;
-            }
-        }
-
-        public boolean getValue() {
-            return value;
-        }
     }
 }

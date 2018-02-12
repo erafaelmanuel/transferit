@@ -10,7 +10,7 @@ public class Receiver implements Publisher {
 
     private String host;
     private int port;
-    private boolean connected;
+    private volatile boolean connected;
 
     private List<Subscriber> subscribers = new ArrayList<>();
 

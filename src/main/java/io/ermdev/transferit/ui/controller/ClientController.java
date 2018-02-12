@@ -67,6 +67,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                         btnCDC.setText("Connect");
                         btnSend.setDisable(true);
                     }
+                    btnCDC.setDisable(false);
                 })
         );
         thread.start();
@@ -127,6 +128,10 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     public void onActionConnect() {
         Thread thread = new Thread(() -> {
             try {
+                Platform.runLater(()-> {
+                    btnCDC.setText("Waiting...");
+                    btnCDC.setDisable(true);
+                });
                 if (btnCDC.getText().equals("Connect")) {
                     receiver.subscribe(this);
                     receiver.setHost(txHost.getText());

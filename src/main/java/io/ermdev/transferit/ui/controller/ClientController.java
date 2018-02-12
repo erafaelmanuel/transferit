@@ -1,9 +1,9 @@
 package io.ermdev.transferit.ui.controller;
 
-import io.ermdev.transferit.exception.TransferitException;
-import io.ermdev.transferit.Transaction;
 import io.ermdev.transferit.BasicClient;
 import io.ermdev.transferit.Receiver;
+import io.ermdev.transferit.Transaction;
+import io.ermdev.transferit.exception.TransferitException;
 import io.ermdev.transferit.fun.ClientListener;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientUIController implements Subscriber, Initializable, ClientListener {
+public class ClientController implements Subscriber, Initializable, ClientListener {
 
     private BasicClient client;
 
@@ -70,6 +70,14 @@ public class ClientUIController implements Subscriber, Initializable, ClientList
                 })
         );
         thread.start();
+    }
+
+    @Override
+    public void onTransfer(double count) {
+        Platform.runLater(() -> {
+            transactions.get(cn - 1).setTransfer(count);
+            setTableData(tblfiles);
+        });
     }
 
     private void setTableColumn(TableView<Transaction> tableView) {
@@ -127,7 +135,6 @@ public class ClientUIController implements Subscriber, Initializable, ClientList
                     client = new BasicClient(receiver);
                     client.setClientListener(this);
                     client.connect();
-                    client.keepAlive();
                 } else {
                     client.disconnect();
                 }
@@ -199,13 +206,5 @@ public class ClientUIController implements Subscriber, Initializable, ClientList
             }
         });
         thread.start();
-    }
-
-    @Override
-    public void onTransfer(double count) {
-        Platform.runLater(() -> {
-            transactions.get(cn - 1).setTransfer(count);
-            setTableData(tblfiles);
-        });
     }
 }

@@ -21,7 +21,11 @@ public class BasicClient {
     public void connect() throws TransferitException {
         try {
             connection = new Socket(receiver.getHost(), receiver.getPort());
-            receiver.setConnected(true);
+            if(isConnectionAccepted()) {
+                receiver.setConnected(true);
+            } else {
+                receiver.setConnected(false);
+            }
         } catch (Exception e) {
             throw new TransferitException("Unable to connect!");
         }
@@ -33,15 +37,24 @@ public class BasicClient {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
             }
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void keepAlive() {
+    private boolean isConnectionAccepted() {
+        InitialConnection initialConnection = new InitialConnection();
+        Thread thread = new Thread(initialConnection);
+        thread.start();
+        return initialConnection.getValue();
+    }
+
+    @Deprecated
+    private void keepConnect() {
         Thread thread = new Thread(() -> {
             try {
-                boolean isConnected = true;
-
-                while (isConnected) {
+                boolean isNew = true;
+                while (isNew) {
                     final InputStream is = connection.getInputStream();
                     final StringBuilder stringBuilder = new StringBuilder();
                     int n;
@@ -49,8 +62,9 @@ public class BasicClient {
                         stringBuilder.append((char) n);
                     }
                     if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                        isConnected = false;
-                        disconnect();
+                        isNew = false;
+                    } else if (stringBuilder.toString().equalsIgnoreCase("start")) {
+                        receiver.setConnected(true);
                     }
                 }
             } catch (Exception e) {
@@ -106,5 +120,36 @@ public class BasicClient {
 
     public void setClientListener(ClientListener clientListener) {
         this.clientListener = clientListener;
+    }
+
+    class InitialConnection implements Runnable {
+
+        private volatile boolean value;
+
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    int n;
+                    while ((n = connection.getInputStream().read()) != -1) {
+                        stringBuilder.append((char) n);
+                    }
+                    if (stringBuilder.toString().equalsIgnoreCase("close")) {
+                        value = false;
+                        break;
+                    } else if (stringBuilder.toString().equalsIgnoreCase("start")) {
+                        value = true;
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                value = false;
+            }
+        }
+
+        public boolean getValue() {
+            return value;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package io.ermdev.transferit.server;
+package io.ermdev.transferit;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

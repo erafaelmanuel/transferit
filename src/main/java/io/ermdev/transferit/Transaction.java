@@ -1,4 +1,4 @@
-package io.ermdev.transferit.local;
+package io.ermdev.transferit;
 
 public class Transaction {
 

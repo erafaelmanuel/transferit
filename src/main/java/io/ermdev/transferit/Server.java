@@ -1,6 +1,6 @@
-package io.ermdev.transferit.server;
+package io.ermdev.transferit;
 
-import io.ermdev.transferit.local.Signature;
+import io.ermdev.transferit.Signature;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

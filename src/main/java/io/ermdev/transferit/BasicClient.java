@@ -1,4 +1,4 @@
-package io.ermdev.transferit.client;
+package io.ermdev.transferit;
 
 import io.ermdev.transferit.exception.TransferitException;
 

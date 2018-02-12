@@ -1,4 +1,4 @@
-package io.ermdev.transferit.server;
+package io.ermdev.transferit;
 
 public class Sender {
 

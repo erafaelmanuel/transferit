@@ -1,8 +1,6 @@
 package io.ermdev.transferit;
 
-import io.ermdev.transferit.server.BasicServer;
-import io.ermdev.transferit.server.Sender;
-import io.ermdev.transferit.ui.callback.OnWelcomeClose;
+import io.ermdev.transferit.ui.fun.OnWelcomeClose;
 import io.ermdev.transferit.ui.stage.ClientStage;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
 import javafx.application.Application;

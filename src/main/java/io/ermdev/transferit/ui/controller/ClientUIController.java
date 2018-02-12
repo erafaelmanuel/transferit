@@ -4,6 +4,7 @@ import io.ermdev.transferit.exception.TransferitException;
 import io.ermdev.transferit.Transaction;
 import io.ermdev.transferit.BasicClient;
 import io.ermdev.transferit.Receiver;
+import io.ermdev.transferit.fun.ClientListener;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,20 +25,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientUIController implements Subscriber, Initializable, BasicClient.ClientListener {
+public class ClientUIController implements Subscriber, Initializable, ClientListener {
 
     private BasicClient client;
+
     private List<File> files = new ArrayList<>();
+
     private List<Transaction> transactions = new ArrayList<>();
+
     private Receiver receiver = new Receiver();
+
     private int cn;
 
     @FXML
     private TextField txHost;
+
     @FXML
     private Button btnCDC;
+
     @FXML
     private Button btnSend;
+
     @FXML
     private TableView<Transaction> tblfiles;
 
@@ -194,9 +202,9 @@ public class ClientUIController implements Subscriber, Initializable, BasicClien
     }
 
     @Override
-    public void onTransferUpdate(double transfer) {
+    public void onTransfer(double count) {
         Platform.runLater(() -> {
-            transactions.get(cn - 1).setTransfer(transfer);
+            transactions.get(cn - 1).setTransfer(count);
             setTableData(tblfiles);
         });
     }

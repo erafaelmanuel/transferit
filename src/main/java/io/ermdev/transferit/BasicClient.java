@@ -1,13 +1,15 @@
 package io.ermdev.transferit;
 
 import io.ermdev.transferit.exception.TransferitException;
+import io.ermdev.transferit.fun.ClientListener;
 
 import java.io.*;
 import java.net.Socket;
 
 public class BasicClient {
 
-    private volatile Receiver receiver;
+    private Receiver receiver;
+
     private ClientListener clientListener;
 
     private Socket connection;
@@ -26,41 +28,37 @@ public class BasicClient {
     }
 
     public void disconnect() {
+        receiver.setConnected(false);
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
             }
-            receiver.setConnected(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            receiver.setConnected(false);
-        }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     public void keepAlive() {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             try {
                 boolean isConnected = true;
-                while (isConnected) {
 
-                    InputStream is = connection.getInputStream();
+                while (isConnected) {
+                    final InputStream is = connection.getInputStream();
+                    final StringBuilder stringBuilder = new StringBuilder();
                     int n;
-                    StringBuilder stringBuilder = new StringBuilder();
                     while ((n = is.read()) != -1) {
                         stringBuilder.append((char) n);
                     }
-
                     if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                        is.close();
                         isConnected = false;
                         disconnect();
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 disconnect();
+                e.printStackTrace();
             }
-        }).start();
+        });
+        thread.start();
     }
 
     public void openTransaction(File file) {
@@ -93,9 +91,8 @@ public class BasicClient {
             while ((n = bis.read(buffer)) != -1) {
                 dos.write(buffer, 0, n);
                 count += n;
-
                 final double percent = (100.0 / length) * (double) count;
-                clientListener.onTransferUpdate(percent);
+                clientListener.onTransfer(percent);
             }
         } else {
             int n;
@@ -103,18 +100,11 @@ public class BasicClient {
                 dos.write(buffer, 0, n);
             }
         }
-
         dos.flush();
         dos.close();
     }
 
     public void setClientListener(ClientListener clientListener) {
         this.clientListener = clientListener;
-    }
-
-
-    @FunctionalInterface
-    public interface ClientListener {
-        void onTransferUpdate(double transfer);
     }
 }

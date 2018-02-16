@@ -5,24 +5,23 @@ import io.ermdev.transferit.fun.ClientListener;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketAddress;
 
-public class BasicClient {
-
-    private final Receiver receiver;
+public class TcpClient {
 
     private ClientListener clientListener;
 
+    private final Receiver receiver;
+
     private Socket connection;
 
-    public BasicClient(Receiver receiver) {
+    public TcpClient(Receiver receiver) {
         this.receiver = receiver;
     }
 
     public void connect() throws TransferitException {
         try {
             connection = new Socket(receiver.getHost(), receiver.getPort());
-            accept();
+            waitAccept();
         } catch (Exception e) {
             throw new TransferitException("Unable to connect!");
         }
@@ -41,7 +40,7 @@ public class BasicClient {
         }
     }
 
-    private void accept() {
+    private void waitAccept() {
         Thread thread = new Thread(() -> {
             try {
                 synchronized (receiver) {

@@ -1,6 +1,6 @@
 package io.ermdev.transferit.ui.controller;
 
-import io.ermdev.transferit.BasicClient;
+import io.ermdev.transferit.TcpClient;
 import io.ermdev.transferit.Receiver;
 import io.ermdev.transferit.Transaction;
 import io.ermdev.transferit.exception.TransferitException;
@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Subscriber, Initializable, ClientListener {
 
-    private BasicClient client;
+    private TcpClient client;
 
     private List<File> files = new ArrayList<>();
 
@@ -113,18 +113,6 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     }
 
     @FXML
-    public void onActionClear() {
-        files.clear();
-        transactions.clear();
-        setTableData(tblfiles);
-    }
-
-    @FXML
-    public void onActionClose(ActionEvent event) {
-        System.exit(0);
-    }
-
-    @FXML
     public void onActionConnect() {
         Thread thread = new Thread(() -> {
             try {
@@ -137,7 +125,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                     receiver.setHost(txHost.getText());
                     receiver.setPort(23411);
 
-                    client = new BasicClient(receiver);
+                    client = new TcpClient(receiver);
                     client.setClientListener(this);
                     client.connect();
                 } else {
@@ -149,6 +137,18 @@ public class ClientController implements Subscriber, Initializable, ClientListen
             }
         });
         thread.start();
+    }
+
+    @FXML
+    public void onActionClear() {
+        files.clear();
+        transactions.clear();
+        setTableData(tblfiles);
+    }
+
+    @FXML
+    public void onActionClose(ActionEvent event) {
+        System.exit(0);
     }
 
     @FXML

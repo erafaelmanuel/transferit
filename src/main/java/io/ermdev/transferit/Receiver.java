@@ -9,7 +9,9 @@ import java.util.List;
 public class Receiver implements Publisher {
 
     private String host;
+
     private int port;
+
     private volatile boolean connected;
 
     private List<Subscriber> subscribers = new ArrayList<>();

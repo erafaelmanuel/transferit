@@ -58,8 +58,8 @@ public class TcpClient {
                         if (stringBuilder.toString().equalsIgnoreCase("start")) {
                             connection.close();
                             receiver.setConnected(true);
-                            connection = new Socket(connection.getInetAddress().getHostAddress(), connection.getPort());
-                            keepAlive();
+                            //connection = new Socket(connection.getInetAddress().getHostAddress(), connection.getPort());
+                            //keepAlive();
                             return;
                         }
                     }

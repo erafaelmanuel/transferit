@@ -22,7 +22,7 @@ public class Main extends Application implements OnWelcomeClose {
     public void onClose(boolean isServer) {
         if (isServer) {
             try {
-                BasicServer server = new BasicServer(23411);
+                TcpServer server = new TcpServer(23411);
                 server.setConnection(new Sender());
                 server.channeling();
             } catch (Exception e) {

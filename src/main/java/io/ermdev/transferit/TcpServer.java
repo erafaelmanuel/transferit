@@ -11,14 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class BasicServer {
+public class TcpServer {
 
     private int port = 23411;
     private ServerSocket serverSocket;
     private Socket connection;
     private Sender sender;
 
-    public BasicServer(int port) {
+    public TcpServer(int port) {
         try {
             this.port = port;
             serverSocket = new ServerSocket(port);

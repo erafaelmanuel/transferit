@@ -40,6 +40,10 @@ public class BasicServer {
                     sender.setHost(connection.getInetAddress().getHostAddress());
                     sender.setEnabled(true);
                     isNotConnected = false;
+                    OutputStream os = connection.getOutputStream();
+                    os.write("start".getBytes(StandardCharsets.UTF_8));
+                    os.flush();
+                    os.close();
                 } else {
                     OutputStream os = connection.getOutputStream();
                     os.write("close".getBytes(StandardCharsets.UTF_8));

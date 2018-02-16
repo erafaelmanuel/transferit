@@ -5,6 +5,7 @@ import io.ermdev.transferit.fun.ClientListener;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 public class BasicClient {
 
@@ -21,7 +22,7 @@ public class BasicClient {
     public void connect() throws TransferitException {
         try {
             connection = new Socket(receiver.getHost(), receiver.getPort());
-            talkToServer();
+            accept();
         } catch (Exception e) {
             throw new TransferitException("Unable to connect!");
         }
@@ -40,7 +41,7 @@ public class BasicClient {
         }
     }
 
-    private void talkToServer() {
+    private void accept() {
         Thread thread = new Thread(() -> {
             try {
                 synchronized (receiver) {
@@ -56,7 +57,11 @@ public class BasicClient {
                             return;
                         }
                         if (stringBuilder.toString().equalsIgnoreCase("start")) {
+                            connection.close();
                             receiver.setConnected(true);
+                            connection = new Socket(connection.getInetAddress().getHostAddress(), connection.getPort());
+                            keepAlive();
+                            return;
                         }
                     }
                 }
@@ -67,22 +72,19 @@ public class BasicClient {
         thread.start();
     }
 
-    @Deprecated
-    private void keepConnect() {
+    private void keepAlive() {
         Thread thread = new Thread(() -> {
             try {
-                boolean isNew = true;
-                while (isNew) {
-                    final InputStream is = connection.getInputStream();
+                while (true) {
                     final StringBuilder stringBuilder = new StringBuilder();
                     int n;
-                    while ((n = is.read()) != -1) {
+                    while ((n = connection.getInputStream().read()) != -1) {
                         stringBuilder.append((char) n);
                     }
                     if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                        isNew = false;
-                    } else if (stringBuilder.toString().equalsIgnoreCase("start")) {
-                        receiver.setConnected(true);
+                        receiver.setConnected(false);
+                        connection.close();
+                        return;
                     }
                 }
             } catch (Exception e) {

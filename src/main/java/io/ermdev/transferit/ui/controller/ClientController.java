@@ -2,7 +2,6 @@ package io.ermdev.transferit.ui.controller;
 
 import io.ermdev.transferit.Endpoint;
 import io.ermdev.transferit.TcpClient;
-import io.ermdev.transferit.Receiver;
 import io.ermdev.transferit.Transaction;
 import io.ermdev.transferit.exception.TransferitException;
 import io.ermdev.transferit.fun.ClientListener;

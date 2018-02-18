@@ -22,6 +22,8 @@ public class TcpServer {
 
     private ServerListener serverListener;
 
+    private volatile boolean ON_FIND_USER = false;
+
     public TcpServer(Endpoint endpoint) {
         this.endpoint = endpoint;
         try {
@@ -32,19 +34,24 @@ public class TcpServer {
     }
 
     public void findConnection() {
+        System.out.println("Call me maybe");
         synchronized (endpoint) {
-            Thread thread = new Thread(() -> {
-                try {
-                    connection = serverSocket.accept();
-                    endpoint.setHost(connection.getInetAddress().getHostAddress());
-                    if (serverListener != null) {
-                        serverListener.onInvite();
+            if(!ON_FIND_USER) {
+                ON_FIND_USER = true;
+                Thread thread = new Thread(() -> {
+                    try {
+                        connection = serverSocket.accept();
+                        endpoint.setHost(connection.getInetAddress().getHostAddress());
+                        if (serverListener != null) {
+                            serverListener.onInvite();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            thread.start();
+                    ON_FIND_USER = false;
+                });
+                thread.start();
+            }
         }
     }
 
@@ -55,12 +62,11 @@ public class TcpServer {
                 os.write("start".getBytes(StandardCharsets.UTF_8));
                 os.flush();
                 os.close();
-
-                endpoint.setConnected(true);
-                keepAlive();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            endpoint.setConnected(true);
+            keepAlive();
         }
     }
 
@@ -73,10 +79,10 @@ public class TcpServer {
                     os.flush();
                     os.close();
                 }
-                endpoint.setConnected(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            endpoint.setConnected(false);
         }
     }
 
@@ -89,10 +95,10 @@ public class TcpServer {
                     os.flush();
                     os.close();
                 }
-                endpoint.setConnected(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            endpoint.setConnected(false);
         }
     }
 
@@ -111,7 +117,6 @@ public class TcpServer {
                                 }
                                 if (stringBuilder.toString().equalsIgnoreCase("close")) {
                                     stop();
-                                    System.out.println("stopped by sender");
                                     if(serverListener != null) {
                                         serverListener.onStop();
                                     }
@@ -122,9 +127,7 @@ public class TcpServer {
                             reject();
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception e) {}
             });
             thread.start();
         }

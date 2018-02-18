@@ -19,16 +19,11 @@ public class TcpClient {
         this.endpoint = endpoint;
     }
 
-    private Socket createConnection(Endpoint endpoint) {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-            return new Socket(endpoint.getHost(), endpoint.getPort());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+    private Socket createConnection(Endpoint endpoint) throws Exception {
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
         }
+        return new Socket(endpoint.getHost(), endpoint.getPort());
     }
 
     public void connect() throws TransferitException {
@@ -51,10 +46,10 @@ public class TcpClient {
                     os.flush();
                     os.close();
                 }
-                endpoint.setConnected(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            endpoint.setConnected(false);
         }
     }
 

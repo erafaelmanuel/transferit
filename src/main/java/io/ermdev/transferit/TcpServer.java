@@ -1,5 +1,7 @@
 package io.ermdev.transferit;
 
+import io.ermdev.transferit.fun.ServerListener;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
@@ -13,22 +15,66 @@ import java.util.Scanner;
 
 public class TcpServer {
 
-    private int port = 23411;
     private ServerSocket serverSocket;
-    private Socket connection;
-    private Endpoint endpoint;
 
-    public TcpServer(int port) {
+    private Socket connection;
+
+    private final Endpoint endpoint;
+
+    private ServerListener serverListener;
+
+    public TcpServer(Endpoint endpoint) {
+        this.endpoint = endpoint;
         try {
-            this.port = port;
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(endpoint.getPort());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void findConnection() {
+        synchronized (endpoint) {
+            Thread thread = new Thread(() -> {
+                while (!endpoint.isConnected()) {
+                    try {
+                        connection = serverSocket.accept();
+                        endpoint.setHost(connection.getInetAddress().getHostAddress());
+                        if (serverListener != null) {
+                            serverListener.onInvite();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+        }
+    }
+    public void accept() {
+        try {
+            OutputStream os = connection.getOutputStream();
+            os.write("start".getBytes(StandardCharsets.UTF_8));
+            os.flush();
+            os.close();
+            endpoint.setConnected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reject() {
+        try {
+            OutputStream os = connection.getOutputStream();
+            os.write("close".getBytes(StandardCharsets.UTF_8));
+            os.flush();
+            os.close();
+            endpoint.setConnected(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setupConnection(Endpoint endpoint) {
-        this.endpoint = endpoint;
         try {
             boolean isNotConnected = true;
             while (isNotConnected) {
@@ -56,6 +102,8 @@ public class TcpServer {
             e.printStackTrace();
         }
     }
+
+
 
     public void keepAlive() {
 
@@ -96,5 +144,9 @@ public class TcpServer {
             Files.copy(dis, Paths.get(fileName));
         }
         dis.close();
+    }
+
+    public void setServerListener(ServerListener serverListener) {
+        this.serverListener = serverListener;
     }
 }

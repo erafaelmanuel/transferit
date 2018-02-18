@@ -2,6 +2,7 @@ package io.ermdev.transferit;
 
 import io.ermdev.transferit.fun.OnWelcomeClose;
 import io.ermdev.transferit.ui.stage.ClientStage;
+import io.ermdev.transferit.ui.stage.ServerStage;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -22,9 +23,8 @@ public class Main extends Application implements OnWelcomeClose {
     public void onClose(boolean isServer) {
         if (isServer) {
             try {
-                TcpServer server = new TcpServer(23411);
-                server.setupConnection(new Endpoint());
-                server.channeling();
+                ServerStage serverStage = new ServerStage(this);
+                serverStage.show();
             } catch (Exception e) {
                 e.printStackTrace();
             }

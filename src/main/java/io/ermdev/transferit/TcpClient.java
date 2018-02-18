@@ -10,27 +10,29 @@ public class TcpClient {
 
     private ClientListener clientListener;
 
-    private final Receiver receiver;
+    private final Endpoint endpoint;
 
     private Socket connection;
 
-    public TcpClient(Receiver receiver) {
-        this.receiver = receiver;
+    public TcpClient(Endpoint endpoint) {
+        this.endpoint = endpoint;
     }
 
     public void connect() throws TransferitException {
-        try {
-            connection = new Socket(receiver.getHost(), receiver.getPort());
-            waitAccept();
-        } catch (Exception e) {
-            throw new TransferitException("Unable to connect!");
+        synchronized (endpoint) {
+            try {
+                connection = new Socket(endpoint.getHost(), endpoint.getPort());
+                sendPermission();
+            } catch (Exception e) {
+                throw new TransferitException("Unable to connect!");
+            }
         }
     }
 
     public void disconnect() {
-        synchronized (receiver) {
-            receiver.setConnected(false);
+        synchronized (endpoint) {
             try {
+                endpoint.setConnected(false);
                 if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
@@ -40,35 +42,37 @@ public class TcpClient {
         }
     }
 
-    private void waitAccept() {
-        Thread thread = new Thread(() -> {
-            try {
-                synchronized (receiver) {
+    private void sendPermission() {
+        synchronized (endpoint) {
+            Thread thread = new Thread(() -> {
+                try {
                     while (true) {
                         StringBuilder stringBuilder = new StringBuilder();
                         int n;
                         while ((n = connection.getInputStream().read()) != -1) {
                             stringBuilder.append((char) n);
                         }
+                        //Connection rejected
                         if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                            connection.close();
-                            receiver.setConnected(false);
+                            //connection.close();
+                            endpoint.setConnected(false);
                             return;
                         }
+                        //Connection accepted
                         if (stringBuilder.toString().equalsIgnoreCase("start")) {
-                            connection.close();
-                            receiver.setConnected(true);
+                            //connection.close();
+                            endpoint.setConnected(true);
                             //connection = new Socket(connection.getInetAddress().getHostAddress(), connection.getPort());
                             //keepAlive();
                             return;
                         }
                     }
+                } catch (Exception e) {
+                    disconnect();
                 }
-            } catch (Exception e) {
-                disconnect();
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
     }
 
     private void keepAlive() {
@@ -81,7 +85,7 @@ public class TcpClient {
                         stringBuilder.append((char) n);
                     }
                     if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                        receiver.setConnected(false);
+                        endpoint.setConnected(false);
                         connection.close();
                         return;
                     }
@@ -96,13 +100,13 @@ public class TcpClient {
 
     public void openTransaction(File file) {
         try {
-            Socket socket = new Socket(receiver.getHost(), receiver.getPort());
+            Socket socket = new Socket(endpoint.getHost(), endpoint.getPort());
             send(socket, file);
             if (!socket.isClosed()) {
                 socket.close();
             }
         } catch (Exception e) {
-            receiver.setConnected(false);
+            endpoint.setConnected(false);
             e.printStackTrace();
         }
     }

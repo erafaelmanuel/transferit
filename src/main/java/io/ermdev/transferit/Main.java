@@ -23,7 +23,7 @@ public class Main extends Application implements OnWelcomeClose {
         if (isServer) {
             try {
                 TcpServer server = new TcpServer(23411);
-                server.setConnection(new Sender());
+                server.setupConnection(new Endpoint());
                 server.channeling();
             } catch (Exception e) {
                 e.printStackTrace();

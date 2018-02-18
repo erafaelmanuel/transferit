@@ -1,5 +1,6 @@
 package io.ermdev.transferit.ui.controller;
 
+import io.ermdev.transferit.Endpoint;
 import io.ermdev.transferit.TcpClient;
 import io.ermdev.transferit.Receiver;
 import io.ermdev.transferit.Transaction;
@@ -33,7 +34,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
 
     private List<Transaction> transactions = new ArrayList<>();
 
-    private Receiver receiver = new Receiver();
+    private Endpoint endpoint = new Endpoint();
 
     private int cn;
 
@@ -121,11 +122,11 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                     btnCDC.setDisable(true);
                 });
                 if (btnCDC.getText().equals("Connect")) {
-                    receiver.subscribe(this);
-                    receiver.setHost(txHost.getText());
-                    receiver.setPort(23411);
+                    endpoint.subscribe(this);
+                    endpoint.setHost(txHost.getText());
+                    endpoint.setPort(23411);
 
-                    client = new TcpClient(receiver);
+                    client = new TcpClient(endpoint);
                     client.setClientListener(this);
                     client.connect();
                 } else {

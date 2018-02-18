@@ -16,7 +16,7 @@ public class TcpServer {
     private int port = 23411;
     private ServerSocket serverSocket;
     private Socket connection;
-    private Sender sender;
+    private Endpoint endpoint;
 
     public TcpServer(int port) {
         try {
@@ -27,9 +27,9 @@ public class TcpServer {
         }
     }
 
-    public void setConnection(Sender sender) {
+    public void setupConnection(Endpoint endpoint) {
+        this.endpoint = endpoint;
         try {
-            this.sender = sender;
             boolean isNotConnected = true;
             while (isNotConnected) {
                 System.out.println("Finding a connection...");
@@ -37,19 +37,19 @@ public class TcpServer {
                 System.out.println("Someone want to connect!");
                 System.out.println("Accept? (y/n) ");
                 if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                    sender.setHost(connection.getInetAddress().getHostAddress());
-                    sender.setEnabled(true);
+                    endpoint.setHost(connection.getInetAddress().getHostAddress());
+                    endpoint.setConnected(true);
                     isNotConnected = false;
                     OutputStream os = connection.getOutputStream();
                     os.write("start".getBytes(StandardCharsets.UTF_8));
                     os.flush();
-                    os.close();
+                    //os.close();
                 } else {
                     OutputStream os = connection.getOutputStream();
                     os.write("close".getBytes(StandardCharsets.UTF_8));
                     os.flush();
-                    os.close();
-                    connection.close();
+                    //os.close();
+                    //connection.close();
                     isNotConnected = true;
                 }
             }
@@ -58,12 +58,16 @@ public class TcpServer {
         }
     }
 
+    public void keepAlive() {
+
+    }
+
     public void channeling() throws Exception {
         while (true) {
             try {
                 System.out.println("Channeling ...");
                 Socket socket = serverSocket.accept();
-                if (sender != null && sender.isEnabled()) {
+                if (endpoint != null && endpoint.isConnected()) {
                     openSession(socket);
                 } else {
                     socket.close();

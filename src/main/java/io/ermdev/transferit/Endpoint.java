@@ -6,12 +6,15 @@ import io.ermdev.transferit.util.Subscriber;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Sender implements Publisher {
+public class Endpoint implements Publisher {
 
     private String host;
-    private boolean enabled;
 
-    private Set<Subscriber> subscribers = new HashSet<>();
+    private int port;
+
+    private boolean connected;
+
+    public Set<Subscriber> subscribers = new HashSet<>();
 
     public String getHost() {
         return host;
@@ -21,12 +24,21 @@ public class Sender implements Publisher {
         this.host = host;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public int getPort() {
+        return port;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+        notifySubscriber();
     }
 
     @Override
@@ -41,6 +53,6 @@ public class Sender implements Publisher {
 
     @Override
     public void notifySubscriber() {
-        subscribers.parallelStream().forEach(subscriber -> subscriber.update(enabled));
+        subscribers.parallelStream().forEach(subscriber -> subscriber.update(connected));
     }
 }

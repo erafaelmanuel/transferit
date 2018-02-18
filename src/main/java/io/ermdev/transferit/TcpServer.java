@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class TcpServer {
+public class TcpServer implements Server {
 
     private ServerSocket serverSocket;
 
@@ -33,6 +33,7 @@ public class TcpServer {
         }
     }
 
+    @Override
     public void findConnection() {
         System.out.println("Call me maybe");
         synchronized (endpoint) {
@@ -55,6 +56,7 @@ public class TcpServer {
         }
     }
 
+    @Override
     public void accept() {
         synchronized (endpoint) {
             try {
@@ -71,6 +73,7 @@ public class TcpServer {
         }
     }
 
+    @Override
     public void reject() {
         synchronized (endpoint) {
             try {
@@ -87,6 +90,7 @@ public class TcpServer {
         }
     }
 
+    @Override
     public void stop() {
         synchronized (endpoint) {
             try {
@@ -104,6 +108,7 @@ public class TcpServer {
         }
     }
 
+    @Override
     public void keepAlive() {
         synchronized (endpoint) {
             while (true) {

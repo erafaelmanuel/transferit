@@ -11,7 +11,6 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 public class TcpServer {
 
@@ -35,78 +34,95 @@ public class TcpServer {
     public void findConnection() {
         synchronized (endpoint) {
             Thread thread = new Thread(() -> {
-                while (!endpoint.isConnected()) {
-                    try {
-                        connection = serverSocket.accept();
-                        endpoint.setHost(connection.getInetAddress().getHostAddress());
-                        if (serverListener != null) {
-                            serverListener.onInvite();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                try {
+                    connection = serverSocket.accept();
+                    endpoint.setHost(connection.getInetAddress().getHostAddress());
+                    if (serverListener != null) {
+                        serverListener.onInvite();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
             thread.start();
         }
     }
+
     public void accept() {
-        try {
-            OutputStream os = connection.getOutputStream();
-            os.write("start".getBytes(StandardCharsets.UTF_8));
-            os.flush();
-            os.close();
-            endpoint.setConnected(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+        synchronized (endpoint) {
+            try {
+                OutputStream os = connection.getOutputStream();
+                os.write("start".getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+
+                endpoint.setConnected(true);
+                keepAlive();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void reject() {
-        try {
-            OutputStream os = connection.getOutputStream();
-            os.write("close".getBytes(StandardCharsets.UTF_8));
-            os.flush();
-            os.close();
-            endpoint.setConnected(false);
-        } catch (Exception e) {
-            e.printStackTrace();
+        synchronized (endpoint) {
+            try {
+                OutputStream os = connection.getOutputStream();
+                os.write("close".getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+
+                endpoint.setConnected(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void setupConnection(Endpoint endpoint) {
-        try {
-            boolean isNotConnected = true;
-            while (isNotConnected) {
-                System.out.println("Finding a connection...");
-                connection = serverSocket.accept();
-                System.out.println("Someone want to connect!");
-                System.out.println("Accept? (y/n) ");
-                if (new Scanner(System.in).next().equalsIgnoreCase("y")) {
-                    endpoint.setHost(connection.getInetAddress().getHostAddress());
-                    endpoint.setConnected(true);
-                    isNotConnected = false;
-                    OutputStream os = connection.getOutputStream();
-                    os.write("start".getBytes(StandardCharsets.UTF_8));
-                    os.flush();
-                    os.close();
-                } else {
+    public void stop() {
+        synchronized (endpoint) {
+            try {
+                if(connection != null && !connection.isClosed()) {
                     OutputStream os = connection.getOutputStream();
                     os.write("close".getBytes(StandardCharsets.UTF_8));
                     os.flush();
                     os.close();
-                    isNotConnected = true;
                 }
+                endpoint.setConnected(false);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-
-
     public void keepAlive() {
-
+        synchronized (endpoint) {
+            Thread thread = new Thread(() -> {
+                try {
+                    while (true) {
+                        connection = serverSocket.accept();
+                        if (connection.getInetAddress().getHostAddress().equals(endpoint.getHost())) {
+                            while (true) {
+                                final StringBuilder stringBuilder = new StringBuilder();
+                                int n;
+                                while ((n = connection.getInputStream().read()) != -1) {
+                                    stringBuilder.append((char) n);
+                                }
+                                if (stringBuilder.toString().equalsIgnoreCase("close")) {
+                                    stop();
+                                    return;
+                                }
+                            }
+                        } else {
+                            reject();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+        }
     }
 
     public void channeling() throws Exception {

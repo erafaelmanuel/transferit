@@ -5,6 +5,7 @@ import io.ermdev.transferit.TcpServer;
 import io.ermdev.transferit.fun.ServerListener;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javax.swing.*;
@@ -41,9 +42,16 @@ public class ServerController implements Subscriber, Initializable, ServerListen
                         server.accept();
                     } else {
                         server.reject();
+                        server.findConnection();
                     }
                 })
         );
         thread.start();
+    }
+
+    @FXML
+    protected void onActionClose() {
+        server.stop();
+        server.findConnection();
     }
 }

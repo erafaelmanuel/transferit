@@ -18,10 +18,22 @@ public class TcpClient {
         this.endpoint = endpoint;
     }
 
+    private Socket createConnection(Endpoint endpoint) {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+            return new Socket(endpoint.getHost(), endpoint.getPort());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void connect() throws TransferitException {
         synchronized (endpoint) {
             try {
-                connection = new Socket(endpoint.getHost(), endpoint.getPort());
+                connection = createConnection(endpoint);
                 sendPermission();
             } catch (Exception e) {
                 throw new TransferitException("Unable to connect!");
@@ -47,24 +59,22 @@ public class TcpClient {
             Thread thread = new Thread(() -> {
                 try {
                     while (true) {
-                        StringBuilder stringBuilder = new StringBuilder();
                         int n;
+                        StringBuilder response = new StringBuilder();
                         while ((n = connection.getInputStream().read()) != -1) {
-                            stringBuilder.append((char) n);
+                            response.append((char) n);
                         }
-                        //Connection rejected
-                        if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                            //connection.close();
-                            endpoint.setConnected(false);
-                            return;
-                        }
-                        //Connection accepted
-                        if (stringBuilder.toString().equalsIgnoreCase("start")) {
-                            //connection.close();
-                            endpoint.setConnected(true);
-                            //connection = new Socket(connection.getInetAddress().getHostAddress(), connection.getPort());
-                            //keepAlive();
-                            return;
+                        switch (response.toString()) {
+                            case "close": {
+                                disconnect();
+                                return;
+                            }
+                            case "start": {
+                                endpoint.setConnected(true);
+                                connection = createConnection(endpoint);
+                                keepAlive();
+                                return;
+                            }
                         }
                     }
                 } catch (Exception e) {

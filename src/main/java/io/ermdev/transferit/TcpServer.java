@@ -43,13 +43,12 @@ public class TcpServer {
                     OutputStream os = connection.getOutputStream();
                     os.write("start".getBytes(StandardCharsets.UTF_8));
                     os.flush();
-                    //os.close();
+                    os.close();
                 } else {
                     OutputStream os = connection.getOutputStream();
                     os.write("close".getBytes(StandardCharsets.UTF_8));
                     os.flush();
-                    //os.close();
-                    //connection.close();
+                    os.close();
                     isNotConnected = true;
                 }
             }

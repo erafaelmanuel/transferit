@@ -5,6 +5,7 @@ import io.ermdev.transferit.fun.ClientListener;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class TcpClient {
 
@@ -44,10 +45,13 @@ public class TcpClient {
     public void disconnect() {
         synchronized (endpoint) {
             try {
-                endpoint.setConnected(false);
-                if (connection != null && !connection.isClosed()) {
-                    connection.close();
+                if(connection != null && !connection.isClosed()) {
+                    OutputStream os = connection.getOutputStream();
+                    os.write("close".getBytes(StandardCharsets.UTF_8));
+                    os.flush();
+                    os.close();
                 }
+                endpoint.setConnected(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

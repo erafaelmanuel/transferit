@@ -67,11 +67,12 @@ public class TcpServer {
     public void reject() {
         synchronized (endpoint) {
             try {
-                OutputStream os = connection.getOutputStream();
-                os.write("close".getBytes(StandardCharsets.UTF_8));
-                os.flush();
-                os.close();
-
+                if(connection != null && !connection.isClosed()) {
+                    OutputStream os = connection.getOutputStream();
+                    os.write("close".getBytes(StandardCharsets.UTF_8));
+                    os.flush();
+                    os.close();
+                }
                 endpoint.setConnected(false);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -102,7 +103,7 @@ public class TcpServer {
                     while (true) {
                         connection = serverSocket.accept();
                         if (connection.getInetAddress().getHostAddress().equals(endpoint.getHost())) {
-                            while (true) {
+                            while (endpoint.isConnected()) {
                                 final StringBuilder stringBuilder = new StringBuilder();
                                 int n;
                                 while ((n = connection.getInputStream().read()) != -1) {
@@ -110,6 +111,10 @@ public class TcpServer {
                                 }
                                 if (stringBuilder.toString().equalsIgnoreCase("close")) {
                                     stop();
+                                    System.out.println("stopped by sender");
+                                    if(serverListener != null) {
+                                        serverListener.onStop();
+                                    }
                                     return;
                                 }
                             }

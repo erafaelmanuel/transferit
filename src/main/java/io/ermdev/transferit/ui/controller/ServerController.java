@@ -49,6 +49,11 @@ public class ServerController implements Subscriber, Initializable, ServerListen
         thread.start();
     }
 
+    @Override
+    public void onStop() {
+        server.findConnection();
+    }
+
     @FXML
     protected void onActionClose() {
         server.stop();

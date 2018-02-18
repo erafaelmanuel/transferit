@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 
-public class WelcomeUIController {
+public class WelcomeController {
 
     @FXML
     public void onActionSend(ActionEvent event) {

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0"
            prefWidth="337.0" xmlns="http://javafx.com/javafx/8.0.65"
-           fx:controller="io.ermdev.transferit.ui.controller.WelcomeUIController" xmlns:fx="http://javafx.com/fxml/1">
+           fx:controller="io.ermdev.transferit.ui.controller.WelcomeController" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                     prefHeight="235.0" prefWidth="337.0">

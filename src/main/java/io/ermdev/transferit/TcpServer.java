@@ -36,7 +36,7 @@ public class TcpServer {
     public void findConnection() {
         System.out.println("Call me maybe");
         synchronized (endpoint) {
-            if(!ON_FIND_USER) {
+            if (!ON_FIND_USER) {
                 ON_FIND_USER = true;
                 Thread thread = new Thread(() -> {
                     try {
@@ -67,13 +67,14 @@ public class TcpServer {
             }
             endpoint.setConnected(true);
             keepAlive();
+            channeling();
         }
     }
 
     public void reject() {
         synchronized (endpoint) {
             try {
-                if(connection != null && !connection.isClosed()) {
+                if (connection != null && !connection.isClosed()) {
                     OutputStream os = connection.getOutputStream();
                     os.write("close".getBytes(StandardCharsets.UTF_8));
                     os.flush();
@@ -89,12 +90,13 @@ public class TcpServer {
     public void stop() {
         synchronized (endpoint) {
             try {
-                if(connection != null && !connection.isClosed()) {
+                if (connection != null && !connection.isClosed()) {
                     OutputStream os = connection.getOutputStream();
                     os.write("close".getBytes(StandardCharsets.UTF_8));
                     os.flush();
                     os.close();
                 }
+                serverSocket.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -104,11 +106,15 @@ public class TcpServer {
 
     public void keepAlive() {
         synchronized (endpoint) {
-            Thread thread = new Thread(() -> {
+            while (true) {
                 try {
-                    while (true) {
-                        connection = serverSocket.accept();
-                        if (connection.getInetAddress().getHostAddress().equals(endpoint.getHost())) {
+                    connection = serverSocket.accept();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (connection.getInetAddress().getHostAddress().equals(endpoint.getHost())) {
+                    Thread thread = new Thread(() -> {
+                        try {
                             while (endpoint.isConnected()) {
                                 final StringBuilder stringBuilder = new StringBuilder();
                                 int n;
@@ -117,35 +123,40 @@ public class TcpServer {
                                 }
                                 if (stringBuilder.toString().equalsIgnoreCase("close")) {
                                     stop();
-                                    if(serverListener != null) {
+                                    if (serverListener != null) {
                                         serverListener.onStop();
                                     }
-                                    return;
                                 }
                             }
-                        } else {
-                            reject();
-                        }
-                    }
-                } catch (Exception e) {}
-            });
-            thread.start();
+                        } catch (Exception e) {}
+                    });
+                    thread.start();
+                    return;
+                } else {
+                    reject();
+                }
+            }
         }
     }
 
-    public void channeling() throws Exception {
-        while (true) {
-            try {
-                System.out.println("Channeling ...");
-                Socket socket = serverSocket.accept();
-                if (endpoint != null && endpoint.isConnected()) {
-                    openSession(socket);
-                } else {
-                    socket.close();
+    public void channeling() {
+        synchronized (endpoint) {
+            Thread thread = new Thread(() -> {
+                while (endpoint.isConnected()) {
+                    final Socket socket;
+                    try {
+                        System.out.println("Channeling ...");
+                        socket = serverSocket.accept();
+                        if (endpoint.isConnected()) {
+                            openSession(socket);
+                        } else {
+                            socket.close();
+                        }
+                    } catch (Exception e) {
+                    }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            });
+            thread.start();
         }
     }
 

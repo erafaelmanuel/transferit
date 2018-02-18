@@ -51,12 +51,26 @@ public class ServerController implements Subscriber, Initializable, ServerListen
 
     @Override
     public void onStop() {
+        Endpoint endpoint = new Endpoint();
+        endpoint.setPort(23411);
+        endpoint.subscribe(this);
+
+        server = new TcpServer(endpoint);
+        server.setServerListener(this);
         server.findConnection();
     }
 
     @FXML
     protected void onActionClose() {
         server.stop();
+
+
+        Endpoint endpoint = new Endpoint();
+        endpoint.setPort(23411);
+        endpoint.subscribe(this);
+
+        server = new TcpServer(endpoint);
+        server.setServerListener(this);
         server.findConnection();
     }
 }

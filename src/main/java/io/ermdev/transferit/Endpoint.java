@@ -48,7 +48,7 @@ public class Endpoint implements Publisher {
 
     @Override
     public void unsubscribe(Subscriber subscriber) {
-
+        subscribers.remove(subscriber);
     }
 
     @Override

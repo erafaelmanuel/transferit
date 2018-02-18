@@ -1,6 +1,7 @@
 package io.ermdev.transferit.ui.controller;
 
 import io.ermdev.transferit.Endpoint;
+import io.ermdev.transferit.Server;
 import io.ermdev.transferit.TcpServer;
 import io.ermdev.transferit.fun.ServerListener;
 import io.ermdev.transferit.util.Subscriber;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class ServerController implements Subscriber, Initializable, ServerListener {
 
-    private TcpServer server;
+    private Server server;
 
     @Override
     public void update(boolean status) {
@@ -28,7 +29,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
         endpoint.subscribe(this);
 
         server = new TcpServer(endpoint);
-        server.setServerListener(this);
+        server.addListener(this);
         server.findConnection();
     }
 
@@ -56,7 +57,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
         endpoint.subscribe(this);
 
         server = new TcpServer(endpoint);
-        server.setServerListener(this);
+        server.addListener(this);
         server.findConnection();
     }
 
@@ -70,7 +71,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
         endpoint.subscribe(this);
 
         server = new TcpServer(endpoint);
-        server.setServerListener(this);
+        server.addListener(this);
         server.findConnection();
     }
 }

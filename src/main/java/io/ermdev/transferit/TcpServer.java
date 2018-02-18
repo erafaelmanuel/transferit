@@ -34,6 +34,11 @@ public class TcpServer implements Server {
     }
 
     @Override
+    public void addListener(ServerListener serverListener) {
+        this.serverListener = serverListener;
+    }
+
+    @Override
     public void findConnection() {
         System.out.println("Call me maybe");
         synchronized (endpoint) {
@@ -111,7 +116,7 @@ public class TcpServer implements Server {
     @Override
     public void keepAlive() {
         synchronized (endpoint) {
-            while (true) {
+            while (endpoint.isConnected()) {
                 try {
                     connection = serverSocket.accept();
                 } catch (Exception e) {
@@ -184,9 +189,5 @@ public class TcpServer implements Server {
             Files.copy(dis, Paths.get(fileName));
         }
         dis.close();
-    }
-
-    public void setServerListener(ServerListener serverListener) {
-        this.serverListener = serverListener;
     }
 }

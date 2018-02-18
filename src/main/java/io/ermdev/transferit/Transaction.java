@@ -3,8 +3,11 @@ package io.ermdev.transferit;
 public class Transaction {
 
     private int number;
+
     private String filename;
+
     private double transfer;
+
     private String percentage;
 
     public Transaction(int number, String filename, double transfer) {
@@ -40,6 +43,7 @@ public class Transaction {
     public void setPercentage(String percentage) {
         this.percentage = percentage;
     }
+
     public String getPercentage() {
         if(percentage == null) {
             return String.format("%.2f", transfer) + "%";

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ;">
+         <children>
+            <VBox prefHeight="149.0" prefWidth="247.0" style="-fx-background-color: #dfe6e9;">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="56.0" layoutY="15.0" prefHeight="120.0" prefWidth="135.0">
+                           <children>
+                              <ImageView fitHeight="111.0" fitWidth="142.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../Downloads/shark-icon1.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="95.0" fitWidth="66.0" layoutX="-19.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../Downloads/icons8-foam-bubbles-100.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <ImageView fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../Downloads/more.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="200.0" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="253.0" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </JFXButton>
+            <VBox alignment="CENTER" layoutY="383.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #636e72;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="15.0" prefWidth="189.0" text="Copyright © 2018, ermdev.io" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

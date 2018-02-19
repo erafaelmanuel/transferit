@@ -20,7 +20,7 @@
                      <children>
                         <ImageView fx:id="imgv1" fitHeight="117.0" fitWidth="115.0" layoutX="66.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../Downloads/penguin-icon%20(1).png" />
+                              <Image url="@../image/img1_client1.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" layoutX="16.0" layoutY="149.0" prefHeight="17.0" prefWidth="215.0" text="Find your friends" textFill="WHITE">
@@ -30,7 +30,7 @@
                         </Label>
                         <ImageView fx:id="imgvback" fitHeight="15.0" fitWidth="15.0" layoutX="7.0" layoutY="9.0" onMousePressed="#onMousePressedBack" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../Downloads/left-arrow.png" />
+                              <Image url="@../image/img_prev.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="22.0" layoutY="10.0" onMousePressed="#onMousePressedBack" text="BACK" textFill="#636e72">
@@ -51,9 +51,10 @@
                   </Label>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="47.0" layoutY="275.0" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Connect" textFill="WHITE" />
-            <JFXTextField labelFloat="true" layoutX="48.0" layoutY="232.0" prefHeight="25.0" prefWidth="152.0" promptText="Host" />
-            <JFXButton buttonType="RAISED" disable="true" layoutX="47.0" layoutY="317.0" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Send File" textFill="WHITE" />
+            <JFXButton fx:id="btnConnect" buttonType="RAISED" layoutX="47.0" layoutY="275.0" onAction="#onActionConnect" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Connect" textFill="WHITE" />
+            <JFXTextField focusColor="#636e72" layoutX="48.0" layoutY="232.0" prefHeight="25.0" prefWidth="152.0" promptText="Enter host (ex. 127.0.0.1 )" unFocusColor="#636e72" />
+            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="47.0" layoutY="317.0" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send File" textFill="WHITE" />
+            <Label fx:id="lblStatus" alignment="CENTER" layoutX="17.0" layoutY="193.0" prefHeight="17.0" prefWidth="215.0" text="You are now connected!" textFill="#00b894" visible="false" />
          </children>
       </AnchorPane>
    </children>

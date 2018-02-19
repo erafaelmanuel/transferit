@@ -22,10 +22,10 @@ public class WelcomeStage extends Stage {
     private void createWelcomeStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = this.getClass().getResource("/fxml/welcome_ui.fxml");
+            URL location = this.getClass().getResource("/fxml/welcome_flatui.fxml");
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 337, 235);
+            Scene scene = new Scene(root, 247, 400);
 
             setTitle("Transferit v1.0");
             setScene(scene);

@@ -1,7 +1,7 @@
 package io.ermdev.transferit;
 
 import io.ermdev.transferit.fun.OnWelcomeClose;
-import io.ermdev.transferit.ui.stage.ClientStage;
+import io.ermdev.transferit.ui.client.ClientStage;
 import io.ermdev.transferit.ui.stage.ServerStage;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
 import javafx.application.Application;
@@ -9,13 +9,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application implements OnWelcomeClose {
 
+    private WelcomeStage welcomeStage;
     public static void main(String args[]) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        WelcomeStage welcomeStage = new WelcomeStage(this);
+        welcomeStage = new WelcomeStage(this);
         welcomeStage.show();
     }
 
@@ -30,6 +31,7 @@ public class Main extends Application implements OnWelcomeClose {
             }
         } else {
             ClientStage clientStage = new ClientStage(this);
+            clientStage.getClientController().setWelcomeStage(welcomeStage);
             clientStage.show();
         }
     }

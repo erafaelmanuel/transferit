@@ -39,14 +39,14 @@ public class WelcomeController implements Initializable {
     @FXML
     public void onActionSend(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
-        stage.close();
+        stage.hide();
         stage.getOnWelcomeClose().onClose(false);
     }
 
     @FXML
     public void onActionReceive(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
-        stage.close();
+        stage.hide();
         stage.getOnWelcomeClose().onClose(true);
     }
 }

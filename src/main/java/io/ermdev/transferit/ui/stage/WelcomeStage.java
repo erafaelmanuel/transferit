@@ -22,7 +22,7 @@ public class WelcomeStage extends Stage {
     private void createWelcomeStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = this.getClass().getResource("/fxml/welcome_flatui.fxml");
+            URL location = this.getClass().getResource("/fxml/mob_welcome_ui.fxml");
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 247, 400);

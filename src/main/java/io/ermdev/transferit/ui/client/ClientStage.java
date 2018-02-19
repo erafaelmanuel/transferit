@@ -21,7 +21,7 @@ public class ClientStage extends Stage {
     private void createClientStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = getClass().getResource("/fxml/client_flatui.fxml");
+            URL location = getClass().getResource("/fxml/mob_client_ui.fxml");
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 247, 400);

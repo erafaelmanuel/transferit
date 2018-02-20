@@ -163,6 +163,7 @@ public class TcpClient implements Client {
         }
     }
 
+    @Override
     public void setListener(ClientListener listener) {
         this.listener = listener;
     }

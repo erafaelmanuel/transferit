@@ -1,4 +1,4 @@
-package io.ermdev.transferit.ui.controller;
+package io.ermdev.transferit.desktop.controller;
 
 import io.ermdev.transferit.integration.Endpoint;
 import io.ermdev.transferit.integration.TcpClient;

@@ -1,9 +1,9 @@
-package io.ermdev.transferit.ui.client;
+package io.ermdev.transferit.desktop.client;
 
 import io.ermdev.transferit.integration.Endpoint;
 import io.ermdev.transferit.integration.TcpClient;
 import io.ermdev.transferit.integration.ClientListener;
-import io.ermdev.transferit.ui.stage.WelcomeStage;
+import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import io.ermdev.transferit.integration.Subscriber;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

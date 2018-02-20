@@ -5,4 +5,6 @@ public interface Client {
     void connect() throws TcpException;
 
     void disconnect() throws TcpException;
+
+    void setListener(ClientListener clientListener);
 }

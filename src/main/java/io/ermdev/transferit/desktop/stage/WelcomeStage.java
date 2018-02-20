@@ -1,7 +1,7 @@
-package io.ermdev.transferit.ui.stage;
+package io.ermdev.transferit.desktop.stage;
 
-import io.ermdev.transferit.ui.welcome.OnWelcomeClose;
-import io.ermdev.transferit.ui.controller.WelcomeController;
+import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
+import io.ermdev.transferit.desktop.controller.WelcomeController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

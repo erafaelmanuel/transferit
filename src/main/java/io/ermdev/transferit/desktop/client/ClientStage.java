@@ -1,7 +1,6 @@
-package io.ermdev.transferit.ui.stage;
+package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.ui.welcome.OnWelcomeClose;
-import io.ermdev.transferit.ui.controller.ClientController;
+import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,24 +21,24 @@ public class ClientStage extends Stage {
     private void createClientStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = this.getClass().getResource("/fxml/client_ui.fxml");
+            URL location = getClass().getResource("/fxml/mob_client_ui.fxml");
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 600, 400);
+            Scene scene = new Scene(root, 247, 400);
 
             setTitle("Transferit v1.0");
             setScene(scene);
-            setClientUIController(fxmlLoader.getController());
+            setClientController(fxmlLoader.getController());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ClientController getClientUIController() {
+    public ClientController getClientController() {
         return clientUIController;
     }
 
-    public void setClientUIController(ClientController clientUIController) {
+    public void setClientController(ClientController clientUIController) {
         this.clientUIController = clientUIController;
     }
 

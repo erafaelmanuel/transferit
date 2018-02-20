@@ -1,6 +1,6 @@
-package io.ermdev.transferit.ui.controller;
+package io.ermdev.transferit.desktop.controller;
 
-import io.ermdev.transferit.ui.stage.WelcomeStage;
+import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

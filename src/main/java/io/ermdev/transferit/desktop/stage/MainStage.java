@@ -1,6 +1,6 @@
-package io.ermdev.transferit.ui.stage;
+package io.ermdev.transferit.desktop.stage;
 
-import io.ermdev.transferit.ui.controller.MainUIController;
+import io.ermdev.transferit.desktop.controller.MainUIController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

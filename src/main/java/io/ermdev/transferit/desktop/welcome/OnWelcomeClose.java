@@ -1,4 +1,4 @@
-package io.ermdev.transferit.ui.welcome;
+package io.ermdev.transferit.desktop.welcome;
 
 @FunctionalInterface
 public interface OnWelcomeClose {

@@ -3,7 +3,7 @@ package io.ermdev.transferit.integration;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Endpoint implements Publisher {
+public class Endpoint extends Publisher {
 
     private String host;
 
@@ -35,21 +35,11 @@ public class Endpoint implements Publisher {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
-        notifySubscriber();
+        notifySubscribers();
     }
 
     @Override
-    public void subscribe(Subscriber subscriber) {
-        subscribers.add(subscriber);
-    }
-
-    @Override
-    public void unsubscribe(Subscriber subscriber) {
-        subscribers.remove(subscriber);
-    }
-
-    @Override
-    public void notifySubscriber() {
+    public void notifySubscribers() {
         subscribers.parallelStream().forEach(subscriber -> subscriber.update(connected));
     }
 }

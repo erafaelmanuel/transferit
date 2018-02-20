@@ -1,10 +1,19 @@
 package io.ermdev.transferit.integration;
 
-public interface Publisher {
+import java.util.HashSet;
+import java.util.Set;
 
-    void subscribe(Subscriber subscriber);
+public abstract class Publisher {
 
-    void unsubscribe(Subscriber subscriber);
+    private Set<Subscriber> subscribers = new HashSet<>();
 
-    void notifySubscriber();
+    public void subscribe(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    public void unsubscribe(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    abstract void notifySubscribers();
 }

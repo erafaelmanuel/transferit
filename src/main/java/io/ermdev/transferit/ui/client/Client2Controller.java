@@ -31,23 +31,38 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         for(int i=0; i< 6; i++) {
-            VBox vBox = new VBox();
-            HBox hBox = new HBox();
+            VBox secondBox = new VBox();
+            secondBox.setPrefHeight(40);
+            secondBox.setPrefWidth(167);
+            secondBox.setStyle("-fx-border-color:#000");
 
-            HBox inside = new HBox();
+            VBox firstBox = new VBox();
+            firstBox.setAlignment(Pos.CENTER_LEFT);
+            firstBox.setPrefHeight(40);
+            firstBox.setPrefWidth(40);
+            firstBox.setStyle("-fx-border-color:#000");
+
+            firstBox.getChildren().add(new Label("Image"));
+
+
+            HBox parent = new HBox();
+
+            HBox inside = new HBox(4);
             inside.setAlignment(Pos.CENTER_LEFT);
             inside.setStyle("-fx-border-color:#000");
             inside.setPrefHeight(50);
             inside.setPrefWidth(222);
+            inside.setPadding(new Insets(3));
 
             inside.setMinHeight(50);
             inside.setMinWidth(222);
 
-            inside.getChildren().add(new Label("tae"));
+            inside.getChildren().add(firstBox);
+            inside.getChildren().add(secondBox);
 
-            hBox.setPadding(new Insets(5, 5, 5, 5));
-            hBox.getChildren().add(inside);
-            vboxFile.getChildren().add(hBox);
+            parent.setPadding(new Insets(5));
+            parent.getChildren().add(inside);
+            vboxFile.getChildren().add(parent);
         }
     }
 

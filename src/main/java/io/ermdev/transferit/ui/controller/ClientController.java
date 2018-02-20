@@ -126,7 +126,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                     endpoint.setPort(23411);
 
                     client = new TcpClient(endpoint);
-                    client.setClientListener(this);
+                    client.setListener(this);
                     client.connect();
                 } else {
                     client.disconnect();
@@ -198,7 +198,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                 for (int ctr = 1; ctr <= files.size(); ctr++) {
                     try {
                         cn = ctr;
-                        client.openTransaction(files.get(ctr - 1));
+                        client.sendFile(files.get(ctr - 1));
                         transactions.get(ctr - 1).setPercentage("Completed");
                         setTableData(tblfiles);
                     } catch (Exception e) {

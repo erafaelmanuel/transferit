@@ -31,7 +31,7 @@ public class Main extends Application implements OnWelcomeClose {
                 e.printStackTrace();
             }
         } else {
-            Client2Stage clientStage = new Client2Stage(this);
+            ClientStage clientStage = new ClientStage(this);
             clientStage.getClientController().setWelcomeStage(welcomeStage);
             clientStage.show();
         }

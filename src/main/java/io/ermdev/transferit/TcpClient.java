@@ -11,9 +11,9 @@ public class TcpClient {
 
     private final Endpoint endpoint;
 
-    private MyProtocol protocol = new MyProtocol();
-
     private ClientListener listener;
+
+    private MyProtocol protocol = new MyProtocol();
 
     public TcpClient(Endpoint endpoint) {
         this.endpoint = endpoint;

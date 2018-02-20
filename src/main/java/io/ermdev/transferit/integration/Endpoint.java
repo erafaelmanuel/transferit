@@ -8,6 +8,12 @@ public class Endpoint extends Publisher {
 
     private boolean connected;
 
+    public Endpoint() {}
+
+    public Endpoint(int port) {
+        this.port = port;
+    }
+
     public String getHost() {
         return host;
     }

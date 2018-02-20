@@ -24,8 +24,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Endpoint endpoint = new Endpoint();
-        endpoint.setPort(23411);
+        Endpoint endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
 
         server = new TcpServer(endpoint);
@@ -52,8 +51,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
 
     @Override
     public void onStop() {
-        Endpoint endpoint = new Endpoint();
-        endpoint.setPort(23411);
+        Endpoint endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
 
         server = new TcpServer(endpoint);
@@ -65,9 +63,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
     protected void onActionClose() {
         server.stop();
 
-
-        Endpoint endpoint = new Endpoint();
-        endpoint.setPort(23411);
+        Endpoint endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
 
         server = new TcpServer(endpoint);

@@ -1,7 +1,4 @@
-package io.ermdev.transferit;
-
-import io.ermdev.transferit.util.Publisher;
-import io.ermdev.transferit.util.Subscriber;
+package io.ermdev.transferit.integration;
 
 import java.util.HashSet;
 import java.util.Set;

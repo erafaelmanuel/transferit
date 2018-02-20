@@ -1,6 +1,4 @@
-package io.ermdev.transferit;
-
-import io.ermdev.transferit.fun.ServerListener;
+package io.ermdev.transferit.integration;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

@@ -1,6 +1,6 @@
 package io.ermdev.transferit.ui.client;
 
-import io.ermdev.transferit.fun.OnWelcomeClose;
+import io.ermdev.transferit.ui.welcome.OnWelcomeClose;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

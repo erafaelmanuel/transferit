@@ -1,16 +1,15 @@
 package io.ermdev.transferit.ui.client;
 
-import io.ermdev.transferit.Endpoint;
-import io.ermdev.transferit.TcpClient;
-import io.ermdev.transferit.fun.ClientListener;
+import io.ermdev.transferit.integration.Endpoint;
+import io.ermdev.transferit.integration.TcpClient;
+import io.ermdev.transferit.integration.ClientListener;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
-import io.ermdev.transferit.util.Subscriber;
+import io.ermdev.transferit.integration.Subscriber;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 

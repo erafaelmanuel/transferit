@@ -1,4 +1,4 @@
-package io.ermdev.transferit.fun;
+package io.ermdev.transferit.integration;
 
 public interface ServerListener {
 

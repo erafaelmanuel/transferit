@@ -1,10 +1,10 @@
 package io.ermdev.transferit.ui.controller;
 
-import io.ermdev.transferit.Endpoint;
-import io.ermdev.transferit.Server;
-import io.ermdev.transferit.TcpServer;
-import io.ermdev.transferit.fun.ServerListener;
-import io.ermdev.transferit.util.Subscriber;
+import io.ermdev.transferit.integration.Endpoint;
+import io.ermdev.transferit.integration.Server;
+import io.ermdev.transferit.integration.TcpServer;
+import io.ermdev.transferit.integration.ServerListener;
+import io.ermdev.transferit.integration.Subscriber;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

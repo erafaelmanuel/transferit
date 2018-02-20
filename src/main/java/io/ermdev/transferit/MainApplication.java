@@ -1,14 +1,13 @@
 package io.ermdev.transferit;
 
-import io.ermdev.transferit.fun.OnWelcomeClose;
-import io.ermdev.transferit.ui.client.Client2Stage;
 import io.ermdev.transferit.ui.client.ClientStage;
 import io.ermdev.transferit.ui.stage.ServerStage;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
+import io.ermdev.transferit.ui.welcome.OnWelcomeClose;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application implements OnWelcomeClose {
+public class MainApplication extends Application implements OnWelcomeClose {
 
     private WelcomeStage welcomeStage;
     public static void main(String args[]) {
@@ -16,7 +15,7 @@ public class Main extends Application implements OnWelcomeClose {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         welcomeStage = new WelcomeStage(this);
         welcomeStage.show();
     }

@@ -1,4 +1,4 @@
-package io.ermdev.transferit.exception;
+package io.ermdev.transferit.integration;
 
 public class TcpException extends Exception {
 

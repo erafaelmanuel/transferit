@@ -1,4 +1,4 @@
-package io.ermdev.transferit;
+package io.ermdev.transferit.integration;
 
 public class Transaction {
 

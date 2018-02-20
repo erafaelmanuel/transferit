@@ -1,8 +1,8 @@
-package io.ermdev.transferit;
+package io.ermdev.transferit.integration;
 
 import java.net.Socket;
 
-public class MyProtocol {
+public class Protocol {
 
     private Socket socket;
 

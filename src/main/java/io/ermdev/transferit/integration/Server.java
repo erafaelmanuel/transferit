@@ -1,6 +1,4 @@
-package io.ermdev.transferit;
-
-import io.ermdev.transferit.fun.ServerListener;
+package io.ermdev.transferit.integration;
 
 public interface Server {
 

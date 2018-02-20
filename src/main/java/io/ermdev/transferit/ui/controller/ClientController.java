@@ -1,11 +1,11 @@
 package io.ermdev.transferit.ui.controller;
 
-import io.ermdev.transferit.Endpoint;
-import io.ermdev.transferit.TcpClient;
-import io.ermdev.transferit.Transaction;
-import io.ermdev.transferit.exception.TcpException;
-import io.ermdev.transferit.fun.ClientListener;
-import io.ermdev.transferit.util.Subscriber;
+import io.ermdev.transferit.integration.Endpoint;
+import io.ermdev.transferit.integration.TcpClient;
+import io.ermdev.transferit.integration.Transaction;
+import io.ermdev.transferit.integration.TcpException;
+import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.integration.Subscriber;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

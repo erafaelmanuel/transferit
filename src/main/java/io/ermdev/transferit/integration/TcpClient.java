@@ -1,19 +1,16 @@
-package io.ermdev.transferit;
-
-import io.ermdev.transferit.exception.TcpException;
-import io.ermdev.transferit.fun.ClientListener;
+package io.ermdev.transferit.integration;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class TcpClient {
+public class TcpClient implements Client {
 
     private final Endpoint endpoint;
 
     private ClientListener listener;
 
-    private MyProtocol protocol = new MyProtocol();
+    private Protocol protocol = new Protocol();
 
     public TcpClient(Endpoint endpoint) {
         this.endpoint = endpoint;
@@ -27,6 +24,7 @@ public class TcpClient {
         }
     }
 
+    @Override
     public void connect() throws TcpException {
         synchronized (endpoint) {
             try {
@@ -37,6 +35,7 @@ public class TcpClient {
         }
     }
 
+    @Override
     public void disconnect() {
         synchronized (endpoint) {
             try {

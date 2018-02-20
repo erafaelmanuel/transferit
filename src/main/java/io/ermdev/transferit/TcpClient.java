@@ -9,28 +9,28 @@ import java.nio.charset.StandardCharsets;
 
 public class TcpClient {
 
-    private ClientListener clientListener;
-
     private final Endpoint endpoint;
 
-    private Socket connection;
+    private MyProtocol protocol = new MyProtocol();
+
+    private ClientListener listener;
 
     public TcpClient(Endpoint endpoint) {
         this.endpoint = endpoint;
     }
 
-    private Socket createConnection(Endpoint endpoint) throws Exception {
-        if (connection != null && !connection.isClosed()) {
-            connection.close();
+    private Socket createConnection(Endpoint endpoint) throws TcpException {
+        try {
+            return new Socket(endpoint.getHost(), endpoint.getPort());
+        } catch (Exception e) {
+            throw new TcpException("Failed to make a socket!");
         }
-        return new Socket(endpoint.getHost(), endpoint.getPort());
     }
 
     public void connect() throws TcpException {
         synchronized (endpoint) {
             try {
-                connection = createConnection(endpoint);
-                sendPermission();
+                sendRequestConnection(createConnection(endpoint));
             } catch (Exception e) {
                 throw new TcpException("Unable to connect!");
             }
@@ -40,86 +40,97 @@ public class TcpClient {
     public void disconnect() {
         synchronized (endpoint) {
             try {
-                if(connection != null && !connection.isClosed()) {
-                    OutputStream os = connection.getOutputStream();
-                    os.write("close".getBytes(StandardCharsets.UTF_8));
-                    os.flush();
-                    os.close();
+                if (protocol.isAlive()) {
+                    sendMessage("close", protocol.getSocket().getOutputStream());
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                protocol.setSocket(null);
             }
             endpoint.setConnected(false);
         }
     }
 
-    private void sendPermission() {
+    private void observeConnection() {
+        Thread thread = new Thread(() -> {
+            try {
+                protocol.setSocket(createConnection(endpoint));
+                while (true) {
+                    if (receiveMessage(protocol.getSocket().getInputStream()).equals("close")) {
+                        protocol.getSocket().close();
+                        endpoint.setConnected(false);
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                endpoint.setConnected(false);
+                protocol.setSocket(null);
+            }
+        });
+        thread.start();
+    }
+
+    private String receiveMessage(InputStream is) throws TcpException {
+        final StringBuilder response = new StringBuilder();
+        try {
+            int n;
+            while ((n = is.read()) != -1) {
+                response.append((char) n);
+            }
+            return response.toString();
+        } catch (Exception e) {
+            throw new TcpException("Receiving message failed");
+        }
+    }
+
+    private void sendRequestConnection(final Socket connection) {
         synchronized (endpoint) {
             Thread thread = new Thread(() -> {
                 try {
                     while (true) {
-                        int n;
-                        StringBuilder response = new StringBuilder();
-                        while ((n = connection.getInputStream().read()) != -1) {
-                            response.append((char) n);
-                        }
-                        switch (response.toString()) {
+                        switch (receiveMessage(connection.getInputStream())) {
                             case "close": {
-                                disconnect();
+                                connection.close();
+                                endpoint.setConnected(false);
                                 return;
                             }
                             case "start": {
+                                connection.close();
                                 endpoint.setConnected(true);
-                                connection = createConnection(endpoint);
-                                keepAlive();
+                                observeConnection();
                                 return;
                             }
                         }
                     }
                 } catch (Exception e) {
-                    disconnect();
+                    endpoint.setConnected(false);
                 }
             });
             thread.start();
         }
     }
 
-    private void keepAlive() {
-        Thread thread = new Thread(() -> {
+    public void sendFile(File file) {
+        synchronized (endpoint) {
             try {
-                while (true) {
-                    final StringBuilder stringBuilder = new StringBuilder();
-                    int n;
-                    while ((n = connection.getInputStream().read()) != -1) {
-                        stringBuilder.append((char) n);
-                    }
-                    if (stringBuilder.toString().equalsIgnoreCase("close")) {
-                        endpoint.setConnected(false);
-                        connection.close();
-                        return;
-                    }
-                }
+                startLinking(createConnection(endpoint), file);
             } catch (Exception e) {
-                disconnect();
+                endpoint.setConnected(false);
             }
-        });
-        thread.start();
-    }
-
-    public void openTransaction(File file) {
-        try {
-            Socket socket = new Socket(endpoint.getHost(), endpoint.getPort());
-            send(socket, file);
-            if (!socket.isClosed()) {
-                socket.close();
-            }
-        } catch (Exception e) {
-            endpoint.setConnected(false);
-            e.printStackTrace();
         }
     }
 
-    private void send(Socket socket, File file) throws Exception {
+    private void sendMessage(String message, OutputStream os) throws TcpException {
+        try {
+            os.write(message.getBytes(StandardCharsets.UTF_8));
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            throw new TcpException("Sending message failed");
+        }
+    }
+
+    @Deprecated
+    private void startLinking(Socket socket, File file) throws Exception {
         byte buffer[] = new byte[8192];
         int length = (int) file.length();
         int count = 0;
@@ -131,13 +142,13 @@ public class TcpClient {
         DataOutputStream dos = new DataOutputStream(bos);
         dos.writeUTF(file.getName());
 
-        if (clientListener != null) {
+        if (listener != null) {
             int n;
             while ((n = bis.read(buffer)) != -1) {
                 dos.write(buffer, 0, n);
                 count += n;
                 final double percent = (100.0 / length) * (double) count;
-                clientListener.onTransfer(percent);
+                listener.onTransfer(percent);
             }
         } else {
             int n;
@@ -147,9 +158,13 @@ public class TcpClient {
         }
         dos.flush();
         dos.close();
+
+        if (!socket.isClosed()) {
+            socket.close();
+        }
     }
 
-    public void setClientListener(ClientListener clientListener) {
-        this.clientListener = clientListener;
+    public void setListener(ClientListener listener) {
+        this.listener = listener;
     }
 }

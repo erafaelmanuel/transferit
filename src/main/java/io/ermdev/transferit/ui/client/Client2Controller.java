@@ -1,24 +1,18 @@
 package io.ermdev.transferit.ui.client;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import io.ermdev.transferit.Endpoint;
 import io.ermdev.transferit.TcpClient;
-import io.ermdev.transferit.exception.TcpException;
 import io.ermdev.transferit.fun.ClientListener;
 import io.ermdev.transferit.ui.stage.WelcomeStage;
 import io.ermdev.transferit.util.Subscriber;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,8 +30,25 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for(int i=0; i< 30; i++)
-            vboxFile.getChildren().add(new Label("tae"));
+        for(int i=0; i< 6; i++) {
+            VBox vBox = new VBox();
+            HBox hBox = new HBox();
+
+            HBox inside = new HBox();
+            inside.setAlignment(Pos.CENTER_LEFT);
+            inside.setStyle("-fx-border-color:#000");
+            inside.setPrefHeight(50);
+            inside.setPrefWidth(222);
+
+            inside.setMinHeight(50);
+            inside.setMinWidth(222);
+
+            inside.getChildren().add(new Label("tae"));
+
+            hBox.setPadding(new Insets(5, 5, 5, 5));
+            hBox.getChildren().add(inside);
+            vboxFile.getChildren().add(hBox);
+        }
     }
 
     @Override

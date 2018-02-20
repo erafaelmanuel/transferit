@@ -3,7 +3,7 @@ package io.ermdev.transferit.ui.controller;
 import io.ermdev.transferit.Endpoint;
 import io.ermdev.transferit.TcpClient;
 import io.ermdev.transferit.Transaction;
-import io.ermdev.transferit.exception.TransferitException;
+import io.ermdev.transferit.exception.TcpException;
 import io.ermdev.transferit.fun.ClientListener;
 import io.ermdev.transferit.util.Subscriber;
 import javafx.application.Platform;
@@ -131,7 +131,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                 } else {
                     client.disconnect();
                 }
-            } catch (TransferitException e) {
+            } catch (TcpException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 client.disconnect();
             }

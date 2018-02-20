@@ -1,6 +1,6 @@
 package io.ermdev.transferit;
 
-import io.ermdev.transferit.exception.TransferitException;
+import io.ermdev.transferit.exception.TcpException;
 import io.ermdev.transferit.fun.ClientListener;
 
 import java.io.*;
@@ -26,13 +26,13 @@ public class TcpClient {
         return new Socket(endpoint.getHost(), endpoint.getPort());
     }
 
-    public void connect() throws TransferitException {
+    public void connect() throws TcpException {
         synchronized (endpoint) {
             try {
                 connection = createConnection(endpoint);
                 sendPermission();
             } catch (Exception e) {
-                throw new TransferitException("Unable to connect!");
+                throw new TcpException("Unable to connect!");
             }
         }
     }
@@ -101,7 +101,6 @@ public class TcpClient {
                 }
             } catch (Exception e) {
                 disconnect();
-                e.printStackTrace();
             }
         });
         thread.start();

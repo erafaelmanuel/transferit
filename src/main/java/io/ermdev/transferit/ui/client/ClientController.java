@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -41,6 +42,9 @@ public class ClientController implements Initializable, Subscriber, ClientListen
     @FXML
     private JFXTextField txtHost;
 
+    @FXML
+    private TextField txtHidden;
+
     private WelcomeStage welcomeStage;
 
     private TcpClient client;
@@ -61,7 +65,7 @@ public class ClientController implements Initializable, Subscriber, ClientListen
         Thread thread = new Thread(() -> {
             if (status) {
                 Platform.runLater(() -> {
-                    lblStatus.setText("You are connected!");
+                    lblStatus.setText("Connection Successful");
                     lblStatus.setStyle("-fx-text-fill:#6ab04c");
                     btnConnect.setText("Disconnect");
                     btnConnect.setStyle("-fx-background-color:#ff7675");
@@ -100,7 +104,7 @@ public class ClientController implements Initializable, Subscriber, ClientListen
                     lblStatus.setStyle("-fx-text-fill:#000");
                     lblStatus.setText("Connecting . . .");
                     btnConnect.setDisable(true);
-                    btnConnect.requestFocus();
+                    txtHidden.requestFocus();
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {
                     endpoint.setHost(txtHost.getText());
@@ -114,7 +118,7 @@ public class ClientController implements Initializable, Subscriber, ClientListen
                 }
             } catch (TcpException e) {
                 Platform.runLater(() -> {
-                    lblStatus.setText("Connection failed!");
+                    lblStatus.setText("Connection Failed");
                     lblStatus.setStyle("-fx-text-fill:#eb4d4b");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(true);

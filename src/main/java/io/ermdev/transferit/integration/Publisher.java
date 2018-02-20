@@ -3,7 +3,7 @@ package io.ermdev.transferit.integration;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Publisher {
+public class Publisher {
 
     private Set<Subscriber> subscribers = new HashSet<>();
 
@@ -15,5 +15,7 @@ public abstract class Publisher {
         subscribers.remove(subscriber);
     }
 
-    abstract void notifySubscribers();
+    public void notifyAll(boolean status) {
+        subscribers.parallelStream().forEach(subscriber -> subscriber.update(status));
+    }
 }

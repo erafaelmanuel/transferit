@@ -54,6 +54,7 @@ public class ClientController implements Initializable {
     protected void onActionConnect() {
         if(s) {
             lblStatus.setVisible(true);
+            lblStatus.setStyle("-fx-text-fill:#6ab04c");
             btnConnect.setText("Disconnect");
             btnConnect.setStyle("-fx-background-color:#ff7675");
             btnSendFile.setDisable(false);

@@ -18,11 +18,11 @@
                   <Image url="@../image/img_bubbles.gif" />
                </image>
             </ImageView>
-            <VBox prefHeight="163.0" prefWidth="247.0" style="-fx-background-color: #dfe6e9;">
+            <VBox prefHeight="174.0" prefWidth="247.0" style="-fx-background-color: #dfe6e9;">
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane layoutX="64.0" layoutY="15.0" prefHeight="120.0" prefWidth="135.0">
+                        <AnchorPane layoutX="65.0" layoutY="27.0" prefHeight="120.0" prefWidth="135.0">
                            <children>
                               <ImageView fx:id="imgv1" fitHeight="111.0" fitWidth="142.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -41,17 +41,17 @@
                               <Image url="@../image/img3dots.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="29.0" layoutY="131.0" prefHeight="17.0" prefWidth="189.0" text="Transfer files between your devices" textFill="#636e72">
+                        <Label alignment="CENTER" layoutX="29.0" layoutY="138.0" prefHeight="17.0" prefWidth="189.0" text="Transfer files between your devices" textFill="#636e72">
                            <font>
                               <Font name="Calibri" size="11.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="224.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="223.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/img_next.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="imgvprev" fitHeight="19.0" fitWidth="22.0" layoutX="7.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvprev" fitHeight="19.0" fitWidth="22.0" layoutX="6.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/img_prev.png" />
                            </image>
@@ -60,12 +60,12 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="209.0" onAction="#onActionSend" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="224.0" onAction="#onActionSend" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="262.0" onAction="#onActionReceive" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="277.0" onAction="#onActionReceive" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
@@ -79,7 +79,7 @@
                   </Label>
                </children>
             </VBox>
-            <Label alignment="CENTER" layoutX="56.0" layoutY="175.0" prefHeight="17.0" prefWidth="135.0" text="Transferit v1.0" textFill="#1b1818" />
+            <Label alignment="CENTER" layoutX="56.0" layoutY="190.0" prefHeight="17.0" prefWidth="135.0" text="Transferit v1.0" textFill="#1b1818" />
          </children>
       </AnchorPane>
    </children>

@@ -1,16 +1,12 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.integration.Endpoint;
-import io.ermdev.transferit.integration.TcpClient;
-import io.ermdev.transferit.integration.ClientListener;
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
+import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.integration.Endpoint;
 import io.ermdev.transferit.integration.Subscriber;
+import io.ermdev.transferit.integration.TcpClient;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -29,39 +25,8 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for(int i=0; i< 6; i++) {
-            VBox secondBox = new VBox();
-            secondBox.setPrefHeight(40);
-            secondBox.setPrefWidth(167);
-            secondBox.setStyle("-fx-border-color:#000");
-
-            VBox firstBox = new VBox();
-            firstBox.setAlignment(Pos.CENTER_LEFT);
-            firstBox.setPrefHeight(40);
-            firstBox.setPrefWidth(40);
-            firstBox.setStyle("-fx-border-color:#000");
-
-            firstBox.getChildren().add(new Label("Image"));
-
-
-            HBox parent = new HBox();
-
-            HBox inside = new HBox(4);
-            inside.setAlignment(Pos.CENTER_LEFT);
-            inside.setStyle("-fx-border-color:#000");
-            inside.setPrefHeight(50);
-            inside.setPrefWidth(222);
-            inside.setPadding(new Insets(3));
-
-            inside.setMinHeight(50);
-            inside.setMinWidth(222);
-
-            inside.getChildren().add(firstBox);
-            inside.getChildren().add(secondBox);
-
-            parent.setPadding(new Insets(5));
-            parent.getChildren().add(inside);
-            vboxFile.getChildren().add(parent);
+        for (int i = 0; i < 12; i++) {
+            vboxFile.getChildren().add(new MyBox());
         }
     }
 

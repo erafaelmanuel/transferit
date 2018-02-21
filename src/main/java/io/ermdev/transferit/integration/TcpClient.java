@@ -40,10 +40,10 @@ public class TcpClient implements Client {
         synchronized (endpoint) {
             try {
                 if (protocol.isAlive()) {
-                    sendMessage("close", protocol.getSocket().getOutputStream());
+                    sendMessage("close", protocol.getOutputStream());
                 }
             } catch (Exception e) {
-                protocol.setSocket(null);
+                protocol.invalidateSocket();
             }
             endpoint.setConnected(false);
         }
@@ -54,15 +54,15 @@ public class TcpClient implements Client {
             try {
                 protocol.setSocket(createConnection(endpoint));
                 while (true) {
-                    if (receiveMessage(protocol.getSocket().getInputStream()).equals("close")) {
-                        protocol.getSocket().close();
+                    if (receiveMessage(protocol.getInputStream()).equals("close")) {
+                        protocol.invalidateSocket();
                         endpoint.setConnected(false);
                         return;
                     }
                 }
             } catch (Exception e) {
+                protocol.invalidateSocket();
                 endpoint.setConnected(false);
-                protocol.setSocket(null);
             }
         });
         thread.start();

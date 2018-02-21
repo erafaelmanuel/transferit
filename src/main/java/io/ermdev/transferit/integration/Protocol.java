@@ -1,5 +1,6 @@
 package io.ermdev.transferit.integration;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -9,6 +10,15 @@ public class Protocol {
     private Socket socket;
 
     public Protocol() {}
+
+    public void invalidateSocket() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        socket = null;
+    }
 
     public boolean isAlive() {
         if (socket == null) {
@@ -26,11 +36,9 @@ public class Protocol {
     public boolean isAlive(Endpoint endpoint) {
         if (!isAlive()) {
             return false;
+        } else {
+            return socket.getInetAddress().getHostAddress().equals(endpoint.getHost());
         }
-        if (!socket.getInetAddress().getHostAddress().equals(endpoint.getHost())) {
-            return false;
-        }
-        return true;
     }
 
     public Socket getSocket() {
@@ -38,11 +46,9 @@ public class Protocol {
     }
 
     public void setSocket(Socket socket) {
-        try {
-            if (isAlive()) {
-                this.socket.close();
-            }
-        } catch (Exception e) {}
+        if (isAlive()) {
+            invalidateSocket();
+        }
         this.socket = socket;
     }
 

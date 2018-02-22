@@ -20,26 +20,19 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable, Subscriber {
 
-    @FXML
-    ImageView imgv1;
+    @FXML ImageView imgv1;
 
-    @FXML
-    ImageView imgvback;
+    @FXML ImageView imgvback;
 
-    @FXML
-    JFXButton btnConnect;
+    @FXML JFXButton btnConnect;
 
-    @FXML
-    JFXButton btnSendFile;
+    @FXML JFXButton btnSendFile;
 
-    @FXML
-    Label lblStatus;
+    @FXML Label lblStatus;
 
-    @FXML
-    JFXTextField txtHost;
+    @FXML JFXTextField txtHost;
 
-    @FXML
-    TextField txtHidden;
+    @FXML TextField txtHidden;
 
     private WelcomeStage welcomeStage;
 
@@ -84,13 +77,11 @@ public class ClientController implements Initializable, Subscriber {
         thread.start();
     }
 
-
     public void setWelcomeStage(WelcomeStage welcomeStage) {
         this.welcomeStage = welcomeStage;
     }
 
-    @FXML
-    void onActionConnect() {
+    @FXML void onActionConnect() {
         Thread thread = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -121,8 +112,7 @@ public class ClientController implements Initializable, Subscriber {
         thread.start();
     }
 
-    @FXML
-    void onActionSend() {
+    @FXML void onActionSend() {
         client2Stage.getController().setClient(client);
         client2Stage.getController().initialize();
         client2Stage.showAndWait();

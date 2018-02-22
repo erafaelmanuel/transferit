@@ -29,7 +29,6 @@ public class Client2Stage extends Stage {
 
             initModality(Modality.APPLICATION_MODAL);
             setTitle(title);
-            setResizable(false);
             setScene(scene);
             setController(fxmlLoader.getController());
         } catch (Exception e) {

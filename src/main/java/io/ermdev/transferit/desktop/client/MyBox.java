@@ -1,6 +1,7 @@
 package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXProgressBar;
+import io.ermdev.transferit.desktop.util.ImageUtil;
 import io.ermdev.transferit.integration.Book;
 import io.ermdev.transferit.integration.Item;
 import io.ermdev.transferit.integration.Subscriber;
@@ -17,15 +18,22 @@ import javafx.scene.text.Font;
 public class MyBox extends HBox implements Subscriber {
 
     private final HBox inside = new HBox(2);
-    private final VBox imgBox = new VBox();
-    private final VBox secondBox = new VBox();
-    private final Label lblTitle = new Label();
-    private final HBox contentBox = new HBox(5);
-    private final JFXProgressBar progressBar = new JFXProgressBar();
-    private final ImageView imgv = new ImageView();
-    private Item item;
 
-    Label label = new Label();
+    private final VBox imgBox = new VBox();
+
+    private final VBox secondBox = new VBox();
+
+    private final Label lblTitle = new Label();
+
+    private final HBox contentBox = new HBox(5);
+
+    private final JFXProgressBar progressBar = new JFXProgressBar();
+
+    private final ImageView imgv = new ImageView();
+
+    private final Label lblPercent = new Label();
+
+    private Item item;
 
     public MyBox(Item item) {
         setItem(item);
@@ -39,12 +47,15 @@ public class MyBox extends HBox implements Subscriber {
 
     private void generateUI() {
         String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
-        setStyle("-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+        String css2 = getClass().getResource("/css/item-box-style.css").toExternalForm();
+
         setPadding(new Insets(1, 5, 2, 5));
+        setId("parent");
+        getStylesheets().add(css2);
 
         inside.setAlignment(Pos.CENTER_LEFT);
-        inside.setStyle("-fx-background-radius: 3, 3 , 3, 3");
-        inside.setStyle("-fx-background-color: #636e72");
+        inside.setId("inside");
+
         inside.setPrefHeight(40);
         inside.setPrefWidth(222);
         inside.setPadding(new Insets(3));
@@ -62,7 +73,7 @@ public class MyBox extends HBox implements Subscriber {
         lblTitle.setText(item.getName());
         lblTitle.setFont(Font.font("Calibri", 10));
         lblTitle.setPadding(new Insets(0, 0, 0, 5));
-        lblTitle.setStyle("-fx-text-fill: #fff");
+        lblTitle.setId("title");
 
         progressBar.setPadding(new Insets(6, 0, 0, 5));
         progressBar.setProgress(item.getProgress());
@@ -71,14 +82,14 @@ public class MyBox extends HBox implements Subscriber {
 
         imgv.setFitHeight(24);
         imgv.setFitWidth(24);
-        imgv.setImage(new Image(getClass().getResource("/image/img_mp3.png").toString()));
+        imgv.setImage(new Image(getClass().getResource(ImageUtil.thumbnail(item.getName())).toString()));
 
-        label.setText("0 %");
-        label.setStyle("-fx-text-fill: #fff");
-        label.setFont(Font.font("Calibri", 10));
+        lblPercent.setText("0%");
+        lblPercent.setFont(Font.font("Calibri", 10));
+        lblPercent.setId("percent");
 
         contentBox.getChildren().add(progressBar);
-        contentBox.getChildren().add(label);
+        contentBox.getChildren().add(lblPercent);
 
         secondBox.getChildren().add(lblTitle);
         secondBox.getChildren().add(contentBox);
@@ -96,7 +107,7 @@ public class MyBox extends HBox implements Subscriber {
         Platform.runLater(() -> {
             final double percent = (100 / item.getSize()) * (Double) book.getContent();
             progressBar.setProgress(percent / 100.0);
-            label.setText(((int) percent) + "%");
+            lblPercent.setText(((int) percent) + "%");
         });
     }
 }

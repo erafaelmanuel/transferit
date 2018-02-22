@@ -6,28 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.client.Client2Controller">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <VBox alignment="CENTER" layoutY="383.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #636e72;">
-               <children>
-                  <Label alignment="CENTER" prefHeight="15.0" prefWidth="189.0" text="Copyright © 2018, ermdev.io" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <ScrollPane layoutY="64.0" prefHeight="319.0" prefWidth="247.0">
+            <ScrollPane layoutY="64.0" prefHeight="336.0" prefWidth="247.0">
                <content>
-                  <VBox fx:id="container" prefHeight="314.0" prefWidth="228.0" />
+                  <VBox fx:id="container" prefHeight="334.0" prefWidth="228.0" />
                </content>
             </ScrollPane>
-            <Button layoutX="60.0" layoutY="24.0" mnemonicParsing="false" onAction="#onBrowse" text="New file" />
-            <Button layoutX="127.0" layoutY="24.0" mnemonicParsing="false" onAction="#onSend" prefHeight="25.0" prefWidth="60.0" text="Send" />
+            <Button layoutX="60.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBrowse" text="New file" />
+            <Button layoutX="127.0" layoutY="32.0" mnemonicParsing="false" onAction="#onSend" prefHeight="25.0" prefWidth="60.0" text="Send" />
+            <Label fx:id="lblStatus" alignment="CENTER" prefHeight="25.0" prefWidth="247.0" style="-fx-background-color: #00b894;" text="Connected" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

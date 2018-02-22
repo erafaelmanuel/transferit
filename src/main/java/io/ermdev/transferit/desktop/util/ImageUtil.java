@@ -24,5 +24,4 @@ public class ImageUtil {
             return "/image/file.png";
         }
     }
-
 }

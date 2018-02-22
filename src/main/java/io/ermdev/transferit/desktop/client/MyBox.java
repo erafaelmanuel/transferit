@@ -2,6 +2,7 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXProgressBar;
 import io.ermdev.transferit.desktop.util.ImageUtil;
+import io.ermdev.transferit.desktop.util.TraficUtil;
 import io.ermdev.transferit.integration.Book;
 import io.ermdev.transferit.integration.Item;
 import io.ermdev.transferit.integration.Subscriber;
@@ -31,9 +32,12 @@ public class MyBox extends HBox implements Subscriber {
 
     private final ImageView imgv = new ImageView();
 
+    private final Label lblDetail = new Label();
+
     private final Label lblPercent = new Label();
 
     private Item item;
+
 
     public MyBox(Item item) {
         setItem(item);
@@ -88,8 +92,12 @@ public class MyBox extends HBox implements Subscriber {
         lblPercent.setFont(Font.font("Calibri", 10));
         lblPercent.setId("percent");
 
-        contentBox.getChildren().add(progressBar);
-        contentBox.getChildren().add(lblPercent);
+        lblDetail.setText("Queque -- " + TraficUtil.size(item.getFile().length()));
+        lblDetail.setPadding(new Insets(0, 0, 0, 5));
+        lblDetail.setFont(Font.font("Calibri", 11));
+        lblDetail.setId("detail");
+
+        contentBox.getChildren().add(lblDetail);
 
         secondBox.getChildren().add(lblTitle);
         secondBox.getChildren().add(contentBox);
@@ -102,12 +110,58 @@ public class MyBox extends HBox implements Subscriber {
         getChildren().add(inside);
     }
 
+    private boolean fr = true;
+
+//    @Override
+//    public void before() {
+//        Platform.runLater(() -> {
+//            contentBox.getChildren().clear();
+//            contentBox.getChildren().add(progressBar);
+//            contentBox.getChildren().add(lblPercent);
+//        });
+//    }
+//
+//    @Override
+//    public void after() {
+//        lblDetail.setText("Completed -- " + TraficUtil.size(item.getFile().length()));
+//        contentBox.getChildren().clear();
+//        contentBox.getChildren().add(lblDetail);
+//    }
+
     @Override
     public void release(Book<?> book) {
-        Platform.runLater(() -> {
-            final double percent = (100 / item.getSize()) * (Double) book.getContent();
-            progressBar.setProgress(percent / 100.0);
-            lblPercent.setText(((int) percent) + "%");
-        });
+        if (fr) {
+            Platform.runLater(() -> {
+                contentBox.getChildren().clear();
+                contentBox.getChildren().add(progressBar);
+                contentBox.getChildren().add(lblPercent);
+            });
+            fr = false;
+        }
+        if ((Double) book.getContent() < item.getSize()) {
+            Platform.runLater(() -> {
+                final double percent = (100 / item.getSize()) * (Double) book.getContent();
+                progressBar.setProgress(percent / 100.0);
+                lblPercent.setText(((int) percent) + "%");
+            });
+        } else {
+            Platform.runLater(() -> {
+                final double percent = (100 / item.getSize()) * (Double) book.getContent();
+                progressBar.setProgress(percent / 100.0);
+                lblPercent.setText("100%");
+            });
+
+            try {
+                Thread.sleep(400);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Platform.runLater(() -> {
+                lblDetail.setText("Completed -- " + TraficUtil.size(item.getFile().length()));
+                contentBox.getChildren().clear();
+                contentBox.getChildren().add(lblDetail);
+            });
+        }
     }
 }

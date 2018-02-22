@@ -10,7 +10,9 @@ public class ItemManager {
 
     private List<Item> items;
 
-    private Item item;
+    private Item item1;
+
+    private Item item2;
 
     public void setItems(List<Item> items) {
         this.items = items;
@@ -20,7 +22,8 @@ public class ItemManager {
     public boolean next() {
         counter++;
         if (items.size() > counter) {
-            item = items.get(counter);
+            item2 = item1;
+            item1 = items.get(counter);
             return true;
         } else {
             return false;
@@ -28,6 +31,10 @@ public class ItemManager {
     }
 
     public Item get() {
-        return item;
+        return item1;
+    }
+
+    public Item getPrev() {
+        return item2;
     }
 }

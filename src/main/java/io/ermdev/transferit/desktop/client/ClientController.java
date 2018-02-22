@@ -125,7 +125,7 @@ public class ClientController implements Initializable, Subscriber {
     void onActionSend() {
         client2Stage.getController().setClient(client);
         client2Stage.getController().initialize();
-        client2Stage.show();
+        client2Stage.showAndWait();
     }
 
     @FXML

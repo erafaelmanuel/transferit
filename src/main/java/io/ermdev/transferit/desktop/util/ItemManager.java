@@ -10,18 +10,24 @@ public class ItemManager {
 
     private List<Item> items;
 
+    private Item item;
+
     public void setItems(List<Item> items) {
         this.items = items;
         counter = -1;
     }
 
-    public Item next() {
+    public boolean next() {
         counter++;
         if (items.size() > counter) {
-            return items.get(counter);
+            item = items.get(counter);
+            return true;
         } else {
-            return null;
+            return false;
         }
     }
 
+    public Item get() {
+        return item;
+    }
 }

@@ -22,8 +22,6 @@ public class Client2Controller implements ClientListener {
 
     private ItemManager itemManager = new ItemManager();
 
-    private Item currentItem;
-
     public void initialize() {
         items.clear();
         container.getChildren().clear();
@@ -61,20 +59,20 @@ public class Client2Controller implements ClientListener {
 
     @Override
     public void onStart() {
-        currentItem = itemManager.next();
+        itemManager.next();
     }
 
     @Override
     public void onUpdate(double n) {
-        if (currentItem != null) {
-            currentItem.setProgress(n);
+        if (itemManager.get() != null) {
+            itemManager.get().setProgress(n);
         }
     }
 
     @Override
     public void onComplete(double total) {
-        if (currentItem != null) {
-            currentItem.setProgress(total);
+        if (itemManager.get() != null) {
+            itemManager.get().setProgress(total);
         }
     }
 }

@@ -1,10 +1,6 @@
 package io.ermdev.transferit.desktop.controller;
 
-import io.ermdev.transferit.integration.Endpoint;
-import io.ermdev.transferit.integration.Server;
-import io.ermdev.transferit.integration.TcpServer;
-import io.ermdev.transferit.integration.ServerListener;
-import io.ermdev.transferit.integration.Subscriber;
+import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +14,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
     private Server server;
 
     @Override
-    public void update(boolean status) {
+    public void release(Book book) {
 
     }
 

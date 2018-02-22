@@ -42,7 +42,7 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
     }
 
     @Override
-    public void update(boolean status) {
+    public void release(Book<?> book) {
 
     }
 

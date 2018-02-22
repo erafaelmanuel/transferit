@@ -1,11 +1,6 @@
 package io.ermdev.transferit.desktop.controller;
 
-import io.ermdev.transferit.integration.Endpoint;
-import io.ermdev.transferit.integration.TcpClient;
-import io.ermdev.transferit.integration.Transaction;
-import io.ermdev.transferit.integration.TcpException;
-import io.ermdev.transferit.integration.ClientListener;
-import io.ermdev.transferit.integration.Subscriber;
+import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,10 +52,10 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     }
 
     @Override
-    public void update(boolean status) {
+    public void release(Book<?> book) {
         Thread thread = new Thread(() ->
                 Platform.runLater(() -> {
-                    if (status) {
+                    if (book.getContent() instanceof Boolean && (Boolean) book.getContent()) {
                         btnCDC.setText("Disconnect");
                         btnSend.setDisable(false);
                     } else {

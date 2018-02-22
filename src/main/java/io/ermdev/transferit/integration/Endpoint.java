@@ -36,6 +36,6 @@ public class Endpoint extends Publisher {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
-        notifyAll(connected);
+        notifyAll(new Book<>(connected));
     }
 }

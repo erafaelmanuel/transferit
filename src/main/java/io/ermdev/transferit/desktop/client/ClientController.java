@@ -2,12 +2,8 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import io.ermdev.transferit.integration.Endpoint;
-import io.ermdev.transferit.integration.TcpClient;
-import io.ermdev.transferit.integration.TcpException;
-import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.integration.*;
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
-import io.ermdev.transferit.integration.Subscriber;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,9 +57,9 @@ public class ClientController implements Initializable, Subscriber, ClientListen
     }
 
     @Override
-    public void update(boolean status) {
+    public void release(Book<?> book) {
         Thread thread = new Thread(() -> {
-            if (status) {
+            if (book.getContent() instanceof Boolean && (Boolean) book.getContent()) {
                 Platform.runLater(() -> {
                     lblStatus.setText("Connection Successful");
                     lblStatus.setStyle("-fx-text-fill:#6ab04c");

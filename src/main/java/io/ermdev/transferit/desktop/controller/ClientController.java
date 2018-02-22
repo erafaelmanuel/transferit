@@ -69,7 +69,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     }
 
     @Override
-    public void onTransfer(double count) {
+    public void onUpdate(double count) {
         Platform.runLater(() -> {
             transactions.get(cn - 1).setTransfer(count);
             setTableData(tblfiles);
@@ -206,5 +206,15 @@ public class ClientController implements Subscriber, Initializable, ClientListen
             }
         });
         thread.start();
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onComplete(double total) {
+
     }
 }

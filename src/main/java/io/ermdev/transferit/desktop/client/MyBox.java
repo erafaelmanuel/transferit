@@ -28,12 +28,16 @@ public class MyBox extends HBox implements Subscriber {
     Label label = new Label();
 
     public MyBox(Item item) {
-        this.item = item;
-        item.subscribe(this);
-        createUI();
+        setItem(item);
+        generateUI();
     }
 
-    private void createUI() {
+    private void setItem(Item item) {
+        this.item = item;
+        item.subscribe(this);
+    }
+
+    private void generateUI() {
         String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
         setStyle("-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
         setPadding(new Insets(1, 5, 2, 5));
@@ -89,13 +93,10 @@ public class MyBox extends HBox implements Subscriber {
 
     @Override
     public void release(Book<?> book) {
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                final double percent = (100 / item.getSize()) * (Double) book.getContent();
-                progressBar.setProgress(percent / 100.0);
-                label.setText(((int) percent) + " %");
-            });
+        Platform.runLater(() -> {
+            final double percent = (100 / item.getSize()) * (Double) book.getContent();
+            progressBar.setProgress(percent / 100.0);
+            label.setText(((int) percent) + "%");
         });
-        thread.start();
     }
 }

@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientController implements Initializable, Subscriber, ClientListener {
+public class ClientController implements Initializable, Subscriber {
 
     @FXML
     private ImageView imgv1;
@@ -82,10 +82,6 @@ public class ClientController implements Initializable, Subscriber, ClientListen
         thread.start();
     }
 
-    @Override
-    public void onTransfer(double count) {
-
-    }
 
     public void setWelcomeStage(WelcomeStage welcomeStage) {
         this.welcomeStage = welcomeStage;
@@ -106,7 +102,7 @@ public class ClientController implements Initializable, Subscriber, ClientListen
                     endpoint.setPort(23411);
 
                     client = new TcpClient(endpoint);
-                    client.setListener(this);
+                    //client.setListener(this);
                     client.connect();
                 } else {
                     client.disconnect();

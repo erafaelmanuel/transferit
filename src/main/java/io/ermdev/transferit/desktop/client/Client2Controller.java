@@ -1,30 +1,28 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.stage.WelcomeStage;
-import io.ermdev.transferit.integration.*;
+import io.ermdev.transferit.desktop.util.ItemManager;
+import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.integration.Item;
+import io.ermdev.transferit.integration.TcpClient;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class Client2Controller implements Initializable, Subscriber, ClientListener {
+public class Client2Controller implements ClientListener {
 
-    private WelcomeStage welcomeStage;
+    @FXML VBox icBox;
 
     private TcpClient client;
 
-    List<Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
-    List<File> files = new ArrayList<>();
+    private ItemManager itemManager = new ItemManager();
 
-    @FXML
-    private VBox vboxFile;
+    private Item currentItem;
 
     @FXML
     void onFile() {
@@ -33,31 +31,21 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
         if (newFiles != null && newFiles.size() > 0) {
             for (File file : newFiles) {
                 Item item = new Item(file);
-                MyBox myBox = new MyBox(item);
-
-                vboxFile.getChildren().add(myBox);
+                icBox.getChildren().add(new MyBox(item));
                 items.add(item);
-                files.add(file);
             }
         }
-        items.get(1).setProgress(454345);
     }
-
-    int cn = 0;
 
     @FXML
     void onSend() {
-        System.out.println(items.size());
         Thread thread = new Thread(() -> {
-            if (client != null && items.size() > 0) {
-                for (int ctr = 1; ctr <= items.size(); ctr++) {
-                    System.out.println("tae");
+            if (client != null) {
+                itemManager.setItems(items);
+                for (Item item : items) {
                     try {
-                        cn = ctr;
-                        client.sendFile(files.get(ctr - 1));
-                        items.get(cn - 1).setProgress(files.get(cn - 1).length());
+                        client.sendFile(item.getFile());
                     } catch (Exception e) {
-                        e.printStackTrace();
                         items.clear();
                         break;
                     }
@@ -69,24 +57,22 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        for (int i = 0; i < 12; i++) {
+    public void onStart() {
+        currentItem = itemManager.next();
+    }
 
+    @Override
+    public void onUpdate(double n) {
+        if (currentItem != null) {
+            currentItem.setProgress(n);
         }
     }
 
     @Override
-    public void release(Book<?> book) {
-
-    }
-
-    @Override
-    public void onTransfer(double count) {
-        items.get(cn - 1).setProgress(count);
-    }
-
-    public void setWelcomeStage(WelcomeStage welcomeStage) {
-        this.welcomeStage = welcomeStage;
+    public void onComplete(double total) {
+        if (currentItem != null) {
+            currentItem.setProgress(total);
+        }
     }
 
     public void setClient(TcpClient client) {

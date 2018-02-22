@@ -23,7 +23,7 @@
             </VBox>
             <ScrollPane layoutY="64.0" prefHeight="319.0" prefWidth="247.0">
                <content>
-                  <VBox fx:id="vboxFile" prefHeight="314.0" prefWidth="228.0" />
+                  <VBox fx:id="icBox" prefHeight="314.0" prefWidth="228.0" />
                </content>
             </ScrollPane>
             <Button layoutX="60.0" layoutY="24.0" mnemonicParsing="false" onAction="#onFile" text="New file" />

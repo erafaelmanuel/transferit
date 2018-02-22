@@ -141,12 +141,14 @@ public class TcpClient implements Client {
         dos.writeUTF(file.getName());
 
         if (listener != null) {
+            listener.onStart();
             int n;
             while ((n = bis.read(buffer)) != -1) {
                 dos.write(buffer, 0, n);
                 count += n;
-                listener.onTransfer(count);
+                listener.onUpdate(count);
             }
+            listener.onComplete(file.length());
         } else {
             int n;
             while ((n = bis.read(buffer)) != -1) {

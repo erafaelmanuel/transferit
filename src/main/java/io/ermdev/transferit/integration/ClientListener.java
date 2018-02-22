@@ -1,6 +1,10 @@
 package io.ermdev.transferit.integration;
 
-@FunctionalInterface
 public interface ClientListener {
-    void onTransfer(double count);
+
+    void onStart();
+
+    void onUpdate(double n);
+
+    void onComplete(double total);
 }

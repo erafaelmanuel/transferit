@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Client2Controller implements ClientListener {
 
-    @FXML VBox icBox;
+    @FXML VBox container;
 
     private TcpClient client;
 
@@ -24,31 +24,34 @@ public class Client2Controller implements ClientListener {
 
     private Item currentItem;
 
-    @FXML
-    void onFile() {
+    public void initialize() {
+        items.clear();
+        container.getChildren().clear();
+    }
+
+    public void setClient(TcpClient client) {
+        this.client = client;
+        client.setListener(this);
+    }
+
+    @FXML void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         if (newFiles != null && newFiles.size() > 0) {
             for (File file : newFiles) {
                 Item item = new Item(file);
-                icBox.getChildren().add(new MyBox(item));
+                container.getChildren().add(new MyBox(item));
                 items.add(item);
             }
         }
     }
 
-    @FXML
-    void onSend() {
+    @FXML void onSend() {
         Thread thread = new Thread(() -> {
             if (client != null) {
                 itemManager.setItems(items);
                 for (Item item : items) {
-                    try {
-                        client.sendFile(item.getFile());
-                    } catch (Exception e) {
-                        items.clear();
-                        break;
-                    }
+                    client.sendFile(item.getFile());
                 }
                 items.clear();
             }
@@ -73,10 +76,5 @@ public class Client2Controller implements ClientListener {
         if (currentItem != null) {
             currentItem.setProgress(total);
         }
-    }
-
-    public void setClient(TcpClient client) {
-        this.client = client;
-        client.setListener(this);
     }
 }

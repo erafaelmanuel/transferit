@@ -2,8 +2,8 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import io.ermdev.transferit.integration.*;
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
+import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,25 +21,25 @@ import java.util.ResourceBundle;
 public class ClientController implements Initializable, Subscriber {
 
     @FXML
-    private ImageView imgv1;
+    ImageView imgv1;
 
     @FXML
-    private ImageView imgvback;
+    ImageView imgvback;
 
     @FXML
-    private JFXButton btnConnect;
+    JFXButton btnConnect;
 
     @FXML
-    private JFXButton btnSendFile;
+    JFXButton btnSendFile;
 
     @FXML
-    private Label lblStatus;
+    Label lblStatus;
 
     @FXML
-    private JFXTextField txtHost;
+    JFXTextField txtHost;
 
     @FXML
-    private TextField txtHidden;
+    TextField txtHidden;
 
     private WelcomeStage welcomeStage;
 
@@ -47,11 +47,12 @@ public class ClientController implements Initializable, Subscriber {
 
     private Endpoint endpoint;
 
+    private Client2Stage client2Stage = new Client2Stage();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         endpoint = new Endpoint();
         endpoint.subscribe(this);
-
         imgv1.setImage(new Image(getClass().getResource("/image/img1_client1.png").toString()));
         imgvback.setImage(new Image(getClass().getResource("/image/img_prev.png").toString()));
     }
@@ -76,6 +77,7 @@ public class ClientController implements Initializable, Subscriber {
                     btnConnect.setStyle("-fx-background-color:#00b894");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(true);
+                    client2Stage.close();
                 });
             }
         });
@@ -87,7 +89,8 @@ public class ClientController implements Initializable, Subscriber {
         this.welcomeStage = welcomeStage;
     }
 
-    @FXML void onActionConnect() {
+    @FXML
+    void onActionConnect() {
         Thread thread = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -102,7 +105,6 @@ public class ClientController implements Initializable, Subscriber {
                     endpoint.setPort(23411);
 
                     client = new TcpClient(endpoint);
-                    //client.setListener(this);
                     client.connect();
                 } else {
                     client.disconnect();
@@ -119,20 +121,21 @@ public class ClientController implements Initializable, Subscriber {
         thread.start();
     }
 
-    @FXML void onActionSend() {
-        Client2Stage clientStage = new Client2Stage(null);
-        clientStage.getClientController().setClient(client);
-        clientStage.show();
+    @FXML
+    void onActionSend() {
+        client2Stage.getController().setClient(client);
+        client2Stage.getController().initialize();
+        client2Stage.show();
     }
 
-    @FXML void onMousePressedBack(MouseEvent event) {
+    @FXML
+    void onMousePressedBack(MouseEvent event) {
         Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
 
-        if(client != null) {
+        if (client != null) {
             client.disconnect();
         }
-
         if (welcomeStage != null) {
             welcomeStage.show();
         }

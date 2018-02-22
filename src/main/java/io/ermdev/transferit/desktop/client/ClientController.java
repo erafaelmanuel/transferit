@@ -91,8 +91,7 @@ public class ClientController implements Initializable, Subscriber, ClientListen
         this.welcomeStage = welcomeStage;
     }
 
-    @FXML
-    protected void onActionConnect() {
+    @FXML void onActionConnect() {
         Thread thread = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -124,8 +123,13 @@ public class ClientController implements Initializable, Subscriber, ClientListen
         thread.start();
     }
 
-    @FXML
-    protected void onMousePressedBack(MouseEvent event) {
+    @FXML void onActionSend() {
+        Client2Stage clientStage = new Client2Stage(null);
+        clientStage.getClientController().setClient(client);
+        clientStage.show();
+    }
+
+    @FXML void onMousePressedBack(MouseEvent event) {
         Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
 

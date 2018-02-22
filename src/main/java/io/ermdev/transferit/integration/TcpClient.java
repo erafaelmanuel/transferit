@@ -131,7 +131,6 @@ public class TcpClient implements Client {
     @Deprecated
     private void startLinking(Socket socket, File file) throws Exception {
         byte buffer[] = new byte[8192];
-        int length = (int) file.length();
         int count = 0;
 
         FileInputStream fis = new FileInputStream(file);
@@ -146,8 +145,7 @@ public class TcpClient implements Client {
             while ((n = bis.read(buffer)) != -1) {
                 dos.write(buffer, 0, n);
                 count += n;
-                final double percent = (100.0 / length) * (double) count;
-                listener.onTransfer(percent);
+                listener.onTransfer(count);
             }
         } else {
             int n;

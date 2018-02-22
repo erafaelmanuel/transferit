@@ -1,7 +1,10 @@
 package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXProgressBar;
+import io.ermdev.transferit.integration.Book;
 import io.ermdev.transferit.integration.Item;
+import io.ermdev.transferit.integration.Subscriber;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -11,19 +14,27 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class MyBox extends HBox {
+public class MyBox extends HBox implements Subscriber {
+
+    private final HBox inside = new HBox(2);
+    private final VBox imgBox = new VBox();
+    private final VBox secondBox = new VBox();
+    private final Label lblTitle = new Label();
+    private final HBox contentBox = new HBox(5);
+    private final JFXProgressBar progressBar = new JFXProgressBar();
+    private final ImageView imgv = new ImageView();
+    private Item item;
+
+    Label label = new Label();
 
     public MyBox(Item item) {
-        final HBox inside = new HBox(2);
-        final VBox imgBox = new VBox();
-        final VBox secondBox = new VBox();
-        final Label lblTitle = new Label();
-        final HBox contentBox = new HBox(5);
-        final JFXProgressBar progressBar = new JFXProgressBar();
-        final ImageView imgv = new ImageView();
+        this.item = item;
+        item.subscribe(this);
+        createUI();
+    }
 
-        final String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
-
+    private void createUI() {
+        String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
         setStyle("-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
         setPadding(new Insets(1, 5, 2, 5));
 
@@ -58,7 +69,7 @@ public class MyBox extends HBox {
         imgv.setFitWidth(24);
         imgv.setImage(new Image(getClass().getResource("/image/img_mp3.png").toString()));
 
-        Label label = new Label("0 %");
+        label.setText("0 %");
         label.setStyle("-fx-text-fill: #fff");
         label.setFont(Font.font("Calibri", 10));
 
@@ -74,5 +85,17 @@ public class MyBox extends HBox {
         inside.getChildren().add(secondBox);
 
         getChildren().add(inside);
+    }
+
+    @Override
+    public void release(Book<?> book) {
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                final double percent = (100 / item.getSize()) * (Double) book.getContent();
+                progressBar.setProgress(percent / 100.0);
+                label.setText(((int) percent) + " %");
+            });
+        });
+        thread.start();
     }
 }

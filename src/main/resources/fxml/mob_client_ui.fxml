@@ -54,7 +54,7 @@
             </VBox>
             <JFXButton fx:id="btnConnect" buttonType="RAISED" layoutX="47.0" layoutY="275.0" onAction="#onActionConnect" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Connect" textFill="WHITE" />
             <JFXTextField fx:id="txtHost" focusColor="#636e72" layoutX="48.0" layoutY="232.0" prefHeight="25.0" prefWidth="152.0" promptText="Enter host (ex. 127.0.0.1 )" unFocusColor="#636e72" />
-            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="47.0" layoutY="317.0" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send File" textFill="WHITE" />
+            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="47.0" layoutY="317.0" onAction="#onActionSend" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send File" textFill="WHITE" />
             <Label fx:id="lblStatus" alignment="CENTER" layoutX="17.0" layoutY="193.0" prefHeight="17.0" prefWidth="215.0" visible="false" />
             <TextField fx:id="txtHidden" layoutX="49.0" layoutY="356.0" prefHeight="19.0" prefWidth="149.0" visible="false" />
          </children>

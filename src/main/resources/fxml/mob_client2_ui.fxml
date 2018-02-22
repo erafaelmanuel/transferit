@@ -26,7 +26,8 @@
                   <VBox fx:id="vboxFile" prefHeight="314.0" prefWidth="228.0" />
                </content>
             </ScrollPane>
-            <Button layoutX="98.0" layoutY="23.0" mnemonicParsing="false" onAction="#onFile" text="New file" />
+            <Button layoutX="60.0" layoutY="24.0" mnemonicParsing="false" onAction="#onFile" text="New file" />
+            <Button layoutX="127.0" layoutY="24.0" mnemonicParsing="false" onAction="#onSend" prefHeight="25.0" prefWidth="60.0" text="Send" />
          </children>
       </AnchorPane>
    </children>

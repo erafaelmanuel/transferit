@@ -1,8 +1,10 @@
 package io.ermdev.transferit.integration;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Item {
+public class Item implements Publisher {
 
     private int index;
 
@@ -13,6 +15,8 @@ public class Item {
     private double progress;
 
     private String image;
+
+    private Set<Subscriber> subscribers = new HashSet<>();
 
     public Item(File file) {
         if (file.exists()) {
@@ -51,6 +55,7 @@ public class Item {
 
     public void setProgress(double progress) {
         this.progress = progress;
+        notifyAll(new Book<>(progress));
     }
 
     public String getImage() {
@@ -59,5 +64,20 @@ public class Item {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public void subscribe(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    @Override
+    public void notifyAll(final Book book) {
+        subscribers.parallelStream().forEach(subscriber -> subscriber.release(book));
     }
 }

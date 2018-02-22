@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Item {
 
-    private static int index = 1;
+    private int index;
 
     private String name;
 
@@ -12,17 +12,21 @@ public class Item {
 
     private double progress;
 
+    private String image;
+
     public Item(File file) {
-        setName(file.getName());
-        setSize(file.length());
+        if (file.exists()) {
+            setName(file.getName());
+            setSize(file.length());
+        }
     }
 
     public int getIndex() {
         return index;
     }
 
-    public void resetIndex() {
-        index = 0;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getName() {
@@ -47,5 +51,13 @@ public class Item {
 
     public void setProgress(double progress) {
         this.progress = progress;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -1,6 +1,7 @@
 package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXProgressBar;
+import io.ermdev.transferit.integration.Item;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -12,11 +13,12 @@ import javafx.scene.text.Font;
 
 public class MyBox extends HBox {
 
-    public MyBox() {
+    public MyBox(Item item) {
         final HBox inside = new HBox(2);
         final VBox imgBox = new VBox();
         final VBox secondBox = new VBox();
         final Label lblTitle = new Label();
+        final HBox contentBox = new HBox(5);
         final JFXProgressBar progressBar = new JFXProgressBar();
         final ImageView imgv = new ImageView();
 
@@ -42,21 +44,29 @@ public class MyBox extends HBox {
         secondBox.setPrefHeight(40);
         secondBox.setPrefWidth(186);
 
-        lblTitle.setText("Please stop me.mp3");
+        lblTitle.setText(item.getName());
         lblTitle.setFont(Font.font("Calibri", 10));
         lblTitle.setPadding(new Insets(0, 0, 0, 5));
         lblTitle.setStyle("-fx-text-fill: #fff");
 
         progressBar.setPadding(new Insets(6, 0, 0, 5));
-        progressBar.setProgress(0.5f);
+        progressBar.setProgress(item.getProgress());
         progressBar.getStylesheets().add(css);
+        progressBar.setMaxWidth(156);
 
         imgv.setFitHeight(24);
         imgv.setFitWidth(24);
         imgv.setImage(new Image(getClass().getResource("/image/img_mp3.png").toString()));
 
+        Label label = new Label("0 %");
+        label.setStyle("-fx-text-fill: #fff");
+        label.setFont(Font.font("Calibri", 10));
+
+        contentBox.getChildren().add(progressBar);
+        contentBox.getChildren().add(label);
+
         secondBox.getChildren().add(lblTitle);
-        secondBox.getChildren().add(progressBar);
+        secondBox.getChildren().add(contentBox);
 
         imgBox.getChildren().add(imgv);
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,6 +26,7 @@
                   <VBox fx:id="vboxFile" prefHeight="314.0" prefWidth="228.0" />
                </content>
             </ScrollPane>
+            <Button layoutX="98.0" layoutY="23.0" mnemonicParsing="false" onAction="#onFile" text="New file" />
          </children>
       </AnchorPane>
    </children>

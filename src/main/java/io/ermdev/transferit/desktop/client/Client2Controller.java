@@ -1,15 +1,15 @@
 package io.ermdev.transferit.desktop.client;
 
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
-import io.ermdev.transferit.integration.ClientListener;
-import io.ermdev.transferit.integration.Endpoint;
-import io.ermdev.transferit.integration.Subscriber;
-import io.ermdev.transferit.integration.TcpClient;
+import io.ermdev.transferit.integration.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Client2Controller implements Initializable, Subscriber, ClientListener {
@@ -23,10 +23,21 @@ public class Client2Controller implements Initializable, Subscriber, ClientListe
     @FXML
     private VBox vboxFile;
 
+    @FXML
+    void onFile() {
+        FileChooser fileChooser = new FileChooser();
+        List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
+        if (newFiles != null && newFiles.size() > 0) {
+            for (File file : newFiles) {
+                vboxFile.getChildren().add(new MyBox(new Item(file)));
+            }
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         for (int i = 0; i < 12; i++) {
-            vboxFile.getChildren().add(new MyBox());
+
         }
     }
 

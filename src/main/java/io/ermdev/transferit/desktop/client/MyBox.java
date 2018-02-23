@@ -53,7 +53,7 @@ public class MyBox extends HBox implements Subscriber {
         String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
         String css2 = getClass().getResource("/css/item-box-style.css").toExternalForm();
 
-        setPadding(new Insets(1, 5, 2, 5));
+        setPadding(new Insets(1, 0, 2, 10));
         setId("parent");
         getStylesheets().add(css2);
 
@@ -111,22 +111,6 @@ public class MyBox extends HBox implements Subscriber {
     }
 
     private boolean fr = true;
-
-//    @Override
-//    public void before() {
-//        Platform.runLater(() -> {
-//            contentBox.getChildren().clear();
-//            contentBox.getChildren().add(progressBar);
-//            contentBox.getChildren().add(lblPercent);
-//        });
-//    }
-//
-//    @Override
-//    public void after() {
-//        lblDetail.setText("Completed -- " + TraficUtil.size(item.getFile().length()));
-//        contentBox.getChildren().clear();
-//        contentBox.getChildren().add(lblDetail);
-//    }
 
     @Override
     public void release(Book<?> book) {

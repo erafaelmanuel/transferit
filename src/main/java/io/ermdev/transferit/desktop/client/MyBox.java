@@ -41,12 +41,15 @@ public class MyBox extends HBox implements Subscriber {
 
     private final Label lblPercent = new Label();
 
-    private Item item;
-
-    private boolean fr = true;
-
     private TrafficUtil trafficUtil = new TrafficUtil();
 
+    private String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
+
+    private String css2 = getClass().getResource("/css/item-box-style.css").toExternalForm();
+
+    private Item item;
+
+    private boolean firstRelease = true;
 
     public MyBox(Item item) {
         setItem(item);
@@ -60,21 +63,18 @@ public class MyBox extends HBox implements Subscriber {
     }
 
     private void generateUI() {
-        String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
-        String css2 = getClass().getResource("/css/item-box-style.css").toExternalForm();
-
         setPadding(new Insets(1, 0, 2, 10));
-        setId("parent");
         getStylesheets().add(css2);
+        setId("parent");
+        getChildren().add(inside);
 
         inside.setAlignment(Pos.CENTER_LEFT);
-        inside.setId("inside");
-
         inside.setPrefHeight(40);
         inside.setPrefWidth(222);
         inside.setPadding(new Insets(3));
         inside.setMinHeight(40);
         inside.setMinWidth(222);
+        inside.setId("inside");
 
         imgBox.setAlignment(Pos.CENTER);
         imgBox.setPrefHeight(24);
@@ -110,7 +110,7 @@ public class MyBox extends HBox implements Subscriber {
         lblDownloaded.setFont(Font.font("Calibri", 10));
         lblDownloaded.setId("detail");
 
-        lblDetail.setText("Queque -- " + trafficUtil.getLastSize());
+        lblDetail.setText("Waiting -- " + trafficUtil.getLastSize());
         lblDetail.setPadding(new Insets(0, 0, 2, 5));
         lblDetail.setFont(Font.font("Calibri", 11));
         lblDetail.setId("detail");
@@ -129,43 +129,40 @@ public class MyBox extends HBox implements Subscriber {
 
         inside.getChildren().add(imgBox);
         inside.getChildren().add(secondBox);
-
-        getChildren().add(inside);
     }
 
     @Override
     public void release(Book<?> book) {
-        if (fr) {
+        if (firstRelease) {
             Platform.runLater(() -> {
                 contentBox.getChildren().clear();
                 contentBox.getChildren().add(progressBox);
                 contentBox.getChildren().add(progressBar);
             });
-            fr = false;
+            firstRelease = false;
         }
+        final double content = (Double) book.getContent();
+        final double percent = (100 / item.getSize()) * content;
         if ((Double) book.getContent() < item.getSize()) {
             Platform.runLater(() -> {
-                final double percent = (100 / item.getSize()) * (Double) book.getContent();
-                lblDownloaded.setText(trafficUtil.simply(((Double) book.getContent()).longValue()) + " of " +
-                        trafficUtil.getLastSize());
-                progressBar.setProgress(percent / 100.0);
+                lblDownloaded.setText(trafficUtil.simply((long) content) + " of " + trafficUtil.getLastSize());
                 lblPercent.setText(((int) percent) + "%");
+                progressBar.setProgress(percent / 100.0);
             });
         } else {
             Platform.runLater(() -> {
-                final double percent = (100 / item.getSize()) * (Double) book.getContent();
-                progressBar.setProgress(percent / 100.0);
+                lblDownloaded.setText(trafficUtil.simply((long) item.getSize()) + " of " + trafficUtil.getLastSize());
                 lblPercent.setText("100%");
+                progressBar.setProgress(percent / 100.0);
             });
-
             try {
                 Thread.sleep(400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             Platform.runLater(() -> {
                 lblDetail.setText("Completed -- " + trafficUtil.getLastSize());
+                lblDetail.setStyle("-fx-text-fill: #009432");
                 contentBox.getChildren().clear();
                 contentBox.getChildren().add(lblDetail);
             });

@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXProgressBar;
 import io.ermdev.transferit.desktop.util.ImageUtil;
-import io.ermdev.transferit.desktop.util.TraficUtil;
+import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.integration.Book;
 import io.ermdev.transferit.integration.Item;
 import io.ermdev.transferit.integration.Subscriber;
@@ -92,7 +92,7 @@ public class MyBox extends HBox implements Subscriber {
         lblPercent.setFont(Font.font("Calibri", 10));
         lblPercent.setId("percent");
 
-        lblDetail.setText("Queque -- " + TraficUtil.size(item.getFile().length()));
+        lblDetail.setText("Queque -- " + TrafficUtil.size(item.getFile().length()));
         lblDetail.setPadding(new Insets(0, 0, 0, 5));
         lblDetail.setFont(Font.font("Calibri", 11));
         lblDetail.setId("detail");
@@ -142,7 +142,7 @@ public class MyBox extends HBox implements Subscriber {
             }
 
             Platform.runLater(() -> {
-                lblDetail.setText("Completed -- " + TraficUtil.size(item.getFile().length()));
+                lblDetail.setText("Completed -- " + TrafficUtil.size(item.getFile().length()));
                 contentBox.getChildren().clear();
                 contentBox.getChildren().add(lblDetail);
             });

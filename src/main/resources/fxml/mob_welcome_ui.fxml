@@ -60,12 +60,12 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="224.0" onAction="#onActionSend" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="230.0" onAction="#onSend" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="277.0" onAction="#onActionReceive" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="283.0" onAction="#onReceive" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>

@@ -27,7 +27,6 @@ public class WelcomeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         imgv1.setImage(new Image(getClass().getResource("/image/img1.png").toString()));
         imgv2.setImage(new Image(getClass().getResource("/image/img2.png").toString()));
         imgv3dots.setImage(new Image(getClass().getResource("/image/img3dots.png").toString()));
@@ -37,14 +36,14 @@ public class WelcomeController implements Initializable {
     }
 
     @FXML
-    public void onActionSend(ActionEvent event) {
+    public void onSend(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
         stage.hide();
         stage.getOnWelcomeClose().onClose(false);
     }
 
     @FXML
-    public void onActionReceive(ActionEvent event) {
+    public void onReceive(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
         stage.hide();
         stage.getOnWelcomeClose().onClose(true);

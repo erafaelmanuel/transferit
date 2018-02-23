@@ -21,20 +21,19 @@ import java.util.List;
 
 public class MobClient2Controller implements ClientListener {
 
-    @FXML
-    VBox container;
+    @FXML VBox container;
 
-    @FXML
-    Label lblStatus;
+    @FXML Label lblStatus;
 
-    @FXML
-    StackPane browser;
+    @FXML StackPane browser;
 
     private TcpClient client;
 
     private List<Item> items = new ArrayList<>();
 
     private ItemManager itemManager = new ItemManager();
+
+    private boolean activated;
 
     public void initialize() {
         onClear();
@@ -45,23 +44,20 @@ public class MobClient2Controller implements ClientListener {
         client.setListener(this);
     }
 
-    @FXML
-    void onClear() {
+    @FXML void onClear() {
         items.clear();
         container.getChildren().clear();
         container.getChildren().add(browser);
-
         lblStatus.setStyle("-fx-background-color: #ff9f43");
         lblStatus.setText("No file to send");
     }
 
-    @FXML
-    void onBrowse() {
+    @FXML void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         if (newFiles != null && newFiles.size() > 0) {
-            container.getChildren().clear();
             long size = 0;
+            container.getChildren().clear();
             for (File file : newFiles) {
                 Item item = new Item(file);
                 size += file.length();
@@ -73,43 +69,36 @@ public class MobClient2Controller implements ClientListener {
         }
     }
 
-    @FXML
-    void onSend() {
+    @FXML void onSend() {
         Thread thread = new Thread(() -> {
             if (client != null) {
                 itemManager.setItems(items);
-                Platform.runLater(() -> {
-                    lblStatus.setStyle("-fx-background-color: #0984e3");
-                    lblStatus.setText("Sending");
-                });
                 for (Item item : items) {
                     client.sendFile(item.getFile());
                 }
-                items.clear();
                 Platform.runLater(() -> {
                     lblStatus.setStyle("-fx-background-color: #00b894");
                     lblStatus.setText("Completed");
                 });
+                items.clear();
             }
         });
         thread.start();
     }
 
-    @FXML
-    void onDrag(DragEvent event) {
+    @FXML void onDrag(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
     }
 
-    @FXML
-    void onDrop(DragEvent event) {
+    @FXML void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasFiles()) {
-            container.getChildren().clear();
             long size = 0;
+            container.getChildren().clear();
             for (File file : db.getFiles()) {
                 Item item = new Item(file);
                 size += file.length();
@@ -127,10 +116,13 @@ public class MobClient2Controller implements ClientListener {
     @Override
     public void onStart() {
         itemManager.next();
-        stop = false;
+        activated = true;
         new Thread(() -> {
-            while (!stop) {
-                updateSpeed();
+            while (activated) {
+                Platform.runLater(() -> {
+                    lblStatus.setStyle("-fx-background-color: #0984e3");
+                    lblStatus.setText("Transfer speed : " + client.getSpeed());
+                });
                 try {
                     Thread.sleep(400);
                 } catch (InterruptedException e) {
@@ -152,13 +144,6 @@ public class MobClient2Controller implements ClientListener {
         if (itemManager.get() != null) {
             itemManager.get().setProgress(total);
         }
-        stop = true;
-    }
-
-    boolean stop = false;
-    public void updateSpeed() {
-        Platform.runLater(() -> {
-            lblStatus.setText("Transfer speed : " + client.getSpeed());
-        });
+        activated = false;
     }
 }

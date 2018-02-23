@@ -15,4 +15,14 @@ public class TrafficUtil {
             return (buffer + " bytes");
         }
     }
+
+    public static String speed(Long buffer) {
+        if ((buffer / 1000000) > 0) {
+            return String.format(Locale.ENGLISH, "%.2f GB/s", ((double) buffer) / 1000000.0);
+        } else if ((buffer / 1000) > 0) {
+            return String.format(Locale.ENGLISH, "%.2f MB/s", ((double) buffer) / 1000.0);
+        } else {
+            return String.format(Locale.ENGLISH, "%.2f KB/s", ((double) buffer));
+        }
+    }
 }

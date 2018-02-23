@@ -12,6 +12,19 @@ public class MainApplication extends Application implements OnWelcomeClose {
     private WelcomeStage welcomeStage;
 
     public static void main(String args[]) {
+
+//        long start = System.currentTimeMillis();
+//
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        long cost = System.currentTimeMillis();
+//
+//        System.out.println(start + " " + cost + " " + (cost - start));
+
+
         launch(args);
     }
 

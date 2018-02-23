@@ -1,5 +1,7 @@
 package io.ermdev.transferit.integration;
 
+import io.ermdev.transferit.desktop.util.TrafficUtil;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -130,8 +132,8 @@ public class TcpClient implements Client {
 
     @Deprecated
     private void startLinking(Socket socket, File file) throws Exception {
-        byte buffer[] = new byte[8192];
-        int count = 0;
+        int total = 0;
+        int read;
 
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
@@ -141,18 +143,23 @@ public class TcpClient implements Client {
         dos.writeUTF(file.getName());
 
         if (listener != null) {
+            byte buffer[] = new byte[10240];
+            long start = System.currentTimeMillis();
             listener.onStart();
-            int n;
-            while ((n = bis.read(buffer)) != -1) {
-                dos.write(buffer, 0, n);
-                count += n;
-                listener.onUpdate(count);
+            while ((read = bis.read(buffer)) != -1) {
+                dos.write(buffer, 0, read);
+                total += read;
+                long cost = System.currentTimeMillis() - start;
+                if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
+                    speed = TrafficUtil.speed(total / cost);
+                }
+                listener.onUpdate(total);
             }
             listener.onComplete(file.length());
         } else {
-            int n;
-            while ((n = bis.read(buffer)) != -1) {
-                dos.write(buffer, 0, n);
+            byte buffer[] = new byte[8192];
+            while ((read = bis.read(buffer)) != -1) {
+                dos.write(buffer, 0, read);
             }
         }
         dos.flush();
@@ -166,5 +173,11 @@ public class TcpClient implements Client {
     @Override
     public void setListener(ClientListener listener) {
         this.listener = listener;
+    }
+
+    String speed = "0 byte/s";
+
+    public String getSpeed() {
+        return speed;
     }
 }

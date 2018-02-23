@@ -97,6 +97,7 @@ public class MyBox extends HBox implements Subscriber {
         imgv.setFitHeight(24);
         imgv.setFitWidth(24);
         imgv.setImage(new Image(getClass().getResource(ImageUtil.thumbnail(item.getName())).toString()));
+        imgv.setId("thumbnail");
 
         lblPercent.setPadding(new Insets(0, 0, 0, 0));
         lblPercent.setText("0%");
@@ -125,6 +126,7 @@ public class MyBox extends HBox implements Subscriber {
         secondBox.getChildren().add(contentBox);
 
         imgBox.getChildren().add(imgv);
+
         inside.getChildren().add(imgBox);
         inside.getChildren().add(secondBox);
 

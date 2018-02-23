@@ -5,8 +5,9 @@
 #inside {
     -fx-background-radius: 3;
     -fx-background-color: #f1f2f6;
-    -fx-border-color: #2e86de;
+    -fx-background-color: #fff;
     -fx-border-color: #576574;
+    -fx-border-color: #0984e3;
 }
 
 #title {
@@ -23,5 +24,4 @@
 }
 
 #thumbnail {
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 2, 0.0 , 0 , 1 );
 }

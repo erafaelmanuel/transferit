@@ -14,6 +14,8 @@ public class TcpClient implements Client {
 
     private Protocol protocol = new Protocol();
 
+    private String speed = "0 byte/s";
+
     public TcpClient(Endpoint endpoint) {
         this.endpoint = endpoint;
     }
@@ -134,7 +136,6 @@ public class TcpClient implements Client {
     private void startLinking(Socket socket, File file) throws Exception {
         int total = 0;
         int read;
-
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
 
@@ -174,8 +175,6 @@ public class TcpClient implements Client {
     public void setListener(ClientListener listener) {
         this.listener = listener;
     }
-
-    String speed = "0 byte/s";
 
     public String getSpeed() {
         return speed;

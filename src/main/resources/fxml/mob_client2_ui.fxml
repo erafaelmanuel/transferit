@@ -31,8 +31,8 @@
                      </children></VBox>
                </content>
             </ScrollPane>
-            <Button layoutX="59.0" layoutY="30.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="60.0" text="Clear" />
-            <Button layoutX="128.0" layoutY="30.0" mnemonicParsing="false" onAction="#onSend" prefHeight="25.0" prefWidth="60.0" text="Send" />
+            <Button fx:id="btnClear" layoutX="59.0" layoutY="30.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="60.0" text="Clear" />
+            <Button fx:id="btnSend" disable="true" layoutX="128.0" layoutY="30.0" mnemonicParsing="false" onAction="#onSend" prefHeight="25.0" prefWidth="60.0" text="Send" />
             <Label fx:id="lblStatus" alignment="CENTER" prefHeight="25.0" prefWidth="247.0" textFill="WHITE" />
          </children>
       </AnchorPane>

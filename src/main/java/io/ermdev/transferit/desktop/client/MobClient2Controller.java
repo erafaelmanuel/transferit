@@ -7,6 +7,7 @@ import io.ermdev.transferit.integration.Item;
 import io.ermdev.transferit.integration.TcpClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -26,6 +27,10 @@ public class MobClient2Controller implements ClientListener {
     @FXML Label lblStatus;
 
     @FXML StackPane browser;
+
+    @FXML Button btnSend;
+
+    @FXML Button btnClear;
 
     private TcpClient client;
 
@@ -50,6 +55,7 @@ public class MobClient2Controller implements ClientListener {
         container.getChildren().add(browser);
         lblStatus.setStyle("-fx-background-color: #ff9f43");
         lblStatus.setText("No file to send");
+        btnSend.setDisable(true);
     }
 
     @FXML void onBrowse() {
@@ -66,12 +72,21 @@ public class MobClient2Controller implements ClientListener {
             }
             lblStatus.setStyle("-fx-background-color: #ff9f43");
             lblStatus.setText(items.size() + " file(s)   --  Total : " + new TrafficUtil().size(size));
+            btnSend.setDisable(false);
         }
     }
 
     @FXML void onSend() {
+        if(btnSend.getText().equalsIgnoreCase("Cancel")) {
+            client.disconnect();
+            return;
+        }
         Thread thread = new Thread(() -> {
             if (client != null) {
+                Platform.runLater(() -> {
+                    btnClear.setDisable(true);
+                    btnSend.setText("Cancel");
+                });
                 itemManager.setItems(items);
                 for (Item item : items) {
                     client.sendFile(item.getFile());
@@ -79,6 +94,8 @@ public class MobClient2Controller implements ClientListener {
                 Platform.runLater(() -> {
                     lblStatus.setStyle("-fx-background-color: #00b894");
                     lblStatus.setText("Completed");
+                    btnClear.setDisable(false);
+                    btnSend.setText("Send");
                 });
                 items.clear();
             }
@@ -107,6 +124,7 @@ public class MobClient2Controller implements ClientListener {
             }
             lblStatus.setStyle("-fx-background-color: #ff9f43");
             lblStatus.setText(items.size() + " file(s)   --  Total : " + new TrafficUtil().size(size));
+            btnSend.setDisable(false);
             success = true;
         }
         event.setDropCompleted(success);

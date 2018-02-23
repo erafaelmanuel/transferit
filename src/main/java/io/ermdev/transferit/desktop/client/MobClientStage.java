@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class ClientStage extends Stage {
+public class MobClientStage extends Stage {
 
-    private ClientController clientUIController;
+    private MobClientController clientUIController;
     private OnWelcomeClose onWelcomeClose;
 
-    public ClientStage(OnWelcomeClose onWelcomeClose) {
+    public MobClientStage(OnWelcomeClose onWelcomeClose) {
         this.onWelcomeClose = onWelcomeClose;
         createClientStage();
     }
@@ -28,17 +28,17 @@ public class ClientStage extends Stage {
 
             setTitle("Transferit v1.0");
             setScene(scene);
-            setClientController(fxmlLoader.getController());
+            setController(fxmlLoader.getController());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ClientController getClientController() {
+    public MobClientController getController() {
         return clientUIController;
     }
 
-    public void setClientController(ClientController clientUIController) {
+    public void setController(MobClientController clientUIController) {
         this.clientUIController = clientUIController;
     }
 

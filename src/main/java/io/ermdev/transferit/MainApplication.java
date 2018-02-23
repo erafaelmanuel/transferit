@@ -1,7 +1,6 @@
 package io.ermdev.transferit;
 
-import io.ermdev.transferit.desktop.client.Client2Stage;
-import io.ermdev.transferit.desktop.client.ClientStage;
+import io.ermdev.transferit.desktop.client.MobClientStage;
 import io.ermdev.transferit.desktop.stage.ServerStage;
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
@@ -32,8 +31,8 @@ public class MainApplication extends Application implements OnWelcomeClose {
                 e.printStackTrace();
             }
         } else {
-            ClientStage clientStage = new ClientStage(this);
-            clientStage.getClientController().setWelcomeStage(welcomeStage);
+            MobClientStage clientStage = new MobClientStage(this);
+            clientStage.getController().setWelcomeStage(welcomeStage);
             clientStage.show();
         }
     }

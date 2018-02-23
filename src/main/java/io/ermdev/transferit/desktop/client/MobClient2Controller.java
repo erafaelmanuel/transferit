@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client2Controller implements ClientListener {
+public class MobClient2Controller implements ClientListener {
 
     @FXML VBox container;
 

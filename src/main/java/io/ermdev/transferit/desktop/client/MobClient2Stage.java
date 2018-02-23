@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class Client2Stage extends Stage {
+public class MobClient2Stage extends Stage {
 
-    private Client2Controller clientUIController;
+    private MobClient2Controller clientUIController;
 
-    public Client2Stage() {
+    public MobClient2Stage() {
         createClientStage();
     }
 
@@ -36,11 +36,11 @@ public class Client2Stage extends Stage {
         }
     }
 
-    public Client2Controller getController() {
+    public MobClient2Controller getController() {
         return clientUIController;
     }
 
-    public void setController(Client2Controller clientUIController) {
+    public void setController(MobClient2Controller clientUIController) {
         this.clientUIController = clientUIController;
     }
 }

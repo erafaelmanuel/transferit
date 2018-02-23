@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientController implements Initializable, Subscriber {
+public class MobClientController implements Initializable, Subscriber {
 
     @FXML ImageView imgv1;
 
@@ -40,7 +40,7 @@ public class ClientController implements Initializable, Subscriber {
 
     private Endpoint endpoint;
 
-    private Client2Stage client2Stage = new Client2Stage();
+    private MobClient2Stage client2Stage = new MobClient2Stage();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

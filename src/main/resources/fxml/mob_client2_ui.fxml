@@ -16,7 +16,7 @@
                <content>
                   <VBox fx:id="container" prefHeight="334.0" prefWidth="228.0">
                      <children>
-                        <StackPane fx:id="browser" onMouseClicked="#onBrowse" prefHeight="336.0" prefWidth="228.0">
+                        <StackPane fx:id="browser" onDragDropped="#onDrop" onDragOver="#onDrag" onMouseClicked="#onBrowse" prefHeight="336.0" prefWidth="228.0">
                            <children>
                               <Label style="-fx-border-color: #2d3436; -fx-border-style: dotted; -fx-background-color: #ecf0f1;" text="Browse (or ) Drop your file here" textFill="#5f5f61">
                                  <padding>

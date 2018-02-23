@@ -29,12 +29,12 @@
                               <Font name="Calibri" size="11.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgvback" fitHeight="15.0" fitWidth="15.0" layoutX="7.0" layoutY="9.0" onMousePressed="#onMousePressedBack" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvback" fitHeight="15.0" fitWidth="15.0" layoutX="7.0" layoutY="9.0" onMouseClicked="#onBack" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/img_prev.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="22.0" layoutY="10.0" onMousePressed="#onMousePressedBack" text="BACK" textFill="#636e72">
+                        <Label layoutX="22.0" layoutY="10.0" onMouseClicked="#onBack" text="BACK" textFill="#636e72">
                            <font>
                               <Font name="Calibri" size="11.0" />
                            </font>
@@ -52,9 +52,9 @@
                   </Label>
                </children>
             </VBox>
-            <JFXButton fx:id="btnConnect" buttonType="RAISED" layoutX="47.0" layoutY="275.0" onAction="#onActionConnect" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Connect" textFill="WHITE" />
+            <JFXButton fx:id="btnConnect" buttonType="RAISED" layoutX="47.0" layoutY="275.0" onAction="#onConnection" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Connect" textFill="WHITE" />
             <JFXTextField fx:id="txtHost" focusColor="#636e72" layoutX="48.0" layoutY="232.0" prefHeight="25.0" prefWidth="152.0" promptText="Enter host (ex. 127.0.0.1 )" unFocusColor="#636e72" />
-            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="47.0" layoutY="317.0" onAction="#onActionSend" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send File" textFill="WHITE" />
+            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="47.0" layoutY="317.0" onAction="#onFile" prefHeight="33.0" prefWidth="152.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send File" textFill="WHITE" />
             <Label fx:id="lblStatus" alignment="CENTER" layoutX="17.0" layoutY="193.0" prefHeight="17.0" prefWidth="215.0" visible="false" />
             <TextField fx:id="txtHidden" layoutX="49.0" layoutY="356.0" prefHeight="19.0" prefWidth="149.0" visible="false" />
          </children>

@@ -81,7 +81,7 @@ public class MobClientController implements Initializable, Subscriber {
         this.welcomeStage = welcomeStage;
     }
 
-    @FXML void onActionConnect() {
+    @FXML void onConnection() {
         Thread thread = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -112,14 +112,14 @@ public class MobClientController implements Initializable, Subscriber {
         thread.start();
     }
 
-    @FXML void onActionSend() {
+    @FXML void onFile() {
         client2Stage.getController().setClient(client);
         client2Stage.getController().initialize();
         client2Stage.showAndWait();
     }
 
     @FXML
-    void onMousePressedBack(MouseEvent event) {
+    void onBack(MouseEvent event) {
         Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
 

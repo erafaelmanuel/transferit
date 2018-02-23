@@ -46,7 +46,7 @@ public class ImageUtil {
         } else if (extension.equalsIgnoreCase("ppt")) {
             return "/image/line/ppt.png";
         } else if (extension.equalsIgnoreCase("pdf")) {
-            return "/image/lin/pdf.png";
+            return "/image/line/pdf.png";
         } else if (extension.equalsIgnoreCase("json-file")) {
             return "/image/line/json-file.png";
         } else if (extension.equalsIgnoreCase("svg")) {

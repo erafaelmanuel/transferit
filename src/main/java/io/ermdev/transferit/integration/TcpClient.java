@@ -151,7 +151,7 @@ public class TcpClient implements Client {
                 total += read;
                 long cost = System.currentTimeMillis() - start;
                 if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
-                    speed = TrafficUtil.speed(total / cost);
+                    speed = new TrafficUtil().speed(total / cost);
                 }
                 listener.onUpdate(total);
             }

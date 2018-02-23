@@ -21,11 +21,14 @@ import java.util.List;
 
 public class MobClient2Controller implements ClientListener {
 
-    @FXML VBox container;
+    @FXML
+    VBox container;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML StackPane browser;
+    @FXML
+    StackPane browser;
 
     private TcpClient client;
 
@@ -42,7 +45,8 @@ public class MobClient2Controller implements ClientListener {
         client.setListener(this);
     }
 
-    @FXML void onClear() {
+    @FXML
+    void onClear() {
         items.clear();
         container.getChildren().clear();
         container.getChildren().add(browser);
@@ -51,7 +55,8 @@ public class MobClient2Controller implements ClientListener {
         lblStatus.setText("No file to send");
     }
 
-    @FXML void onBrowse() {
+    @FXML
+    void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         if (newFiles != null && newFiles.size() > 0) {
@@ -64,11 +69,12 @@ public class MobClient2Controller implements ClientListener {
                 items.add(item);
             }
             lblStatus.setStyle("-fx-background-color: #ff9f43");
-            lblStatus.setText(items.size() + " file(s)   --  Total : " + TrafficUtil.size(size));
+            lblStatus.setText(items.size() + " file(s)   --  Total : " + new TrafficUtil().size(size));
         }
     }
 
-    @FXML void onSend() {
+    @FXML
+    void onSend() {
         Thread thread = new Thread(() -> {
             if (client != null) {
                 itemManager.setItems(items);
@@ -89,14 +95,16 @@ public class MobClient2Controller implements ClientListener {
         thread.start();
     }
 
-    @FXML void onDrag(DragEvent event) {
+    @FXML
+    void onDrag(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
     }
 
-    @FXML void onDrop(DragEvent event) {
+    @FXML
+    void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasFiles()) {
@@ -109,7 +117,7 @@ public class MobClient2Controller implements ClientListener {
                 items.add(item);
             }
             lblStatus.setStyle("-fx-background-color: #ff9f43");
-            lblStatus.setText(items.size() + " file(s)   --  Total : " + TrafficUtil.size(size));
+            lblStatus.setText(items.size() + " file(s)   --  Total : " + new TrafficUtil().size(size));
             success = true;
         }
         event.setDropCompleted(success);
@@ -119,6 +127,17 @@ public class MobClient2Controller implements ClientListener {
     @Override
     public void onStart() {
         itemManager.next();
+        stop = false;
+        new Thread(() -> {
+            while (!stop) {
+                updateSpeed();
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -133,5 +152,13 @@ public class MobClient2Controller implements ClientListener {
         if (itemManager.get() != null) {
             itemManager.get().setProgress(total);
         }
+        stop = true;
+    }
+
+    boolean stop = false;
+    public void updateSpeed() {
+        Platform.runLater(() -> {
+            lblStatus.setText("Transfer speed : " + client.getSpeed());
+        });
     }
 }

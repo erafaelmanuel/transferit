@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -26,7 +27,9 @@ public class MyBox extends HBox implements Subscriber {
 
     private final Label lblTitle = new Label();
 
-    private final HBox contentBox = new HBox(5);
+    private final VBox contentBox = new VBox();
+
+    private final BorderPane progressBox = new BorderPane();
 
     private final JFXProgressBar progressBar = new JFXProgressBar();
 
@@ -34,9 +37,15 @@ public class MyBox extends HBox implements Subscriber {
 
     private final Label lblDetail = new Label();
 
+    private final Label lblDownloaded = new Label();
+
     private final Label lblPercent = new Label();
 
     private Item item;
+
+    private boolean fr = true;
+
+    private TrafficUtil trafficUtil = new TrafficUtil();
 
 
     public MyBox(Item item) {
@@ -46,6 +55,7 @@ public class MyBox extends HBox implements Subscriber {
 
     private void setItem(Item item) {
         this.item = item;
+        trafficUtil.size((long) item.getSize());
         item.subscribe(this);
     }
 
@@ -79,52 +89,63 @@ public class MyBox extends HBox implements Subscriber {
         lblTitle.setPadding(new Insets(0, 0, 0, 5));
         lblTitle.setId("title");
 
-        progressBar.setPadding(new Insets(6, 0, 0, 5));
+        progressBar.setPadding(new Insets(0, 0, 0, 5));
         progressBar.setProgress(item.getProgress());
         progressBar.getStylesheets().add(css);
-        progressBar.setMaxWidth(156);
+        progressBar.setMaxWidth(175);
 
         imgv.setFitHeight(24);
         imgv.setFitWidth(24);
         imgv.setImage(new Image(getClass().getResource(ImageUtil.thumbnail(item.getName())).toString()));
 
+        lblPercent.setPadding(new Insets(0, 0, 0, 0));
         lblPercent.setText("0%");
         lblPercent.setFont(Font.font("Calibri", 10));
+        lblPercent.setAlignment(Pos.CENTER_RIGHT);
         lblPercent.setId("percent");
 
-        lblDetail.setText("Queque -- " + TrafficUtil.size(item.getFile().length()));
-        lblDetail.setPadding(new Insets(0, 0, 0, 5));
+        lblDownloaded.setText("0.0 of " + trafficUtil.getLastSize());
+        lblDownloaded.setPadding(new Insets(0, 0, 0, 5));
+        lblDownloaded.setFont(Font.font("Calibri", 10));
+        lblDownloaded.setId("detail");
+
+        lblDetail.setText("Queque -- " + trafficUtil.getLastSize());
+        lblDetail.setPadding(new Insets(0, 0, 2, 5));
         lblDetail.setFont(Font.font("Calibri", 11));
         lblDetail.setId("detail");
 
+        progressBox.setMaxWidth(175);
+
         contentBox.getChildren().add(lblDetail);
+
+        progressBox.setLeft(lblDownloaded);
+        progressBox.setRight(lblPercent);
 
         secondBox.getChildren().add(lblTitle);
         secondBox.getChildren().add(contentBox);
 
         imgBox.getChildren().add(imgv);
-
         inside.getChildren().add(imgBox);
         inside.getChildren().add(secondBox);
 
         getChildren().add(inside);
     }
 
-    private boolean fr = true;
-
     @Override
     public void release(Book<?> book) {
         if (fr) {
             Platform.runLater(() -> {
                 contentBox.getChildren().clear();
+                contentBox.getChildren().add(progressBox);
                 contentBox.getChildren().add(progressBar);
-                contentBox.getChildren().add(lblPercent);
             });
             fr = false;
         }
         if ((Double) book.getContent() < item.getSize()) {
             Platform.runLater(() -> {
                 final double percent = (100 / item.getSize()) * (Double) book.getContent();
+                lblDownloaded.setText(trafficUtil.simply(((Double) book.getContent()).longValue()) + " of " +
+                        trafficUtil.getLastSize());
                 progressBar.setProgress(percent / 100.0);
                 lblPercent.setText(((int) percent) + "%");
             });
@@ -142,7 +163,7 @@ public class MyBox extends HBox implements Subscriber {
             }
 
             Platform.runLater(() -> {
-                lblDetail.setText("Completed -- " + TrafficUtil.size(item.getFile().length()));
+                lblDetail.setText("Completed -- " + trafficUtil.getLastSize());
                 contentBox.getChildren().clear();
                 contentBox.getChildren().add(lblDetail);
             });

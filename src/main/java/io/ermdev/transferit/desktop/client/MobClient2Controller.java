@@ -44,7 +44,7 @@ public class MobClient2Controller implements ClientListener {
         container.getChildren().clear();
         container.getChildren().add(browser);
 
-        lblStatus.setStyle("-fx-background-color:  #222f3e");
+        lblStatus.setStyle("-fx-background-color: #ff9f43");
         lblStatus.setText("No file to send");
     }
 

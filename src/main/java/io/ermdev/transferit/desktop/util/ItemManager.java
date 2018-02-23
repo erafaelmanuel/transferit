@@ -12,8 +12,6 @@ public class ItemManager {
 
     private Item item1;
 
-    private Item item2;
-
     public void setItems(List<Item> items) {
         this.items = items;
         counter = -1;
@@ -22,7 +20,6 @@ public class ItemManager {
     public boolean next() {
         counter++;
         if (items.size() > counter) {
-            item2 = item1;
             item1 = items.get(counter);
             return true;
         } else {
@@ -32,9 +29,5 @@ public class ItemManager {
 
     public Item get() {
         return item1;
-    }
-
-    public Item getPrev() {
-        return item2;
     }
 }

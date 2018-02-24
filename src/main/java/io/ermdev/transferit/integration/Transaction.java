@@ -1,27 +1,26 @@
 package io.ermdev.transferit.integration;
 
 import io.ermdev.transferit.desktop.util.TrafficUtil;
-import io.ermdev.transferit.integration.Book;
-import io.ermdev.transferit.integration.Item;
-import io.ermdev.transferit.integration.Subscriber;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Transaction extends Item {
+public class Transaction extends Item implements Publisher {
+
+    private Set<Subscriber> subscribers = new HashSet<>();
 
     private String percentage;
-
-    private String fileSize;
 
     public Transaction(File file) {
         super(file);
     }
 
     public String getPercentage() {
-        if(percentage != null && percentage.equalsIgnoreCase("Completed")) {
+        if (percentage != null && percentage.equalsIgnoreCase("Completed")) {
             return percentage;
         }
-        return percentage = (int)((100 / getSize()) * getProgress()) + "%";
+        return percentage = (int) ((100 / getSize()) * getProgress()) + "%";
     }
 
     public void setPercentage(String percentage) {
@@ -84,12 +83,12 @@ public class Transaction extends Item {
 
     @Override
     public void subscribe(Subscriber subscriber) {
-        super.subscribe(subscriber);
+        subscribers.add(subscriber);
     }
 
     @Override
     public void unsubscribe(Subscriber subscriber) {
-        super.unsubscribe(subscriber);
+        subscribers.remove(subscriber);
     }
 
     @Override

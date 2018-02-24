@@ -136,7 +136,7 @@ public class MobClient2Controller implements ClientListener {
 
     @Override
     public void onSendFileStart(Item item) {
-
+        item.notifyBefore();
     }
 
     @Override
@@ -147,6 +147,7 @@ public class MobClient2Controller implements ClientListener {
     @Override
     public void onSendFileComplete(Item item) {
         item.setProgress(item.getSize());
+        item.notifyAfter();
     }
 
     @Override

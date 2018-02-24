@@ -1,32 +1,17 @@
 package io.ermdev.transferit.integration;
 
-import io.ermdev.transferit.desktop.util.TrafficUtil;
-
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class TcpClient implements Client {
 
-    final Endpoint endpoint;
-
-    private ClientListener listener;
+    private final Endpoint endpoint;
 
     private Protocol protocol = new Protocol();
 
-    private String speed = "0 byte/s";
-
     public TcpClient(Endpoint endpoint) {
         this.endpoint = endpoint;
-    }
-
-    @Override
-    public Socket newSocket() throws TcpException {
-        try {
-            return new Socket(endpoint.getHost(), endpoint.getPort());
-        } catch (Exception e) {
-            throw new TcpException("Failed to make a socket!");
-        }
     }
 
     @Override
@@ -51,6 +36,39 @@ public class TcpClient implements Client {
                 protocol.invalidateSocket();
             }
             endpoint.setConnected(false);
+        }
+    }
+
+    @Override
+    public Socket newSocket() throws TcpException {
+        try {
+            return new Socket(endpoint.getHost(), endpoint.getPort());
+        } catch (Exception e) {
+            throw new TcpException("Failed to make a socket!");
+        }
+    }
+
+    @Override
+    public void sendFile(File file) {
+        synchronized (endpoint) {
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                BufferedInputStream bis = new BufferedInputStream(fis);
+
+                BufferedOutputStream bos = new BufferedOutputStream(newSocket().getOutputStream());
+                DataOutputStream dos = new DataOutputStream(bos);
+                dos.writeUTF(file.getName());
+
+                byte buffer[] = new byte[8192];
+                int read;
+                while ((read = bis.read(buffer)) != -1) {
+                    dos.write(buffer, 0, read);
+                }
+                dos.flush();
+                dos.close();
+            } catch (Exception e) {
+                endpoint.setConnected(false);
+            }
         }
     }
 
@@ -113,16 +131,6 @@ public class TcpClient implements Client {
         }
     }
 
-    public void sendFile(File file) {
-        synchronized (endpoint) {
-            try {
-                gg(newSocket(), file);
-            } catch (Exception e) {
-                endpoint.setConnected(false);
-            }
-        }
-    }
-
     private void sendMessage(String message, OutputStream os) throws TcpException {
         try {
             os.write(message.getBytes(StandardCharsets.UTF_8));
@@ -131,73 +139,5 @@ public class TcpClient implements Client {
         } catch (Exception e) {
             throw new TcpException("Sending message failed");
         }
-    }
-
-    @Deprecated
-    private void startLinking(Socket socket, File file) throws Exception {
-        int total = 0;
-        int read;
-        FileInputStream fis = new FileInputStream(file);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-
-        BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
-        DataOutputStream dos = new DataOutputStream(bos);
-        dos.writeUTF(file.getName());
-
-        if (listener != null) {
-            byte buffer[] = new byte[10240];
-            long start = System.currentTimeMillis();
-            //listener.onStart();
-            while ((read = bis.read(buffer)) != -1) {
-                dos.write(buffer, 0, read);
-                total += read;
-                long cost = System.currentTimeMillis() - start;
-                if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
-                    speed = new TrafficUtil().speed(total / cost);
-                }
-                //listener.onUpdate(total);
-            }
-            //listener.onComplete(file.length());
-        } else {
-            byte buffer[] = new byte[8192];
-            while ((read = bis.read(buffer)) != -1) {
-                dos.write(buffer, 0, read);
-            }
-        }
-        dos.flush();
-        dos.close();
-
-        if (!socket.isClosed()) {
-            socket.close();
-        }
-    }
-
-    @Deprecated
-    private void gg(Socket socket, File file) throws Exception {
-        int total = 0;
-        int read;
-
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-        dos.writeUTF(file.getName());
-
-        byte buffer[] = new byte[10240];
-        long start = System.currentTimeMillis();
-
-        while ((read = bis.read(buffer)) != -1) {
-            dos.write(buffer, 0, read);
-            total += read;
-            long cost = System.currentTimeMillis() - start;
-            if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
-                speed = new TrafficUtil().speed(total / cost);
-            }
-            //
-        }
-        dos.flush();
-        socket.close();
-    }
-
-    public String getSpeed() {
-        return speed;
     }
 }

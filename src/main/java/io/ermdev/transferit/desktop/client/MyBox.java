@@ -5,7 +5,7 @@ import io.ermdev.transferit.desktop.util.ImageUtil;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.integration.Book;
 import io.ermdev.transferit.integration.Item;
-import io.ermdev.transferit.integration.Subscriber;
+import io.ermdev.transferit.integration.ItemSubscriber;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class MyBox extends HBox implements Subscriber {
+public class MyBox extends HBox implements ItemSubscriber {
 
     private final HBox inside = new HBox(2);
 
@@ -48,8 +48,6 @@ public class MyBox extends HBox implements Subscriber {
     private String css2 = getClass().getResource("/css/item-box-style.css").toExternalForm();
 
     private Item item;
-
-    private boolean firstRelease = true;
 
     public MyBox(Item item) {
         setItem(item);
@@ -133,39 +131,41 @@ public class MyBox extends HBox implements Subscriber {
 
     @Override
     public void release(Book<?> book) {
-        if (firstRelease) {
-            Platform.runLater(() -> {
-                contentBox.getChildren().clear();
-                contentBox.getChildren().add(progressBox);
-                contentBox.getChildren().add(progressBar);
-            });
-            firstRelease = false;
-        }
         final double content = (Double) book.getContent();
         final double percent = (100 / item.getSize()) * content;
-        if ((Double) book.getContent() < item.getSize()) {
-            Platform.runLater(() -> {
-                lblDownloaded.setText(trafficUtil.simply((long) content) + " of " + trafficUtil.getLastSize());
-                lblPercent.setText(((int) percent) + "%");
-                progressBar.setProgress(percent / 100.0);
-            });
-        } else {
-            Platform.runLater(() -> {
-                lblDownloaded.setText(trafficUtil.simply((long) item.getSize()) + " of " + trafficUtil.getLastSize());
-                lblPercent.setText("100%");
-                progressBar.setProgress(percent / 100.0);
-            });
-            try {
-                Thread.sleep(400);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Platform.runLater(() -> {
-                lblDetail.setText("Completed -- " + trafficUtil.getLastSize());
-                lblDetail.setStyle("-fx-text-fill: #009432");
-                contentBox.getChildren().clear();
-                contentBox.getChildren().add(lblDetail);
-            });
+        Platform.runLater(() -> {
+            lblDownloaded.setText(trafficUtil.simply((long) content) + " of " + trafficUtil.getLastSize());
+            lblPercent.setText(((int) percent) + "%");
+            progressBar.setProgress(percent / 100.0);
+        });
+    }
+
+    @Override
+    public void beforeItemRelease() {
+        Platform.runLater(() -> {
+            contentBox.getChildren().clear();
+            contentBox.getChildren().add(progressBox);
+            contentBox.getChildren().add(progressBar);
+        });
+    }
+
+    @Override
+    public void afterItemRelease() {
+        Platform.runLater(() -> {
+            lblDownloaded.setText(trafficUtil.simply((long) item.getSize()) + " of " + trafficUtil.getLastSize());
+            lblPercent.setText("100%");
+            progressBar.setProgress(1);
+        });
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        Platform.runLater(() -> {
+            lblDetail.setText("Completed -- " + trafficUtil.getLastSize());
+            lblDetail.setStyle("-fx-text-fill: #009432");
+            contentBox.getChildren().clear();
+            contentBox.getChildren().add(lblDetail);
+        });
     }
 }

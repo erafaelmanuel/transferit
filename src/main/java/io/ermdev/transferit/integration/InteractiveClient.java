@@ -2,7 +2,7 @@ package io.ermdev.transferit.integration;
 
 public interface InteractiveClient {
 
-    ClientListener getListener();
+    ItemClientListener getListener();
 
-    void setListener(ClientListener clientListener);
+    void setListener(ItemClientListener clientListener);
 }

@@ -9,10 +9,10 @@ import java.io.FileInputStream;
 
 public class ItemClient implements InteractiveClient {
 
-    private ClientListener listener;
+    private ItemClientListener listener;
     private Client client;
 
-    public ItemClient(Client client, ClientListener listener) {
+    public ItemClient(Client client, ItemClientListener listener) {
         this.client = client;
         this.setListener(listener);
     }
@@ -49,12 +49,12 @@ public class ItemClient implements InteractiveClient {
     }
 
     @Override
-    public ClientListener getListener() {
+    public ItemClientListener getListener() {
         return listener;
     }
 
     @Override
-    public void setListener(ClientListener listener) {
+    public void setListener(ItemClientListener listener) {
         this.listener = listener;
     }
 }

@@ -1,8 +1,6 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.util.ItemManager;
 import io.ermdev.transferit.integration.*;
-import io.ermdev.transferit.integration.Transaction;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,15 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientController implements Subscriber, Initializable, ClientListener1 {
+public class ClientController implements Subscriber, Initializable, ItemClientListener {
 
     private TcpClient client;
 
     private List<Transaction> transactions = new ArrayList<>();
 
     private Endpoint endpoint = new Endpoint();
-
-    private ItemManager itemManager = new ItemManager();
 
     @FXML
     private TextField txHost;
@@ -69,16 +65,16 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     }
 
     private void setTableColumn(TableView<Transaction> tableView) {
-//        TableColumn<Transaction, String> c1 = new TableColumn<>("#");
-//        c1.setCellValueFactory(new PropertyValueFactory<>("number"));
-//        c1.setPrefWidth(50);
-//        c1.setMaxWidth(50);
-//        c1.setSortable(false);
+        TableColumn<Transaction, Integer> c1 = new TableColumn<>("#");
+        c1.setCellValueFactory(new PropertyValueFactory<>("index"));
+        c1.setPrefWidth(50);
+        c1.setMaxWidth(50);
+        c1.setSortable(false);
 
         TableColumn<Transaction, String> c2 = new TableColumn<>("File Name");
         c2.setCellValueFactory(new PropertyValueFactory<>("name"));
-        c2.setPrefWidth(420);
-        c2.setMaxWidth(420);
+        c2.setPrefWidth(370);
+        c2.setMaxWidth(370);
         c2.setSortable(false);
 
         TableColumn<Transaction, String> c4 = new TableColumn<>("Size");
@@ -93,24 +89,27 @@ public class ClientController implements Subscriber, Initializable, ClientListen
         c3.setMaxWidth(80);
         c3.setSortable(false);
 
-        //tableView.getColumns().add(c1);
+        tableView.getColumns().add(c1);
         tableView.getColumns().add(c2);
         tableView.getColumns().add(c4);
         tableView.getColumns().add(c3);
     }
 
     private void setTableData(TableView<Transaction> tableView) {
-        tableView.getItems().clear();
-        for (Transaction transaction : transactions) {
-            tableView.getItems().add(transaction);
-        }
+        Platform.runLater(() -> {
+            tableView.getItems().clear();
+            for (int ctr = 0; ctr < transactions.size(); ctr++) {
+                transactions.get(ctr).setIndex(ctr + 1);
+                tableView.getItems().add(transactions.get(ctr));
+            }
+        });
     }
 
     @FXML
     public void onActionConnect() {
         Thread thread = new Thread(() -> {
             try {
-                Platform.runLater(()-> {
+                Platform.runLater(() -> {
                     btnCDC.setText("Waiting...");
                     btnCDC.setDisable(true);
                 });
@@ -118,9 +117,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                     endpoint.subscribe(this);
                     endpoint.setHost(txHost.getText());
                     endpoint.setPort(23411);
-
                     client = new TcpClient(endpoint);
-                    //client.setListener(this);
                     client.connect();
                 } else {
                     client.disconnect();
@@ -164,15 +161,17 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     public void onActionOpenFolder() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File folder = directoryChooser.showDialog(null);
-        File subFiles[] = folder.listFiles();
-        if (subFiles != null) {
-            transactions.clear();
-            for (File file : subFiles) {
-                if (file.isFile()) {
-                    transactions.add(new Transaction(file));
+        if (folder != null) {
+            File subFiles[] = folder.listFiles();
+            if (subFiles != null) {
+                transactions.clear();
+                for (File file : subFiles) {
+                    if (file.isFile()) {
+                        transactions.add(new Transaction(file));
+                    }
                 }
+                setTableData(tblfiles);
             }
-            setTableData(tblfiles);
         }
     }
 
@@ -180,40 +179,35 @@ public class ClientController implements Subscriber, Initializable, ClientListen
     public void onActionSend() {
         Thread thread = new Thread(() -> {
             if (client != null && transactions.size() > 0) {
-                List<Item> items =  new ArrayList<>(transactions);
-                itemManager.setItems(items);
+                ItemClient itemClient = new ItemClient(client, this);
                 for (Transaction item : transactions) {
-                    client.sendFile(item.getFile());
+                    itemClient.sendItem(item);
                 }
-                //transactions.clear();
             }
         });
         thread.start();
     }
 
     @Override
-    public void onStart() {
-        itemManager.next();
+    public void onSendFileStart(Item item) {
+        item.setProgress(item.getProgress());
+        setTableData(tblfiles);
     }
 
     @Override
-    public void onUpdate(double count) {
-        if (itemManager.get() != null) {
-            Platform.runLater(() -> {
-                itemManager.get().setProgress(count);
-                setTableData(tblfiles);
-            });
-
-        }
+    public void onSendFileUpdate(Item item, double n) {
+        item.setProgress(n);
+        setTableData(tblfiles);
     }
 
     @Override
-    public void onComplete(double total) {
-        if (itemManager.get() != null) {
-            Platform.runLater(() -> {
-                ((Transaction) itemManager.get()).setPercentage("Completed");
-                setTableData(tblfiles);
-            });
-        }
+    public void onSendFileComplete(Item item) {
+        item.setProgress(item.getSize());
+        setTableData(tblfiles);
+    }
+
+    @Override
+    public void onTransferSpeed(String speed) {
+
     }
 }

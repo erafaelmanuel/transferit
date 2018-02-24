@@ -3,14 +3,11 @@ package io.ermdev.transferit.integration;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 
-public class Transaction extends Item implements Publisher {
-
-    private Set<Subscriber> subscribers = new HashSet<>();
+public class Transaction extends Item {
 
     private String percentage;
+    private int index;
 
     public Transaction(File file) {
         super(file);
@@ -25,6 +22,14 @@ public class Transaction extends Item implements Publisher {
 
     public void setPercentage(String percentage) {
         this.percentage = percentage;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getFileSize() {
@@ -79,20 +84,5 @@ public class Transaction extends Item implements Publisher {
     @Override
     public void setFile(File file) {
         super.setFile(file);
-    }
-
-    @Override
-    public void subscribe(Subscriber subscriber) {
-        subscribers.add(subscriber);
-    }
-
-    @Override
-    public void unsubscribe(Subscriber subscriber) {
-        subscribers.remove(subscriber);
-    }
-
-    @Override
-    public void notifyAll(Book book) {
-        super.notifyAll(book);
     }
 }

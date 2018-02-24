@@ -4,7 +4,7 @@ import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.integration.Client;
 import io.ermdev.transferit.integration.Item;
 import io.ermdev.transferit.integration.ItemClient;
-import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.integration.ItemClientListener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MobClient2Controller implements ClientListener {
+public class MobClient2Controller implements ItemClientListener {
 
     @FXML
     VBox container;

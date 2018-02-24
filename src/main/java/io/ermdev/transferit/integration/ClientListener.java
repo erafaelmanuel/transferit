@@ -2,9 +2,11 @@ package io.ermdev.transferit.integration;
 
 public interface ClientListener {
 
-    void onStart();
+    void onSendFileStart(Item item);
 
-    void onUpdate(double n);
+    void onSendFileUpdate(Item item, double n);
 
-    void onComplete(double total);
+    void onSendFileComplete(Item item);
+
+    void onTransferSpeed(String speed);
 }

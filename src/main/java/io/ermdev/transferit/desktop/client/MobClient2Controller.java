@@ -4,7 +4,7 @@ import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.integration.Client;
 import io.ermdev.transferit.integration.Item;
 import io.ermdev.transferit.integration.ItemClient;
-import io.ermdev.transferit.integration.v2.ClientListener;
+import io.ermdev.transferit.integration.ClientListener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.client;
 
 import io.ermdev.transferit.desktop.util.ItemManager;
 import io.ermdev.transferit.integration.*;
-import io.ermdev.transferit.integration.v2.Transaction;
+import io.ermdev.transferit.integration.Transaction;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientController implements Subscriber, Initializable, ClientListener {
+public class ClientController implements Subscriber, Initializable, ClientListener1 {
 
     private TcpClient client;
 

@@ -1,7 +1,6 @@
 package io.ermdev.transferit.integration;
 
 import io.ermdev.transferit.desktop.util.TrafficUtil;
-import io.ermdev.transferit.integration.v2.ClientListener;
 
 import java.io.*;
 import java.net.Socket;

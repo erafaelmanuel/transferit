@@ -6,6 +6,7 @@ import java.net.Socket;
 public class LinkClient implements Client {
 
     private MyProtocol protocol;
+
     private Endpoint endpoint;
 
     public LinkClient(Endpoint endpoint) {

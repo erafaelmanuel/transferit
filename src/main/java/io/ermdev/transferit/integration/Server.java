@@ -1,16 +1,14 @@
 package io.ermdev.transferit.integration;
 
+import java.io.InputStream;
+
 public interface Server {
 
-    void addListener(ServerListener serverListener);
-
-    void findConnection();
+    void open();
 
     void accept();
 
-    void reject();
-
-    void keepAlive();
-
     void stop();
+
+    void receiveFile(InputStream inputStream);
 }

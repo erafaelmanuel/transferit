@@ -3,12 +3,13 @@ package io.ermdev.transferit.integration;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class LinkServer implements ProtocolListener {
+public class LinkServer implements Server, ProtocolListener {
 
     private ServerSocket server1;
 
@@ -19,6 +20,10 @@ public class LinkServer implements ProtocolListener {
     private Endpoint endpoint;
 
     private ServerListener serverListener;
+
+    private Thread acceptor;
+
+    private Thread opener;
 
     public LinkServer(Endpoint endpoint) {
         try {
@@ -36,88 +41,70 @@ public class LinkServer implements ProtocolListener {
         this.serverListener = serverListener;
     }
 
-    public Socket findSocket() throws ServerException {
-        try {
-            return server1.accept();
-        } catch (Exception e) {
-            throw new ServerException("No socket found");
-        }
-    }
-
+    @Override
     public void open() {
-        Thread thread = new Thread(() -> {
+        opener = new Thread(() -> {
             while (!endpoint.isConnected()) {
                 try {
-                    Socket socket = findSocket();
+                    Socket socket = server1.accept();
                     endpoint.setHost(socket.getInetAddress().getHostAddress());
                     protocol.setSocket(socket);
                     protocol.listen();
                 } catch (Exception e) {
-                    e.printStackTrace();
                     protocol.stopListening();
                 }
             }
+            opener = null;
         });
-        thread.start();
+        opener.start();
     }
 
+    @Override
     public void accept() {
-        Thread thread = new Thread(() -> {
+        acceptor = new Thread(() -> {
             try {
                 protocol.dispatch(Status.ACCEPT);
                 endpoint.setConnected(true);
-                channeling();
+                while (endpoint.isConnected()) {
+                    Socket socket = server2.accept();
+                    receiveFile(socket.getInputStream());
+                }
             } catch (Exception e) {
-                e.printStackTrace();
                 protocol.stopListening();
             }
+            acceptor = null;
         });
-        thread.start();
+        acceptor.start();
     }
 
+    @Override
     public void stop() {
         try {
+            protocol.stopListening();
             protocol.dispatch(Status.STOP);
         } catch (ClientException e) {
             e.printStackTrace();
         }
-        protocol.stopListening();
     }
 
-    public void channeling() {
-        Thread thread = new Thread(() -> {
-            try {
-                while (endpoint.isConnected()) {
-                    Socket socket = server2.accept();
-                    System.out.println("New socket");
-                    receivedFile(socket);
-                    System.out.println("File send");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+    @Override
+    public void receiveFile(InputStream inputStream) {
+        try {
+            BufferedInputStream bis = new BufferedInputStream(inputStream);
+            DataInputStream dis = new DataInputStream(bis);
+            String fileName = dis.readUTF();
+            File file = new File(fileName);
+            if (!file.exists() || file.delete()) {
+                Files.copy(dis, Paths.get(fileName));
             }
-        });
-        thread.start();
-    }
-
-    private void receivedFile(Socket socket) throws Exception {
-        BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
-        DataInputStream dis = new DataInputStream(bis);
-        String fileName = dis.readUTF();
-        File file = new File(fileName);
-        if (!file.exists() || file.delete()) {
-            Files.copy(dis, Paths.get(fileName));
+            dis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        dis.close();
     }
 
     @Override
     public void onCreate() {
         serverListener.onInvite();
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

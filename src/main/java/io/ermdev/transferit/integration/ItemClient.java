@@ -20,7 +20,7 @@ public class ItemClient implements InteractiveClient {
 
     public Socket newSocket() throws ClientException {
         try {
-            return new Socket(client.getEndpoint().getHost(), client.getEndpoint().getPort());
+            return new Socket(client.getEndpoint().getHost(), client.getEndpoint().getPort() + 1);
         } catch (Exception e) {
             throw new ClientException("Failed to make a socket!");
         }

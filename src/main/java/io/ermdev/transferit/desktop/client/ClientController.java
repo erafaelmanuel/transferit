@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Subscriber, Initializable, ItemClientListener {
 
-    private TcpClient client;
+    private Client client;
 
     private List<Transaction> transactions = new ArrayList<>();
 
@@ -117,7 +117,7 @@ public class ClientController implements Subscriber, Initializable, ItemClientLi
                     endpoint.subscribe(this);
                     endpoint.setHost(txHost.getText());
                     endpoint.setPort(23411);
-                    client = new TcpClient(endpoint);
+                    client = new LinkClient(endpoint);
                     client.connect();
                 } else {
                     client.disconnect();

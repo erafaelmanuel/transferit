@@ -15,12 +15,12 @@ public class TcpClient implements Client {
     }
 
     @Override
-    public void connect() throws TcpException {
+    public void connect() throws ClientException {
         synchronized (endpoint) {
             try {
                 sendRequestConnection(newSocket());
             } catch (Exception e) {
-                throw new TcpException("Unable to connect!");
+                throw new ClientException("Unable to connect!");
             }
         }
     }
@@ -40,11 +40,11 @@ public class TcpClient implements Client {
     }
 
     @Override
-    public Socket newSocket() throws TcpException {
+    public Socket newSocket() throws ClientException {
         try {
             return new Socket(endpoint.getHost(), endpoint.getPort());
         } catch (Exception e) {
-            throw new TcpException("Failed to make a socket!");
+            throw new ClientException("Failed to make a socket!");
         }
     }
 
@@ -91,7 +91,7 @@ public class TcpClient implements Client {
         thread.start();
     }
 
-    private String receiveMessage(InputStream is) throws TcpException {
+    private String receiveMessage(InputStream is) throws ClientException {
         final StringBuilder response = new StringBuilder();
         try {
             int n;
@@ -100,7 +100,7 @@ public class TcpClient implements Client {
             }
             return response.toString();
         } catch (Exception e) {
-            throw new TcpException("Receiving message failed");
+            throw new ClientException("Receiving message failed");
         }
     }
 
@@ -131,13 +131,13 @@ public class TcpClient implements Client {
         }
     }
 
-    private void sendMessage(String message, OutputStream os) throws TcpException {
+    private void sendMessage(String message, OutputStream os) throws ClientException {
         try {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
             os.close();
         } catch (Exception e) {
-            throw new TcpException("Sending message failed");
+            throw new ClientException("Sending message failed");
         }
     }
 }

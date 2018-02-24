@@ -33,14 +33,6 @@ public class Protocol {
         return true;
     }
 
-    public boolean isAlive(Endpoint endpoint) {
-        if (!isAlive()) {
-            return false;
-        } else {
-            return socket.getInetAddress().getHostAddress().equals(endpoint.getHost());
-        }
-    }
-
     public Socket getSocket() {
         return socket;
     }

@@ -5,11 +5,11 @@ import java.net.Socket;
 
 public interface Client {
 
-    void connect() throws TcpException;
+    void connect() throws ClientException;
 
-    void disconnect() throws TcpException;
+    void disconnect();
 
-    Socket newSocket() throws TcpException;
+    Socket newSocket() throws ClientException;
 
     void sendFile(File file);
 }

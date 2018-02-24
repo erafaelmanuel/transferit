@@ -122,7 +122,7 @@ public class ClientController implements Subscriber, Initializable, ItemClientLi
                 } else {
                     client.disconnect();
                 }
-            } catch (TcpException e) {
+            } catch (ClientException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 client.disconnect();
             }

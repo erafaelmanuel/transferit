@@ -100,7 +100,7 @@ public class MobClientController implements Initializable, Subscriber {
                 } else {
                     client.disconnect();
                 }
-            } catch (TcpException e) {
+            } catch (ClientException e) {
                 Platform.runLater(() -> {
                     lblStatus.setText("Connection Failed");
                     lblStatus.setStyle("-fx-text-fill:#eb4d4b");

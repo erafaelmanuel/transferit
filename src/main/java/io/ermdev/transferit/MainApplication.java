@@ -1,7 +1,6 @@
 package io.ermdev.transferit;
 
 import io.ermdev.transferit.desktop.client.MobClientStage;
-import io.ermdev.transferit.desktop.stage.ClientStage;
 import io.ermdev.transferit.desktop.stage.ServerStage;
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;

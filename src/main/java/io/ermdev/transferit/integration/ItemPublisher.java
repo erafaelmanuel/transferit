@@ -1,8 +1,12 @@
 package io.ermdev.transferit.integration;
 
-import io.ermdev.transferit.integration.Publisher;
+public interface ItemPublisher {
 
-public interface ItemPublisher extends Publisher {
+    void subscribe(ItemSubscriber subscriber);
+
+    void unsubscribe(ItemSubscriber subscriber);
+
+    void notifyAll(final Book book);
 
     void notifyBefore();
 

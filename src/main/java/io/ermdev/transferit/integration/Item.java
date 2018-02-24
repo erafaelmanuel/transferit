@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Item implements Publisher {
+public class Item implements ItemPublisher {
 
     private String name;
 
@@ -16,7 +16,7 @@ public class Item implements Publisher {
 
     private File file;
 
-    private Set<Subscriber> subscribers = new HashSet<>();
+    private Set<ItemSubscriber> subscribers = new HashSet<>();
 
     public Item(File file) {
         if (file.exists()) {
@@ -68,17 +68,27 @@ public class Item implements Publisher {
     }
 
     @Override
-    public void subscribe(Subscriber subscriber) {
+    public void subscribe(ItemSubscriber subscriber) {
         subscribers.add(subscriber);
     }
 
     @Override
-    public void unsubscribe(Subscriber subscriber) {
+    public void unsubscribe(ItemSubscriber subscriber) {
         subscribers.remove(subscriber);
     }
 
     @Override
     public void notifyAll(final Book book) {
         subscribers.parallelStream().forEach(subscriber -> subscriber.release(book));
+    }
+
+    @Override
+    public void notifyBefore() {
+        subscribers.parallelStream().forEach(ItemSubscriber::beforeItemRelease);
+    }
+
+    @Override
+    public void notifyAfter() {
+        subscribers.parallelStream().forEach(ItemSubscriber::afterItemRelease);
     }
 }

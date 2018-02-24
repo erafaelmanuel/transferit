@@ -2,15 +2,15 @@ package io.ermdev.transferit.integration.v2;
 
 import io.ermdev.transferit.integration.Item;
 
-import java.util.List;
-
 public interface ClientListener {
 
-    List<Item> getItems();
+    int TIME_ITERVAL = 400;
 
-    void onStart(Item item);
+    void onSendFileStart(Item item);
 
-    void onUpdate(Item item, double n);
+    void onSendFileUpdate(Item item, double n);
 
-    void onComplete(Item item);
+    void onSendFileComplete(Item item);
+
+    void onTransferSpeed(String speed);
 }

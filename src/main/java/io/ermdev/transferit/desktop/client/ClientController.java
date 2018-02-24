@@ -120,7 +120,7 @@ public class ClientController implements Subscriber, Initializable, ClientListen
                     endpoint.setPort(23411);
 
                     client = new TcpClient(endpoint);
-                    client.setListener(this);
+                    //client.setListener(this);
                     client.connect();
                 } else {
                     client.disconnect();

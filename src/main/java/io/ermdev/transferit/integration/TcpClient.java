@@ -1,6 +1,7 @@
 package io.ermdev.transferit.integration;
 
 import io.ermdev.transferit.desktop.util.TrafficUtil;
+import io.ermdev.transferit.integration.v2.ClientListener;
 
 import java.io.*;
 import java.net.Socket;
@@ -8,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 public class TcpClient implements Client {
 
-    private final Endpoint endpoint;
+    final Endpoint endpoint;
 
     private ClientListener listener;
 
@@ -20,7 +21,8 @@ public class TcpClient implements Client {
         this.endpoint = endpoint;
     }
 
-    private Socket createConnection(Endpoint endpoint) throws TcpException {
+    @Override
+    public Socket newSocket() throws TcpException {
         try {
             return new Socket(endpoint.getHost(), endpoint.getPort());
         } catch (Exception e) {
@@ -32,7 +34,7 @@ public class TcpClient implements Client {
     public void connect() throws TcpException {
         synchronized (endpoint) {
             try {
-                sendRequestConnection(createConnection(endpoint));
+                sendRequestConnection(newSocket());
             } catch (Exception e) {
                 throw new TcpException("Unable to connect!");
             }
@@ -56,7 +58,7 @@ public class TcpClient implements Client {
     private void observeConnection() {
         Thread thread = new Thread(() -> {
             try {
-                protocol.setSocket(createConnection(endpoint));
+                protocol.setSocket(newSocket());
                 while (true) {
                     if (receiveMessage(protocol.getInputStream()).equals("close")) {
                         protocol.invalidateSocket();
@@ -115,7 +117,7 @@ public class TcpClient implements Client {
     public void sendFile(File file) {
         synchronized (endpoint) {
             try {
-                startLinking(createConnection(endpoint), file);
+                gg(newSocket(), file);
             } catch (Exception e) {
                 endpoint.setConnected(false);
             }
@@ -146,7 +148,7 @@ public class TcpClient implements Client {
         if (listener != null) {
             byte buffer[] = new byte[10240];
             long start = System.currentTimeMillis();
-            listener.onStart();
+            //listener.onStart();
             while ((read = bis.read(buffer)) != -1) {
                 dos.write(buffer, 0, read);
                 total += read;
@@ -154,9 +156,9 @@ public class TcpClient implements Client {
                 if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
                     speed = new TrafficUtil().speed(total / cost);
                 }
-                listener.onUpdate(total);
+                //listener.onUpdate(total);
             }
-            listener.onComplete(file.length());
+            //listener.onComplete(file.length());
         } else {
             byte buffer[] = new byte[8192];
             while ((read = bis.read(buffer)) != -1) {
@@ -171,9 +173,29 @@ public class TcpClient implements Client {
         }
     }
 
-    @Override
-    public void setListener(ClientListener listener) {
-        this.listener = listener;
+    @Deprecated
+    private void gg(Socket socket, File file) throws Exception {
+        int total = 0;
+        int read;
+
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+        dos.writeUTF(file.getName());
+
+        byte buffer[] = new byte[10240];
+        long start = System.currentTimeMillis();
+
+        while ((read = bis.read(buffer)) != -1) {
+            dos.write(buffer, 0, read);
+            total += read;
+            long cost = System.currentTimeMillis() - start;
+            if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
+                speed = new TrafficUtil().speed(total / cost);
+            }
+            //
+        }
+        dos.flush();
+        socket.close();
     }
 
     public String getSpeed() {

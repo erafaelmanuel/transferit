@@ -4,6 +4,7 @@ import io.ermdev.transferit.integration.Item;
 
 import java.util.List;
 
+@Deprecated
 public class ItemManager {
 
     private int counter = 0;

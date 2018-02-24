@@ -1,10 +1,10 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.util.ItemManager;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
-import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.integration.Client;
 import io.ermdev.transferit.integration.Item;
-import io.ermdev.transferit.integration.TcpClient;
+import io.ermdev.transferit.integration.ItemClient;
+import io.ermdev.transferit.integration.v2.ClientListener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,34 +22,35 @@ import java.util.List;
 
 public class MobClient2Controller implements ClientListener {
 
-    @FXML VBox container;
+    @FXML
+    VBox container;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML StackPane browser;
+    @FXML
+    StackPane browser;
 
-    @FXML Button btnSend;
+    @FXML
+    Button btnSend;
 
-    @FXML Button btnClear;
+    @FXML
+    Button btnClear;
 
-    private TcpClient client;
+    private ItemClient client;
 
     private List<Item> items = new ArrayList<>();
-
-    private ItemManager itemManager = new ItemManager();
-
-    private boolean activated;
 
     public void initialize() {
         onClear();
     }
 
-    public void setClient(TcpClient client) {
-        this.client = client;
-        client.setListener(this);
+    public void setClient(Client c) {
+        client = new ItemClient(c, this);
     }
 
-    @FXML void onClear() {
+    @FXML
+    void onClear() {
         items.clear();
         container.getChildren().clear();
         container.getChildren().add(browser);
@@ -58,7 +59,8 @@ public class MobClient2Controller implements ClientListener {
         btnSend.setDisable(true);
     }
 
-    @FXML void onBrowse() {
+    @FXML
+    void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         if (newFiles != null && newFiles.size() > 0) {
@@ -76,9 +78,9 @@ public class MobClient2Controller implements ClientListener {
         }
     }
 
-    @FXML void onSend() {
-        if(btnSend.getText().equalsIgnoreCase("Cancel")) {
-            client.disconnect();
+    @FXML
+    void onSend() {
+        if (btnSend.getText().equalsIgnoreCase("Cancel")) {
             return;
         }
         Thread thread = new Thread(() -> {
@@ -87,9 +89,8 @@ public class MobClient2Controller implements ClientListener {
                     btnClear.setDisable(true);
                     btnSend.setText("Cancel");
                 });
-                itemManager.setItems(items);
                 for (Item item : items) {
-                    client.sendFile(item.getFile());
+                    client.sendItem(item);
                 }
                 Platform.runLater(() -> {
                     lblStatus.setStyle("-fx-background-color: #00b894");
@@ -103,14 +104,16 @@ public class MobClient2Controller implements ClientListener {
         thread.start();
     }
 
-    @FXML void onDrag(DragEvent event) {
+    @FXML
+    void onDrag(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
     }
 
-    @FXML void onDrop(DragEvent event) {
+    @FXML
+    void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasFiles()) {
@@ -132,36 +135,25 @@ public class MobClient2Controller implements ClientListener {
     }
 
     @Override
-    public void onStart() {
-        itemManager.next();
-        activated = true;
-        new Thread(() -> {
-            while (activated) {
-                Platform.runLater(() -> {
-                    lblStatus.setStyle("-fx-background-color: #0984e3");
-                    lblStatus.setText("Transfer speed : " + client.getSpeed());
-                });
-                try {
-                    Thread.sleep(400);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+    public void onSendFileStart(Item item) {
+
     }
 
     @Override
-    public void onUpdate(double n) {
-        if (itemManager.get() != null) {
-            itemManager.get().setProgress(n);
-        }
+    public void onSendFileUpdate(Item item, double n) {
+        item.setProgress(n);
     }
 
     @Override
-    public void onComplete(double total) {
-        if (itemManager.get() != null) {
-            itemManager.get().setProgress(total);
-        }
-        activated = false;
+    public void onSendFileComplete(Item item) {
+        item.setProgress(item.getSize());
+    }
+
+    @Override
+    public void onTransferSpeed(String speed) {
+        Platform.runLater(() -> {
+            lblStatus.setStyle("-fx-background-color: #0984e3");
+            lblStatus.setText("Transfer speed : " + speed);
+        });
     }
 }

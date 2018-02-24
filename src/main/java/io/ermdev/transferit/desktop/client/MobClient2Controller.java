@@ -108,30 +108,34 @@ public class MobClient2Controller implements ItemClientListener {
     void onDrag(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            event.consume();
         }
-        event.consume();
     }
 
     @FXML
     void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
-        boolean success = false;
         if (db.hasFiles()) {
             long size = 0;
             container.getChildren().clear();
             for (File file : db.getFiles()) {
-                Item item = new Item(file);
-                size += file.length();
-                container.getChildren().add(new MyBox(item));
-                items.add(item);
+                if (file.isFile()) {
+                    Item item = new Item(file);
+                    size += file.length();
+                    container.getChildren().add(new MyBox(item));
+                    items.add(item);
+                }
             }
-            lblStatus.setStyle("-fx-background-color: #ff9f43");
-            lblStatus.setText(items.size() + " file(s)   --  Total : " + new TrafficUtil().size(size));
-            btnSend.setDisable(false);
-            success = true;
+            if (items.size() < 1) {
+                container.getChildren().add(browser);
+            } else {
+                lblStatus.setStyle("-fx-background-color: #ff9f43");
+                lblStatus.setText(items.size() + " file(s)   --  Total : " + new TrafficUtil().size(size));
+                btnSend.setDisable(false);
+            }
+            event.setDropCompleted(true);
+            event.consume();
         }
-        event.setDropCompleted(success);
-        event.consume();
     }
 
     @Override

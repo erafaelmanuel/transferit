@@ -43,9 +43,8 @@ public class MyProtocol {
 
     private void read(String arg) {
         try {
-            String rToken = arg.split("&")[0].split("token=")[1];
-            String rStatus = arg.split("&")[1].split("status=")[1];
-
+            final String rToken = arg.split("&")[0].split("token=")[1];
+            final String rStatus = arg.split("&")[1].split("status=")[1];
             if (true) {
                 switch (Integer.parseInt(rStatus)) {
                     case 100: {
@@ -57,6 +56,8 @@ public class MyProtocol {
                     }
                     case 200: {
                         endpoint.setConnected(false);
+                        stopListening();
+                        System.out.println("Stop");
                         if (protocolListener != null) {
                             protocolListener.onStop();
                         }
@@ -81,23 +82,26 @@ public class MyProtocol {
     }
 
     public void listen() {
-        try {
-            okListen = true;
-            while (okListen) {
-                String message = "";
-                int n;
-                while ((n = socket.getInputStream().read()) != -1) {
-                    if ((char) n == ';') {
-                        read(message);
-                        message = "";
-                    } else {
-                        message = message.concat(String.valueOf((char) n));
+        Thread thread = new Thread(() -> {
+            try {
+                okListen = true;
+                while (okListen) {
+                    String message = "";
+                    int n;
+                    while ((n = socket.getInputStream().read()) != -1) {
+                        if ((char) n == ';') {
+                            read(message);
+                            message = "";
+                        } else {
+                            message = message.concat(String.valueOf((char) n));
+                        }
                     }
                 }
+            } catch (Exception e) {
+                stopListening();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
+        thread.start();
     }
 
     public void stopListening() {

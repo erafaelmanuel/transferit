@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.net.Socket;
 
 public class ItemClient implements InteractiveClient {
 
@@ -21,10 +22,11 @@ public class ItemClient implements InteractiveClient {
         if (getListener() != null) {
             getListener().onSendFileStart(item);
             try {
+                Socket socket = new Socket("localhost", 23412);
                 int total = 0;
                 int read;
                 BufferedInputStream bis = new BufferedInputStream(new FileInputStream(item.getFile()));
-                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(client.newSocket().getOutputStream()));
+                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 dos.writeUTF(item.getName());
 
                 byte buffer[] = new byte[10240];

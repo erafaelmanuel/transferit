@@ -27,6 +27,7 @@ public class LinkClient implements Client {
     @Override
     public void disconnect() {
         try {
+            endpoint.setConnected(false);
             protocol.dispatch(Status.STOP);
             protocol.stopListening();
         } catch (Exception e) {

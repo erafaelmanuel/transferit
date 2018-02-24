@@ -1,11 +1,18 @@
 package io.ermdev.transferit.integration;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class LinkServer implements ProtocolListener {
 
-    private ServerSocket serverSocket;
+    private ServerSocket server1;
+
+    private ServerSocket server2;
 
     private MyProtocol protocol;
 
@@ -16,7 +23,8 @@ public class LinkServer implements ProtocolListener {
     public LinkServer(Endpoint endpoint) {
         try {
             this.endpoint = endpoint;
-            this.serverSocket = new ServerSocket(endpoint.getPort());
+            server1 = new ServerSocket(endpoint.getPort());
+            server2 = new ServerSocket(endpoint.getPort() + 1);
             protocol = new MyProtocol(endpoint);
             protocol.setListener(this);
         } catch (Exception e) {
@@ -30,7 +38,7 @@ public class LinkServer implements ProtocolListener {
 
     public Socket findSocket() throws ServerException {
         try {
-            return serverSocket.accept();
+            return server1.accept();
         } catch (Exception e) {
             throw new ServerException("No socket found");
         }
@@ -57,6 +65,8 @@ public class LinkServer implements ProtocolListener {
         Thread thread = new Thread(() -> {
             try {
                 protocol.dispatch(Status.ACCEPT);
+                endpoint.setConnected(true);
+                channeling();
             } catch (Exception e) {
                 e.printStackTrace();
                 protocol.stopListening();
@@ -72,6 +82,33 @@ public class LinkServer implements ProtocolListener {
             e.printStackTrace();
         }
         protocol.stopListening();
+    }
+
+    public void channeling() {
+        Thread thread = new Thread(() -> {
+            try {
+                while (endpoint.isConnected()) {
+                    Socket socket = server2.accept();
+                    System.out.println("New socket");
+                    receivedFile(socket);
+                    System.out.println("File send");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
+    private void receivedFile(Socket socket) throws Exception {
+        BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
+        DataInputStream dis = new DataInputStream(bis);
+        String fileName = dis.readUTF();
+        File file = new File(fileName);
+        if (!file.exists() || file.delete()) {
+            Files.copy(dis, Paths.get(fileName));
+        }
+        dis.close();
     }
 
     @Override

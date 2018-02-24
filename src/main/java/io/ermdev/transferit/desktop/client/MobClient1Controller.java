@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,17 +19,23 @@ import java.util.ResourceBundle;
 
 public class MobClient1Controller implements Initializable, Subscriber {
 
-    @FXML ImageView imgv1;
+    @FXML
+    ImageView imgv1;
 
-    @FXML ImageView imgvback;
+    @FXML
+    ImageView imgvback;
 
-    @FXML JFXButton btnConnect;
+    @FXML
+    JFXButton btnConnect;
 
-    @FXML JFXButton btnSendFile;
+    @FXML
+    JFXButton btnSendFile;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML JFXTextField txtHost;
+    @FXML
+    JFXTextField txtHost;
 
     private WelcomeStage welcomeStage;
 
@@ -79,7 +84,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
         this.welcomeStage = welcomeStage;
     }
 
-    @FXML void onConnection() {
+    @FXML
+    void onConnection() {
         Thread thread = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -108,7 +114,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
         thread.start();
     }
 
-    @FXML void onFile() {
+    @FXML
+    void onFile() {
         client2Stage.getController().setClient(client);
         client2Stage.getController().initialize();
         client2Stage.showAndWait();

@@ -24,10 +24,6 @@ public class ServerController implements Subscriber, Initializable, ServerListen
     public void initialize(URL location, ResourceBundle resources) {
         Endpoint endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
-
-//        server = new TcpServer(endpoint);
-//        server.addListener(this);
-//        server.findConnection();
         server = new LinkServer(endpoint);
         server.setServerListener(this);
         server.open();
@@ -39,10 +35,10 @@ public class ServerController implements Subscriber, Initializable, ServerListen
                 Platform.runLater(() -> {
                     boolean isAccepted = (JOptionPane.showConfirmDialog(null, "You want to accept?", null,
                             JOptionPane.YES_NO_OPTION) == 0);
-                    if(isAccepted) {
+                    if (isAccepted) {
                         server.accept();
                     } else {
-                        server.close();
+                        server.stop();
                     }
                 })
         );

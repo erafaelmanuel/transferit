@@ -7,19 +7,18 @@ import java.util.Locale;
 
 public class MyProtocol {
 
+    private Endpoint endpoint;
+
     private Socket socket;
 
-    private String token;
-
-    private Endpoint endpoint;
+    private Thread postman;
 
     private volatile boolean okListen;
 
     private ProtocolListener protocolListener;
 
-    public MyProtocol(Endpoint endpoint) {
+    MyProtocol(Endpoint endpoint) {
         this.endpoint = endpoint;
-        token = (Math.random() * 100000) + "";
     }
 
     public void setSocket(Socket socket) {
@@ -32,7 +31,7 @@ public class MyProtocol {
 
     public void dispatch(Status status) throws ClientException {
         try {
-            String message = String.format(Locale.ENGLISH, "token=%s&status=%d;", token, status.getCode());
+            String message = String.format(Locale.ENGLISH, "token=12345&status=%d;", status.getCode());
             OutputStream os = socket.getOutputStream();
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
@@ -43,38 +42,21 @@ public class MyProtocol {
 
     private void read(String arg) {
         try {
-            final String rToken = arg.split("&")[0].split("token=")[1];
-            final String rStatus = arg.split("&")[1].split("status=")[1];
-            if (true) {
-                switch (Integer.parseInt(rStatus)) {
-                    case 100: {
-                        token = rToken;
-                        if (protocolListener != null) {
-                            protocolListener.onCreate();
-                        }
-                        break;
-                    }
-                    case 200: {
-                        endpoint.setConnected(false);
-                        stopListening();
-                        System.out.println("Stop");
-                        if (protocolListener != null) {
-                            protocolListener.onStop();
-                        }
-                        break;
-                    }
-                    case 300: {
-                        endpoint.setConnected(true);
-                        break;
-                    }
-                    case 400: {
-                        endpoint.setConnected(false);
-                        break;
-                    }
-                    default: {
-                        throw new TcpException("Unknown status code");
-                    }
+            final int status = Integer.parseInt(arg.split("&")[1].split("status=")[1]);
+            if (status == 100) {
+                if (protocolListener != null) {
+                    protocolListener.onCreate();
                 }
+            } else if (status == 200) {
+                endpoint.setConnected(false);
+                stopListening();
+            } else if (status == 300) {
+                endpoint.setConnected(true);
+            } else if (status == 400) {
+                endpoint.setConnected(false);
+                stopListening();
+            } else {
+                throw new TcpException("Unknown status code");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +64,7 @@ public class MyProtocol {
     }
 
     public void listen() {
-        Thread thread = new Thread(() -> {
+        postman = new Thread(() -> {
             try {
                 okListen = true;
                 while (okListen) {
@@ -97,11 +79,13 @@ public class MyProtocol {
                         }
                     }
                 }
+                postman = null;
             } catch (Exception e) {
+                endpoint.setConnected(false);
                 stopListening();
             }
         });
-        thread.start();
+        postman.start();
     }
 
     public void stopListening() {

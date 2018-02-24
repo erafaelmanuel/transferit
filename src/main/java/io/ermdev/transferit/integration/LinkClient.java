@@ -36,6 +36,11 @@ public class LinkClient implements Client {
     }
 
     @Override
+    public Endpoint getEndpoint() {
+        return endpoint;
+    }
+
+    @Override
     public Socket newSocket() throws ClientException {
         try {
             return new Socket(endpoint.getHost(), endpoint.getPort());

@@ -43,6 +43,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
 
     private Endpoint endpoint;
 
+    private Thread connector;
+
     private MobClient2Stage client2Stage = new MobClient2Stage();
 
     @Override
@@ -86,7 +88,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
 
     @FXML
     void onConnection() {
-        Thread thread = new Thread(() -> {
+        connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
                     lblStatus.setVisible(true);
@@ -110,8 +112,9 @@ public class MobClient1Controller implements Initializable, Subscriber {
                     btnSendFile.setDisable(true);
                 });
             }
+            connector = null;
         });
-        thread.start();
+        connector.start();
     }
 
     @FXML

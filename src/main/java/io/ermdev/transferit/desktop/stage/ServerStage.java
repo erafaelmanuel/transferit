@@ -1,7 +1,7 @@
 package io.ermdev.transferit.desktop.stage;
 
-import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
 import io.ermdev.transferit.desktop.controller.ServerController;
+import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +30,7 @@ public class ServerStage extends Stage {
             setTitle("Transferit v1.0");
             setScene(scene);
             setServerController(fxmlLoader.getController());
+            setOnCloseRequest(e -> System.exit(0));
         } catch (Exception e) {
             e.printStackTrace();
         }

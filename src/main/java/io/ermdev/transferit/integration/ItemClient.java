@@ -18,15 +18,22 @@ public class ItemClient implements InteractiveClient {
         this.setListener(listener);
     }
 
+    public Socket newSocket() throws ClientException {
+        try {
+            return new Socket(client.getEndpoint().getHost(), client.getEndpoint().getPort());
+        } catch (Exception e) {
+            throw new ClientException("Failed to make a socket!");
+        }
+    }
+
     public void sendItem(final Item item) {
         if (getListener() != null) {
             getListener().onSendFileStart(item);
             try {
-                Socket socket = new Socket("localhost", 23412);
                 int total = 0;
                 int read;
                 BufferedInputStream bis = new BufferedInputStream(new FileInputStream(item.getFile()));
-                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(newSocket().getOutputStream()));
                 dos.writeUTF(item.getName());
 
                 byte buffer[] = new byte[10240];
@@ -35,7 +42,6 @@ public class ItemClient implements InteractiveClient {
                     dos.write(buffer, 0, read);
                     total += read;
                     getListener().onSendFileUpdate(item, total);
-
                     long cost = System.currentTimeMillis() - start;
                     if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
                         getListener().onTransferSpeed(new TrafficUtil().speed(total / cost));

@@ -9,6 +9,8 @@ public interface Client {
 
     void disconnect();
 
+    Endpoint getEndpoint();
+
     Socket newSocket() throws ClientException;
 
     void sendFile(File file);

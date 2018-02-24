@@ -75,7 +75,7 @@ public class LinkServer implements ProtocolListener {
         thread.start();
     }
 
-    public void close() {
+    public void stop() {
         try {
             protocol.dispatch(Status.STOP);
         } catch (ClientException e) {

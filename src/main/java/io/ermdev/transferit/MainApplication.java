@@ -4,8 +4,11 @@ import io.ermdev.transferit.desktop.client.MobClientStage;
 import io.ermdev.transferit.desktop.stage.ServerStage;
 import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
+import io.ermdev.transferit.integration.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.net.Socket;
 
 public class MainApplication extends Application implements OnWelcomeClose {
 

@@ -11,7 +11,9 @@ import java.util.ResourceBundle;
 
 public class ServerController implements Subscriber, Initializable, ServerListener {
 
-    private Server server;
+    private LinkServer server;
+
+    private ServerListener serverListener;
 
     @Override
     public void release(Book book) {
@@ -23,9 +25,12 @@ public class ServerController implements Subscriber, Initializable, ServerListen
         Endpoint endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
 
-        server = new TcpServer(endpoint);
-        server.addListener(this);
-        server.findConnection();
+//        server = new TcpServer(endpoint);
+//        server.addListener(this);
+//        server.findConnection();
+        server = new LinkServer(endpoint);
+        server.setServerListener(this);
+        server.open();
     }
 
     @Override
@@ -37,8 +42,7 @@ public class ServerController implements Subscriber, Initializable, ServerListen
                     if(isAccepted) {
                         server.accept();
                     } else {
-                        server.reject();
-                        server.findConnection();
+                        server.close();
                     }
                 })
         );
@@ -47,23 +51,23 @@ public class ServerController implements Subscriber, Initializable, ServerListen
 
     @Override
     public void onStop() {
-        Endpoint endpoint = new Endpoint(23411);
-        endpoint.subscribe(this);
-
-        server = new TcpServer(endpoint);
-        server.addListener(this);
-        server.findConnection();
+//        Endpoint endpoint = new Endpoint(23411);
+//        endpoint.subscribe(this);
+//
+//        server = new TcpServer(endpoint);
+//        server.addListener(this);
+//        server.findConnection();
     }
 
     @FXML
     protected void onActionClose() {
-        server.stop();
-
-        Endpoint endpoint = new Endpoint(23411);
-        endpoint.subscribe(this);
-
-        server = new TcpServer(endpoint);
-        server.addListener(this);
-        server.findConnection();
+//        server.stop();
+//
+//        Endpoint endpoint = new Endpoint(23411);
+//        endpoint.subscribe(this);
+//
+//        server = new TcpServer(endpoint);
+//        server.addListener(this);
+//        server.findConnection();
     }
 }

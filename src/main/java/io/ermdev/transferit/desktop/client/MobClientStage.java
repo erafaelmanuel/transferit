@@ -10,7 +10,7 @@ import java.net.URL;
 
 public class MobClientStage extends Stage {
 
-    private MobClientController clientUIController;
+    private MobClient1Controller clientUIController;
     private OnWelcomeClose onWelcomeClose;
 
     public MobClientStage(OnWelcomeClose onWelcomeClose) {
@@ -34,11 +34,11 @@ public class MobClientStage extends Stage {
         }
     }
 
-    public MobClientController getController() {
+    public MobClient1Controller getController() {
         return clientUIController;
     }
 
-    public void setController(MobClientController clientUIController) {
+    public void setController(MobClient1Controller clientUIController) {
         this.clientUIController = clientUIController;
     }
 

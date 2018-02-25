@@ -22,20 +22,15 @@ import java.util.List;
 
 public class MobClient2Controller implements ClientListener {
 
-    @FXML
-    VBox container;
+    @FXML VBox container;
 
-    @FXML
-    Label lblStatus;
+    @FXML Label lblStatus;
 
-    @FXML
-    StackPane browser;
+    @FXML StackPane browser;
 
-    @FXML
-    Button btnSend;
+    @FXML Button btnSend;
 
-    @FXML
-    Button btnClear;
+    @FXML Button btnClear;
 
     private ItemClient client;
 
@@ -54,8 +49,7 @@ public class MobClient2Controller implements ClientListener {
         client = new ItemClient(c, this);
     }
 
-    @FXML
-    void onClear() {
+    @FXML void onClear() {
         items.clear();
         container.getChildren().clear();
         container.getChildren().add(browser);
@@ -64,8 +58,7 @@ public class MobClient2Controller implements ClientListener {
         btnSend.setDisable(true);
     }
 
-    @FXML
-    void onBrowse() {
+    @FXML void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         long size = 0;
@@ -83,8 +76,7 @@ public class MobClient2Controller implements ClientListener {
         }
     }
 
-    @FXML
-    void onSend() {
+    @FXML void onSend() {
         if (btnSend.getText().equalsIgnoreCase("Pause")) {
             okSend = false;
             client.pause();
@@ -127,16 +119,14 @@ public class MobClient2Controller implements ClientListener {
         }
     }
 
-    @FXML
-    void onDrag(DragEvent event) {
+    @FXML void onDrag(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             event.consume();
         }
     }
 
-    @FXML
-    void onDrop(DragEvent event) {
+    @FXML void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
         long size = 0;
         if (db.hasFiles()) {

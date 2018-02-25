@@ -41,6 +41,10 @@ public class MobClient2Controller implements ItemClientListener {
 
     private List<Item> items = new ArrayList<>();
 
+    private Thread sender;
+
+    private volatile boolean okSend;
+
     public void initialize() {
         onClear();
     }
@@ -80,28 +84,38 @@ public class MobClient2Controller implements ItemClientListener {
 
     @FXML
     void onSend() {
-        if (btnSend.getText().equalsIgnoreCase("Cancel")) {
-            return;
-        }
-        Thread thread = new Thread(() -> {
-            if (client != null) {
-                Platform.runLater(() -> {
-                    btnClear.setDisable(true);
-                    btnSend.setText("Cancel");
-                });
-                for (Item item : items) {
-                    client.sendItem(item);
+        if (btnSend.getText().equalsIgnoreCase("Pause")) {
+            okSend = false;
+            client.pause();
+            btnSend.setText("Start");
+        } else if (btnSend.getText().equalsIgnoreCase("Start")){
+            okSend = true;
+            client.play();
+            btnSend.setText("Pause");
+        } else {
+            sender = new Thread(() -> {
+                okSend = true;
+                if (client != null) {
+                    Platform.runLater(() -> {
+                        btnClear.setDisable(true);
+                        btnSend.setText("Pause");
+                    });
+                    for (Item item : items) {
+                        while (!okSend) {}
+                        client.sendItem(item);
+                    }
+                    Platform.runLater(() -> {
+                        lblStatus.setStyle("-fx-background-color: #00b894");
+                        lblStatus.setText("Completed");
+                        btnClear.setDisable(false);
+                        btnSend.setText("Send");
+                    });
+                    items.clear();
+                    sender = null;
                 }
-                Platform.runLater(() -> {
-                    lblStatus.setStyle("-fx-background-color: #00b894");
-                    lblStatus.setText("Completed");
-                    btnClear.setDisable(false);
-                    btnSend.setText("Send");
-                });
-                items.clear();
-            }
-        });
-        thread.start();
+            });
+            sender.start();
+        }
     }
 
     @FXML

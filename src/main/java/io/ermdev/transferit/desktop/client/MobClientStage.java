@@ -29,6 +29,7 @@ public class MobClientStage extends Stage {
             setTitle("Transferit v1.0");
             setScene(scene);
             setController(fxmlLoader.getController());
+            setOnCloseRequest(e -> System.exit(0));
         } catch (Exception e) {
             e.printStackTrace();
         }

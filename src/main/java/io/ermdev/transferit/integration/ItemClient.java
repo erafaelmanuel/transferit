@@ -11,7 +11,10 @@ import java.net.Socket;
 public class ItemClient implements InteractiveClient {
 
     private ItemClientListener listener;
+
     private Client client;
+
+    private volatile boolean okSend;
 
     public ItemClient(Client client, ItemClientListener listener) {
         this.client = client;
@@ -29,6 +32,7 @@ public class ItemClient implements InteractiveClient {
     public void sendItem(final Item item) {
         if (getListener() != null) {
             getListener().onSendFileStart(item);
+            okSend = true;
             try {
                 int total = 0;
                 int read;
@@ -39,6 +43,7 @@ public class ItemClient implements InteractiveClient {
                 byte buffer[] = new byte[10240];
                 long start = System.currentTimeMillis();
                 while ((read = bis.read(buffer)) != -1) {
+                    while (!okSend) {}
                     dos.write(buffer, 0, read);
                     total += read;
                     getListener().onSendFileUpdate(item, total);
@@ -54,6 +59,14 @@ public class ItemClient implements InteractiveClient {
             }
             getListener().onSendFileComplete(item);
         }
+    }
+
+    public void pause() {
+        okSend = false;
+    }
+
+    public void play() {
+        okSend = true;
     }
 
     @Override

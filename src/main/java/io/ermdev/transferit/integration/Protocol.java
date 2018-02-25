@@ -1,7 +1,5 @@
 package io.ermdev.transferit.integration;
 
-import io.ermdev.transferit.desktop.util.TrafficUtil;
-
 import java.io.File;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -85,8 +83,10 @@ public class Protocol {
                 }
             } else if (content.equals("file")) {
                 String file = message.split("&")[1].split("file=")[1];
-                System.out.println(file.split(":")[0]);
-                System.out.println(new TrafficUtil().size(Long.parseLong(file.split(":")[1])));
+                String name = file.split(":")[0];
+                long size = Long.parseLong(file.split(":")[1]);
+
+                protocolListener.onFile(name, size);
             }
         } catch (Exception e) {
             e.printStackTrace();

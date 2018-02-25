@@ -46,13 +46,8 @@ public class ServerController implements Subscriber, Initializable, ServerListen
     }
 
     @Override
-    public void onStop() {
-//        Endpoint endpoint = new Endpoint(23411);
-//        endpoint.subscribe(this);
-//
-//        server = new TcpServer(endpoint);
-//        server.addListener(this);
-//        server.findConnection();
+    public void onNewFile(String name, long size) {
+
     }
 
     @FXML

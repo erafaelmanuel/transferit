@@ -107,4 +107,9 @@ public class LinkServer implements Server, ProtocolListener {
     public void onCreate() {
         serverListener.onInvite();
     }
+
+    @Override
+    public void onFile(String name, long size) {
+        serverListener.onNewFile(name, size);
+    }
 }

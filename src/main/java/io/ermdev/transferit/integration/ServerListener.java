@@ -4,5 +4,5 @@ public interface ServerListener {
 
     void onInvite();
 
-    void onStop();
+    void onNewFile(String name, long size);
 }

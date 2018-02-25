@@ -19,11 +19,9 @@ public class Item implements ItemPublisher {
     private Set<ItemSubscriber> subscribers = new HashSet<>();
 
     public Item(File file) {
-        if (file.exists()) {
-            setName(file.getName());
-            setSize(file.length());
-            setFile(file);
-        }
+        setName(file.getName());
+        setSize(file.length());
+        setFile(file);
     }
 
     public String getName() {

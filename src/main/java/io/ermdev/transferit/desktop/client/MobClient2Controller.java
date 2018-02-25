@@ -47,6 +47,7 @@ public class MobClient2Controller implements ItemClientListener {
 
     public void initialize() {
         onClear();
+        btnSend.setText("Send");
     }
 
     public void setClient(Client c) {

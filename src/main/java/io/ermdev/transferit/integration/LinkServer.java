@@ -67,7 +67,7 @@ public class LinkServer implements Server, ProtocolListener {
                 endpoint.setConnected(true);
                 while (endpoint.isConnected()) {
                     Socket socket = server2.accept();
-                    receiveFile(socket.getInputStream());
+                    serverListener.onReceiveFile(socket.getInputStream());
                 }
             } catch (Exception e) {
                 protocol.stopListening();

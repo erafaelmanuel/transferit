@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +25,17 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private Endpoint endpoint;
 
+    private ItemServer itemServer = new ItemServer();
+
     private List<Item> items = new ArrayList<>();
 
-    @FXML
-    VBox container;
+    @FXML VBox container;
 
-    @FXML
-    Label lblStatus;
+    @FXML Label lblStatus;
 
-    @FXML
-    StackPane browser;
+    @FXML StackPane browser;
 
-    @FXML
-    Label lblBrowser;
+    @FXML Label lblBrowser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,7 +48,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     }
 
     public void initialize() {
-        lblBrowser.setText(items.size() + " Receive file(s)");
+        lblBrowser.setText("0 Receive file(s)");
         container.getChildren().clear();
         container.getChildren().add(browser);
     }
@@ -76,15 +75,23 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @Override
     public void onNewFile(String name, long size) {
-        Platform.runLater(() -> {
-            if (items.size() < 1) {
-                container.getChildren().clear();
-            }
-            Item item = new Item(new File(name));
-            item.setSize((double) size);
-            container.getChildren().add(new MyBox(item));
-            items.add(item);
-        });
+        if (items.size() < 1) {
+            Platform.runLater(() -> container.getChildren().clear());
+        }
+        Item item = new Item(new File(name));
+        item.setSize((double) size);
+        items.add(item);
+        Platform.runLater(() -> container.getChildren().add(new MyBox(item)));
+    }
+
+    @Override
+    public void onReceiveFile(InputStream inputStream) {
+        itemServer.setItems(items);
+        try {
+            itemServer.receiveFile(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

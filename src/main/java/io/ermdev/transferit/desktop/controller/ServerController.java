@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javax.swing.*;
+import java.io.InputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,6 +49,11 @@ public class ServerController implements Subscriber, Initializable, ServerListen
 
     @Override
     public void onNewFile(String name, long size) {
+
+    }
+
+    @Override
+    public void onReceiveFile(InputStream inputStream) {
 
     }
 

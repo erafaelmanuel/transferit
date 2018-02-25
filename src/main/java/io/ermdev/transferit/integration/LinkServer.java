@@ -15,7 +15,7 @@ public class LinkServer implements Server, ProtocolListener {
 
     private ServerSocket server2;
 
-    private MyProtocol protocol;
+    private Protocol protocol;
 
     private Endpoint endpoint;
 
@@ -30,7 +30,7 @@ public class LinkServer implements Server, ProtocolListener {
             this.endpoint = endpoint;
             server1 = new ServerSocket(endpoint.getPort());
             server2 = new ServerSocket(endpoint.getPort() + 1);
-            protocol = new MyProtocol(endpoint);
+            protocol = new Protocol(endpoint);
             protocol.setListener(this);
         } catch (Exception e) {
             e.printStackTrace();

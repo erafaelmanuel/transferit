@@ -5,13 +5,13 @@ import java.net.Socket;
 
 public class LinkClient implements Client {
 
-    private MyProtocol protocol;
+    private Protocol protocol;
 
     private Endpoint endpoint;
 
     public LinkClient(Endpoint endpoint) {
         this.endpoint = endpoint;
-        protocol = new MyProtocol(endpoint);
+        protocol = new Protocol(endpoint);
     }
 
     @Override

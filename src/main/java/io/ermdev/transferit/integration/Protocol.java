@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-public class MyProtocol {
+public class Protocol {
 
     private Endpoint endpoint;
 
@@ -17,7 +17,7 @@ public class MyProtocol {
 
     private ProtocolListener protocolListener;
 
-    MyProtocol(Endpoint endpoint) {
+    Protocol(Endpoint endpoint) {
         this.endpoint = endpoint;
     }
 

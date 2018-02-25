@@ -10,13 +10,13 @@ import java.net.Socket;
 
 public class ItemClient implements InteractiveClient {
 
-    private ItemClientListener listener;
+    private ClientListener listener;
 
     private Client client;
 
     private volatile boolean okSend;
 
-    public ItemClient(Client client, ItemClientListener listener) {
+    public ItemClient(Client client, ClientListener listener) {
         this.client = client;
         this.setListener(listener);
     }
@@ -75,12 +75,12 @@ public class ItemClient implements InteractiveClient {
     }
 
     @Override
-    public ItemClientListener getListener() {
+    public ClientListener getListener() {
         return listener;
     }
 
     @Override
-    public void setListener(ItemClientListener listener) {
+    public void setListener(ClientListener listener) {
         this.listener = listener;
     }
 }

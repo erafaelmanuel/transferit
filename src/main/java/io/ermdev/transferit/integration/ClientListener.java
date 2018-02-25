@@ -1,6 +1,6 @@
 package io.ermdev.transferit.integration;
 
-public interface ItemClientListener {
+public interface ClientListener {
 
     void onSendFileStart(Item item);
 

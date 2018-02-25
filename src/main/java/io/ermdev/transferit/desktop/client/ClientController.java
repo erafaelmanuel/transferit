@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientController implements Subscriber, Initializable, ItemClientListener {
+public class ClientController implements Subscriber, Initializable, ClientListener {
 
     private Client client;
 

@@ -86,8 +86,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @Override
     public void onReceiveFile(InputStream inputStream) {
-        itemServer.setItems(items);
         try {
+            itemServer.setItems(items);
             itemServer.receiveFile(inputStream);
         } catch (Exception e) {
             e.printStackTrace();

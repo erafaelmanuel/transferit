@@ -85,7 +85,6 @@ public class Protocol {
                 String file = message.split("&")[1].split("file=")[1];
                 String name = file.split(":")[0];
                 long size = Long.parseLong(file.split(":")[1]);
-
                 protocolListener.onFile(name, size);
             }
         } catch (Exception e) {

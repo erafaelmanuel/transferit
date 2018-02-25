@@ -52,6 +52,10 @@ public class LinkClient implements Client {
 
     @Override
     public void sendFile(File file) {
-
+        try {
+            protocol.dispatch(file);
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.server.MobServerController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="326.0" prefHeight="35.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #ff7675;" text="Connect" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </JFXButton>
+            <Label fx:id="lblStatus" alignment="CENTER" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: #fdcb6e;" text="Waiting" textFill="WHITE" />
+            <VBox alignment="CENTER" layoutY="381.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #636e72;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="15.0" prefWidth="189.0" text="Copyright © 2018, ermdev.io" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <ScrollPane layoutY="45.0" prefHeight="336.0" prefWidth="247.0" style="-fx-background-color: transparent;">
+               <content>
+                  <VBox fx:id="container" prefHeight="334.0" prefWidth="228.0">
+                     <children>
+                        <StackPane fx:id="browser" onDragDropped="#onDrop" onDragOver="#onDrag" onMouseClicked="#onBrowse" prefHeight="336.0" prefWidth="228.0">
+                           <children>
+                              <Label style="-fx-border-color: #2d3436; -fx-border-style: dotted; -fx-background-color: #ecf0f1;" text="0 Receive file(s)" textFill="#5f5f61">
+                                 <padding>
+                                    <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="50.0" left="15.0" />
+                           </padding>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
    </children>

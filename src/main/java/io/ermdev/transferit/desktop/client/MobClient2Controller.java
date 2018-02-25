@@ -101,6 +101,9 @@ public class MobClient2Controller implements ItemClientListener {
                         btnSend.setText("Pause");
                     });
                     for (Item item : items) {
+                        client.getClient().sendFile(item.getFile());
+                    }
+                    for (Item item : items) {
                         while (!okSend) {}
                         client.sendItem(item);
                     }

@@ -21,6 +21,10 @@ public class ItemClient implements InteractiveClient {
         this.setListener(listener);
     }
 
+    public Client getClient() {
+        return client;
+    }
+
     public Socket newSocket() throws ClientException {
         try {
             return new Socket(client.getEndpoint().getHost(), client.getEndpoint().getPort() + 1);
@@ -43,7 +47,8 @@ public class ItemClient implements InteractiveClient {
                 byte buffer[] = new byte[10240];
                 long start = System.currentTimeMillis();
                 while ((read = bis.read(buffer)) != -1) {
-                    while (!okSend) {}
+                    while (!okSend) {
+                    }
                     dos.write(buffer, 0, read);
                     total += read;
                     getListener().onSendFileUpdate(item, total);

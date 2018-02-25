@@ -1,9 +1,11 @@
 package io.ermdev.transferit.integration;
 
+import io.ermdev.transferit.desktop.util.TrafficUtil;
+
+import java.io.File;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 
 public class Protocol {
 
@@ -31,7 +33,11 @@ public class Protocol {
 
     public void dispatch(Status status) throws ClientException {
         try {
-            String message = String.format(Locale.ENGLISH, "token=12345&status=%d;", status.getCode());
+            String message = "content-type=action"
+                    .concat("&")
+                    .concat("status=")
+                    .concat(status.toString())
+                    .concat(";");
             OutputStream os = socket.getOutputStream();
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
@@ -40,23 +46,47 @@ public class Protocol {
         }
     }
 
-    private void read(String arg) {
+    public void dispatch(File file) throws ClientException {
         try {
-            final int status = Integer.parseInt(arg.split("&")[1].split("status=")[1]);
-            if (status == 100) {
-                if (protocolListener != null) {
-                    protocolListener.onCreate();
+            String message = "content-type=file"
+                    .concat("&")
+                    .concat("file=")
+                    .concat(file.getName())
+                    .concat(":")
+                    .concat(String.valueOf(file.length()))
+                    .concat(";");
+            OutputStream os = socket.getOutputStream();
+            os.write(message.getBytes(StandardCharsets.UTF_8));
+            os.flush();
+        } catch (Exception e) {
+            throw new ClientException("Dispatching Failed!");
+        }
+    }
+
+    private void read(String message) {
+        try {
+            String content = message.split("&")[0].split("content-type=")[1];
+            if (content.equals("action")) {
+                int status = Integer.parseInt(message.split("&")[1].split("status=")[1]);
+                if (status == 100) {
+                    if (protocolListener != null) {
+                        protocolListener.onCreate();
+                    }
+                } else if (status == 200) {
+                    endpoint.setConnected(false);
+                    stopListening();
+                } else if (status == 300) {
+                    endpoint.setConnected(true);
+                } else if (status == 400) {
+                    endpoint.setConnected(false);
+                    stopListening();
+                } else {
+                    throw new TcpException("Unknown status code");
                 }
-            } else if (status == 200) {
-                endpoint.setConnected(false);
-                stopListening();
-            } else if (status == 300) {
-                endpoint.setConnected(true);
-            } else if (status == 400) {
-                endpoint.setConnected(false);
-                stopListening();
-            } else {
-                throw new TcpException("Unknown status code");
+            } else if (content.equals("file")) {
+                String file = message.split("&")[1].split("file=")[1];
+                System.out.println(file.split(":")[0]);
+                System.out.println(new TrafficUtil().size(Long.parseLong(file.split(":")[1])));
             }
         } catch (Exception e) {
             e.printStackTrace();

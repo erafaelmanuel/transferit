@@ -11,9 +11,9 @@ import java.nio.file.Paths;
 
 public class LinkServer implements Server, ProtocolListener {
 
-    private ServerSocket server1;
+    private volatile ServerSocket server1;
 
-    private ServerSocket server2;
+    private volatile ServerSocket server2;
 
     private Protocol protocol;
 
@@ -82,7 +82,7 @@ public class LinkServer implements Server, ProtocolListener {
         try {
             protocol.stopListening();
             protocol.dispatch(Status.STOP);
-        } catch (ClientException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

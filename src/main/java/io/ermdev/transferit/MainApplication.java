@@ -26,6 +26,7 @@ public class MainApplication extends Application implements OnWelcomeClose {
         if (isServer) {
             try {
                 MobServerStage serverStage = new MobServerStage(this);
+                serverStage.getController().setWelcomeStage(welcomeStage);
                 serverStage.show();
             } catch (Exception e) {
                 e.printStackTrace();

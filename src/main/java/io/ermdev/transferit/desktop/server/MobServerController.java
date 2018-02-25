@@ -1,13 +1,17 @@
 package io.ermdev.transferit.desktop.server;
 
 import io.ermdev.transferit.desktop.client.MyBox;
+import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
@@ -19,6 +23,8 @@ import java.util.ResourceBundle;
 
 public class MobServerController implements ServerListener, Subscriber, Initializable {
 
+    private WelcomeStage welcomeStage;
+
     private LinkServer server;
 
     private Thread summoner;
@@ -29,13 +35,17 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private List<Item> items = new ArrayList<>();
 
-    @FXML VBox container;
+    @FXML
+    VBox container;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML StackPane browser;
+    @FXML
+    StackPane browser;
 
-    @FXML Label lblBrowser;
+    @FXML
+    Label lblBrowser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,6 +61,10 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         lblBrowser.setText("0 Receive file(s)");
         container.getChildren().clear();
         container.getChildren().add(browser);
+    }
+
+    public void setWelcomeStage(WelcomeStage welcomeStage) {
+        this.welcomeStage = welcomeStage;
     }
 
     @Override
@@ -106,6 +120,17 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
                 lblStatus.setText("Disconnected");
                 lblStatus.setStyle("-fx-background-color: #d63031");
             });
+        }
+    }
+
+    @FXML
+    void onCancel(ActionEvent event) {
+        initialize();
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        server.stop();
+        server = null;
+        if (welcomeStage != null) {
+            welcomeStage.show();
         }
     }
 }

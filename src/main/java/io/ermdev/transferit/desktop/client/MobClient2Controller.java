@@ -67,8 +67,8 @@ public class MobClient2Controller implements ItemClientListener {
     void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
+        long size = 0;
         if (newFiles != null && newFiles.size() > 0) {
-            long size = 0;
             container.getChildren().clear();
             for (File file : newFiles) {
                 Item item = new Item(file);
@@ -129,8 +129,8 @@ public class MobClient2Controller implements ItemClientListener {
     @FXML
     void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
+        long size = 0;
         if (db.hasFiles()) {
-            long size = 0;
             container.getChildren().clear();
             for (File file : db.getFiles()) {
                 if (file.isFile()) {

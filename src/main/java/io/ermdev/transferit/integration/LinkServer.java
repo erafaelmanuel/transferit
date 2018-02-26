@@ -82,11 +82,7 @@ public class LinkServer implements Server, ProtocolListener {
     public void stop() {
         try {
             protocol.stopListening();
-            try {
-                protocol.dispatch(Status.STOP);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            protocol.dispatch(Status.STOP);
             server1.close();
             server2.close();
         } catch (Exception e) {

@@ -54,7 +54,7 @@ public class LinkClient implements Client {
     public void sendFile(File file) {
         try {
             protocol.dispatch(file);
-        } catch (ClientException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

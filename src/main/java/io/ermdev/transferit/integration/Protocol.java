@@ -110,6 +110,7 @@ public class Protocol {
                 }
                 postman = null;
             } catch (Exception e) {
+                e.printStackTrace();
                 endpoint.setConnected(false);
                 stopListening();
             }

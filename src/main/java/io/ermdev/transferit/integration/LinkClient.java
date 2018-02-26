@@ -32,7 +32,6 @@ public class LinkClient implements Client {
             protocol.dispatch(Status.STOP);
             protocol.stopListening();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -55,7 +54,6 @@ public class LinkClient implements Client {
         try {
             protocol.dispatch(file);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

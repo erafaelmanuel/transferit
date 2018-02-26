@@ -1,7 +1,7 @@
 package io.ermdev.transferit.desktop.server;
 
-import io.ermdev.transferit.desktop.client.MyBox;
-import io.ermdev.transferit.desktop.stage.WelcomeStage;
+import io.ermdev.transferit.desktop.component.MyBox;
+import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import io.ermdev.transferit.desktop.stage.WelcomeStage;
+import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

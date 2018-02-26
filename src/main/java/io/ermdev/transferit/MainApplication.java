@@ -2,7 +2,7 @@ package io.ermdev.transferit;
 
 import io.ermdev.transferit.desktop.client.MobClientStage;
 import io.ermdev.transferit.desktop.server.MobServerStage;
-import io.ermdev.transferit.desktop.stage.WelcomeStage;
+import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
 import javafx.application.Application;
 import javafx.stage.Stage;

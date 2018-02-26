@@ -1,6 +1,5 @@
-package io.ermdev.transferit.desktop.stage;
+package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.controller.ServerController;
 import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,44 +8,41 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class ServerStage extends Stage {
+public class ClientStage extends Stage {
 
-    private ServerController serverController;
+    private ClientController clientUIController;
     private OnWelcomeClose onWelcomeClose;
 
-    public ServerStage(OnWelcomeClose onWelcomeClose) {
+    public ClientStage(OnWelcomeClose onWelcomeClose) {
         this.onWelcomeClose = onWelcomeClose;
-        createServerStage();
+        createClientStage();
     }
 
-    private void createServerStage() {
+    private void createClientStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = this.getClass().getResource("/fxml/server_ui.fxml");
+            URL location = this.getClass().getResource("/fxml/client_ui.fxml");
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 600, 400);
 
             setTitle("Transferit v1.0");
             setScene(scene);
-            setServerController(fxmlLoader.getController());
-            setOnCloseRequest(e -> System.exit(0));
+            setClientUIController(fxmlLoader.getController());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ServerController getServerController() {
-        return serverController;
+    public ClientController getClientUIController() {
+        return clientUIController;
     }
 
-    public void setServerController(ServerController serverController) {
-        this.serverController = serverController;
+    public void setClientUIController(ClientController clientUIController) {
+        this.clientUIController = clientUIController;
     }
 
     public OnWelcomeClose getOnWelcomeClose() {
         return onWelcomeClose;
     }
-
-
 }

@@ -1,6 +1,5 @@
-package io.ermdev.transferit.desktop.controller;
+package io.ermdev.transferit.desktop.welcome;
 
-import io.ermdev.transferit.desktop.stage.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,17 +12,23 @@ import java.util.ResourceBundle;
 
 public class WelcomeController implements Initializable {
 
-    @FXML private ImageView imgv1;
+    @FXML
+    private ImageView imgv1;
 
-    @FXML private ImageView imgv2;
+    @FXML
+    private ImageView imgv2;
 
-    @FXML private ImageView imgv3dots;
+    @FXML
+    private ImageView imgv3dots;
 
-    @FXML private ImageView imgvbubbles;
+    @FXML
+    private ImageView imgvbubbles;
 
-    @FXML private ImageView imgvnext;
+    @FXML
+    private ImageView imgvnext;
 
-    @FXML private ImageView imgvprev;
+    @FXML
+    private ImageView imgvprev;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

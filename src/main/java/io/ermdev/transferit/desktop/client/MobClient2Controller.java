@@ -1,5 +1,6 @@
 package io.ermdev.transferit.desktop.client;
 
+import io.ermdev.transferit.desktop.component.MyBox;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.integration.Client;
 import io.ermdev.transferit.integration.Item;

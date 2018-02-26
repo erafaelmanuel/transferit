@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.client;
+package io.ermdev.transferit.desktop.component;
 
 import com.jfoenix.controls.JFXProgressBar;
 import io.ermdev.transferit.desktop.util.ImageUtil;

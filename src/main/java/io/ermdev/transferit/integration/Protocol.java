@@ -29,7 +29,7 @@ public class Protocol {
         this.protocolListener = protocolListener;
     }
 
-    public void dispatch(Status status) throws ClientException {
+    public void dispatch(Status status) {
         try {
             String message = "content-type=action"
                     .concat("&")
@@ -40,11 +40,11 @@ public class Protocol {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
         } catch (Exception e) {
-            throw new ClientException("Dispatching Failed!");
+            e.printStackTrace();
         }
     }
 
-    public void dispatch(File file) throws ClientException {
+    public void dispatch(File file) {
         try {
             String message = "content-type=file"
                     .concat("&")
@@ -57,7 +57,7 @@ public class Protocol {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
         } catch (Exception e) {
-            throw new ClientException("Dispatching Failed!");
+            e.printStackTrace();
         }
     }
 

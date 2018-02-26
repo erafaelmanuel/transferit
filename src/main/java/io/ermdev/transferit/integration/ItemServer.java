@@ -31,6 +31,8 @@ public class ItemServer {
                     item.setProgress(total);
                 }
                 item.notifyAfter();
+                bos.flush();
+                bos.close();
                 dis.close();
                 items.remove(item);
             }

@@ -32,7 +32,7 @@ public class Protocol {
     public void dispatch(Status status) {
         try {
             String message = "content-type=action"
-                    .concat("&")
+                    .concat("?")
                     .concat("status=")
                     .concat(status.toString())
                     .concat(";");
@@ -40,13 +40,14 @@ public class Protocol {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void dispatch(File file) {
         try {
             String message = "content-type=file"
-                    .concat("&")
+                    .concat("?")
                     .concat("file=")
                     .concat(file.getName())
                     .concat(":")
@@ -56,14 +57,15 @@ public class Protocol {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void read(String message) {
         try {
-            String content = message.split("&")[0].split("content-type=")[1];
+            String content = message.split("\\?")[0].split("content-type=")[1];
             if (content.equals("action")) {
-                int status = Integer.parseInt(message.split("&")[1].split("status=")[1]);
+                int status = Integer.parseInt(message.split("\\?")[1].split("status=")[1]);
                 if (status == 100) {
                     if (protocolListener != null) {
                         protocolListener.onCreate();
@@ -80,12 +82,13 @@ public class Protocol {
                     throw new TcpException("Unknown status code");
                 }
             } else if (content.equals("file")) {
-                String file = message.split("&")[1].split("file=")[1];
+                String file = message.split("\\?")[1].split("file=")[1];
                 String name = file.split(":")[0];
                 long size = Long.parseLong(file.split(":")[1]);
                 protocolListener.onFile(name, size);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

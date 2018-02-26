@@ -59,6 +59,7 @@ public class ItemClient implements InteractiveClient {
                 }
                 dos.flush();
                 dos.close();
+                bis.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

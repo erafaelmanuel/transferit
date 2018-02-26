@@ -119,6 +119,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
                 btnCancel.setDisable(false);
             });
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

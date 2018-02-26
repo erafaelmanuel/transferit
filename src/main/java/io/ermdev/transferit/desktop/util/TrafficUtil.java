@@ -6,7 +6,7 @@ public class TrafficUtil {
 
     private String size;
     private String speed;
-    private String simply;
+    private String round;
 
     public String size(long buffer) {
         if ((buffer / 1000000000) > 0) {
@@ -30,15 +30,15 @@ public class TrafficUtil {
         }
     }
 
-    public String simply(Long buffer) {
+    public String round(Long buffer) {
         if ((buffer / 1000000000) > 0) {
-            return simply = String.format(Locale.ENGLISH, "%.1f", buffer / 1000000000.0);
+            return round = String.format(Locale.ENGLISH, "%.1f", buffer / 1000000000.0);
         } else if ((buffer / 1000000) > 0) {
-            return simply = String.format(Locale.ENGLISH, "%.1f", buffer / 1000000.0);
+            return round = String.format(Locale.ENGLISH, "%.1f", buffer / 1000000.0);
         } else if ((buffer / 1000) > 0) {
-            return simply = String.format(Locale.ENGLISH, "%.1f", buffer / 1000.0);
+            return round = String.format(Locale.ENGLISH, "%.1f", buffer / 1000.0);
         } else {
-            return simply = (buffer + " bytes");
+            return round = (buffer + " bytes");
         }
     }
 
@@ -50,7 +50,7 @@ public class TrafficUtil {
         return speed;
     }
 
-    public String getLastSimply() {
-        return simply;
+    public String getLastRound() {
+        return round;
     }
 }

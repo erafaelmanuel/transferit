@@ -134,7 +134,7 @@ public class MyBox extends HBox implements ItemSubscriber {
         final double content = (Double) book.getContent();
         final double percent = (100 / item.getSize()) * content;
         Platform.runLater(() -> {
-            lblDownloaded.setText(trafficUtil.simply((long) content) + " of " + trafficUtil.getLastSize());
+            lblDownloaded.setText(trafficUtil.round((long) content) + " of " + trafficUtil.getLastSize());
             lblPercent.setText(((int) percent) + "%");
             progressBar.setProgress(percent / 100.0);
         });
@@ -152,7 +152,7 @@ public class MyBox extends HBox implements ItemSubscriber {
     @Override
     public void afterItemRelease() {
         Platform.runLater(() -> {
-            lblDownloaded.setText(trafficUtil.simply((long) item.getSize()) + " of " + trafficUtil.getLastSize());
+            lblDownloaded.setText(trafficUtil.round((long) item.getSize()) + " of " + trafficUtil.getLastSize());
             lblPercent.setText("100%");
             progressBar.setProgress(1);
         });

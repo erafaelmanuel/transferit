@@ -33,8 +33,8 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <Button layoutX="45.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Clear" />
-            <Button layoutX="126.0" layoutY="32.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
+            <Button fx:id="btnClear" layoutX="45.0" layoutY="32.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="76.0" text="Clear" />
+            <Button fx:id="btnCancel" layoutX="126.0" layoutY="32.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
          </children>
       </AnchorPane>
    </children>

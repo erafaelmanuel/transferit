@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -46,6 +47,12 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @FXML
     Label lblBrowser;
+
+    @FXML
+    Button btnClear;
+
+    @FXML
+    Button btnCancel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -101,8 +108,16 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     @Override
     public void onReceiveFile(InputStream inputStream) {
         try {
+            Platform.runLater(() -> {
+                btnClear.setDisable(true);
+                btnCancel.setDisable(true);
+            });
             itemServer.setItems(items);
             itemServer.receiveFile(inputStream);
+            Platform.runLater(() -> {
+                btnClear.setDisable(false);
+                btnCancel.setDisable(false);
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,5 +147,10 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         if (welcomeStage != null) {
             welcomeStage.show();
         }
+    }
+
+    @FXML
+    void onClear() {
+        initialize();
     }
 }

@@ -61,6 +61,32 @@ public class Protocol {
         }
     }
 
+    public void listen() {
+        postman = new Thread(() -> {
+            try {
+                okListen = true;
+                while (okListen) {
+                    String message = "";
+                    int n;
+                    while ((n = socket.getInputStream().read()) != -1) {
+                        if ((char) n == ';') {
+                            read(message);
+                            message = "";
+                        } else {
+                            message = message.concat(String.valueOf((char) n));
+                        }
+                    }
+                }
+                postman = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                endpoint.setConnected(false);
+                stopListening();
+            }
+        });
+        postman.start();
+    }
+
     private void read(String message) {
         try {
             String content = message.split("\\?")[0].split("content-type=")[1];
@@ -90,32 +116,6 @@ public class Protocol {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void listen() {
-        postman = new Thread(() -> {
-            try {
-                okListen = true;
-                while (okListen) {
-                    String message = "";
-                    int n;
-                    while ((n = socket.getInputStream().read()) != -1) {
-                        if ((char) n == ';') {
-                            read(message);
-                            message = "";
-                        } else {
-                            message = message.concat(String.valueOf((char) n));
-                        }
-                    }
-                }
-                postman = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                endpoint.setConnected(false);
-                stopListening();
-            }
-        });
-        postman.start();
     }
 
     public void stopListening() {

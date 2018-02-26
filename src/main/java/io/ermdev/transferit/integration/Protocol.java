@@ -40,7 +40,6 @@ public class Protocol {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -57,7 +56,6 @@ public class Protocol {
             os.write(message.getBytes(StandardCharsets.UTF_8));
             os.flush();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -88,7 +86,6 @@ public class Protocol {
                 protocolListener.onFile(name, size);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -13,25 +13,15 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <VBox prefHeight="174.0" prefWidth="247.0" style="-fx-background-color: #535c68;">
+            <VBox prefHeight="174.0" prefWidth="247.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane fx:id="container" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="imgv" fitHeight="111.0" fitWidth="149.0" layoutX="68.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../Pictures/ImGRandom/little-bird.png" />
-                           </image>
-                        </ImageView>
                         <ImageView fx:id="imgv3dots" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/system/img3dots.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="29.0" layoutY="138.0" prefHeight="17.0" prefWidth="189.0" text="Transfer files between your devices" textFill="WHITE">
-                           <font>
-                              <Font name="Calibri" size="10.0" />
-                           </font>
-                        </Label>
                         <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="223.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/system/img_next.png" />
@@ -56,16 +46,12 @@
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <VBox alignment="CENTER" layoutY="383.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #636e72;">
-               <children>
-                  <Label alignment="CENTER" prefHeight="15.0" prefWidth="189.0" text="Copyright © 2018, ermdev.io" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
             <Label alignment="CENTER" layoutX="56.0" layoutY="190.0" prefHeight="17.0" prefWidth="135.0" text="Transferit v1.0" textFill="#1b1818" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="381.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #dfe4ea;" text="Copyright © 2018" textAlignment="CENTER" textFill="#616161">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

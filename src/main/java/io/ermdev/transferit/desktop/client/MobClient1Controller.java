@@ -51,7 +51,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
     public void initialize(URL location, ResourceBundle resources) {
         endpoint = new Endpoint();
         endpoint.subscribe(this);
-        imgv1.setImage(new Image(getClass().getResource("/image/bg-cl/img1.png").toString()));
+        imgv1.setImage(new Image(getClass().getResource("/image/bg-cl/img3.png").toString()));
         imgvback.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
     }
 

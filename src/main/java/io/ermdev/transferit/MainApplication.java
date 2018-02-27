@@ -17,6 +17,12 @@ public class MainApplication extends Application implements OnWelcomeClose {
 
     @Override
     public void start(Stage primaryStage) {
+
+        Stage stage = new Stage();
+//        Scene scene = new Scene(new Cover1(), 247, 174);
+//        stage.setScene(scene);
+//        stage.show();
+
         welcomeStage = new WelcomeStage(this);
         welcomeStage.display();
     }

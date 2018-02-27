@@ -1,31 +1,30 @@
 package io.ermdev.transferit.desktop.welcome;
 
 import io.ermdev.transferit.desktop.component.Cover;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class WelcomeController implements Initializable {
 
-    @FXML
-    private ImageView imgv3dots;
+    @FXML ImageView imgv3dots;
 
-    @FXML
-    private ImageView imgvnext;
+    @FXML ImageView imgvnext;
 
-    @FXML
-    private ImageView imgvprev;
+    @FXML ImageView imgvprev;
 
     @FXML AnchorPane container;
 
@@ -41,7 +40,7 @@ public class WelcomeController implements Initializable {
         covers[2] = new Cover3();
         covers[3] = new Cover4();
 
-        container.getChildren().add(0, covers[(int)((Math.random() * 4))]);
+        container.getChildren().add(0, covers[(int) ((Math.random() * 4))]);
 
         imgv3dots.setImage(new Image(getClass().getResource("/image/system/img3dots.png").toString()));
         imgvnext.setImage(new Image(getClass().getResource("/image/system/img_next.png").toString()));
@@ -65,11 +64,16 @@ public class WelcomeController implements Initializable {
         stage.getOnWelcomeClose().onClose(true);
     }
 
-    @FXML void onOption(MouseEvent me) {
+
+    @FXML
+    void onOption(MouseEvent me) {
         if (!optionMenu.isDisplayed()) {
             optionMenu.setX(me.getScreenX());
             optionMenu.setY(me.getScreenY());
             optionMenu.display();
+        } else {
+            optionMenu.hide();
+            optionMenu.setDisplay(false);
         }
     }
 

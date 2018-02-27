@@ -1,5 +1,7 @@
 package io.ermdev.transferit.desktop.welcome;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,8 +20,15 @@ public class OptionMenu extends Stage {
             Scene scene = new Scene(root, 170, 82);
 
             initStyle(StageStyle.UNDECORATED);
+
             setResizable(false);
             setScene(scene);
+            focusedProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue) {
+                    hide();
+                    setDisplay(false);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

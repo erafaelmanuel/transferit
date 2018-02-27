@@ -57,6 +57,10 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initialize();
+        File directory = new File("files");
+       if (!(directory.exists() || directory.mkdir())) {
+           throw new RuntimeException("File folder is missing");
+       }
         endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
         server = new LinkServer(endpoint);

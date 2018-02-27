@@ -17,7 +17,7 @@ public class ItemServer {
             DataInputStream dis = new DataInputStream(new BufferedInputStream(inputStream));
             String fileName = dis.readUTF();
             Optional<Item> o = items.parallelStream().filter(item -> item.getName().equals(fileName)).findFirst();
-            File file = new File(fileName);
+            File file = new File("files/" + fileName);
             byte buffer[] = new byte[10240];
             if (o.isPresent() && (!file.exists() || file.delete())) {
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));

@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.server;
 
-import io.ermdev.transferit.desktop.component.MyBox;
+import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
@@ -106,7 +106,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         Item item = new Item(new File(name));
         item.setSize((double) size);
         items.add(item);
-        Platform.runLater(() -> container.getChildren().add(new MyBox(item)));
+        Platform.runLater(() -> container.getChildren().add(new ItemBox(item)));
     }
 
     @Override

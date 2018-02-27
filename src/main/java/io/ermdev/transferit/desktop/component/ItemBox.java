@@ -17,9 +17,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class MyBox extends HBox implements ItemSubscriber {
+import java.net.URL;
 
-    private final HBox inside = new HBox(2);
+public class ItemBox extends HBox implements ItemSubscriber {
+
+    private final HBox firstBox = new HBox(2);
 
     private final VBox imgBox = new VBox();
 
@@ -43,13 +45,13 @@ public class MyBox extends HBox implements ItemSubscriber {
 
     private TrafficUtil trafficUtil = new TrafficUtil();
 
-    private String css = getClass().getResource("/css/jfx-progress-bar.css").toExternalForm();
+    private URL progressBarStyle = getClass().getResource("/css/jfx-progress-bar.css");
 
-    private String css2 = getClass().getResource("/css/item-box-style.css").toExternalForm();
+    private URL itemBoxStyle = getClass().getResource("/css/item-box-style.css");
 
     private Item item;
 
-    public MyBox(Item item) {
+    public ItemBox(Item item) {
         setItem(item);
         generateUI();
     }
@@ -60,27 +62,34 @@ public class MyBox extends HBox implements ItemSubscriber {
         item.subscribe(this);
     }
 
-    private void generateUI() {
-        setPadding(new Insets(1, 0, 2, 10));
-        getStylesheets().add(css2);
-        setId("parent");
-        getChildren().add(inside);
+    private void createFirstBox() {
+        firstBox.setAlignment(Pos.CENTER_LEFT);
+        firstBox.setPrefHeight(40);
+        firstBox.setPrefWidth(222);
+        firstBox.setPadding(new Insets(3));
+        firstBox.setMinHeight(40);
+        firstBox.setMinWidth(222);
+        firstBox.setId("inside");
+        firstBox.getChildren().add(imgBox);
+        firstBox.getChildren().add(secondBox);
 
-        inside.setAlignment(Pos.CENTER_LEFT);
-        inside.setPrefHeight(40);
-        inside.setPrefWidth(222);
-        inside.setPadding(new Insets(3));
-        inside.setMinHeight(40);
-        inside.setMinWidth(222);
-        inside.setId("inside");
+        imgv.setFitHeight(24);
+        imgv.setFitWidth(24);
+        imgv.setImage(new Image(getClass().getResource(ImageUtil.thumbnail(item.getName())).toString()));
+        imgv.setId("thumbnail");
 
         imgBox.setAlignment(Pos.CENTER);
         imgBox.setPrefHeight(24);
         imgBox.setPrefWidth(24);
+        imgBox.getChildren().add(imgv);
+    }
 
+    private void createSecondBox() {
         secondBox.setAlignment(Pos.CENTER_LEFT);
         secondBox.setPrefHeight(40);
         secondBox.setPrefWidth(186);
+        secondBox.getChildren().add(lblTitle);
+        secondBox.getChildren().add(contentBox);
 
         lblTitle.setText(item.getName());
         lblTitle.setFont(Font.font("Calibri", 10));
@@ -89,13 +98,9 @@ public class MyBox extends HBox implements ItemSubscriber {
 
         progressBar.setPadding(new Insets(0, 0, 0, 5));
         progressBar.setProgress(item.getProgress());
-        progressBar.getStylesheets().add(css);
+        progressBar.getStylesheets().add(progressBarStyle.toExternalForm());
         progressBar.setMaxWidth(175);
 
-        imgv.setFitHeight(24);
-        imgv.setFitWidth(24);
-        imgv.setImage(new Image(getClass().getResource(ImageUtil.thumbnail(item.getName())).toString()));
-        imgv.setId("thumbnail");
 
         lblPercent.setPadding(new Insets(0, 0, 0, 0));
         lblPercent.setText("0%");
@@ -114,19 +119,21 @@ public class MyBox extends HBox implements ItemSubscriber {
         lblDetail.setId("detail");
 
         progressBox.setMaxWidth(175);
-
-        contentBox.getChildren().add(lblDetail);
-
         progressBox.setLeft(lblDownloaded);
         progressBox.setRight(lblPercent);
 
-        secondBox.getChildren().add(lblTitle);
-        secondBox.getChildren().add(contentBox);
+        contentBox.getChildren().add(lblDetail);
+    }
 
-        imgBox.getChildren().add(imgv);
 
-        inside.getChildren().add(imgBox);
-        inside.getChildren().add(secondBox);
+    private void generateUI() {
+        setPadding(new Insets(1, 0, 2, 10));
+        getStylesheets().add(itemBoxStyle.toExternalForm());
+        setId("parent");
+        getChildren().add(firstBox);
+
+        createFirstBox();
+        createSecondBox();
     }
 
     @Override

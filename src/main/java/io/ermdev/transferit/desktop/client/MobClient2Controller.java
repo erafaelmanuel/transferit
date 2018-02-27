@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.component.MyBox;
+import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.integration.Client;
 import io.ermdev.transferit.integration.Item;
@@ -68,7 +68,7 @@ public class MobClient2Controller implements ClientListener {
             for (File file : newFiles) {
                 Item item = new Item(file);
                 size += file.length();
-                container.getChildren().add(new MyBox(item));
+                container.getChildren().add(new ItemBox(item));
                 items.add(item);
             }
             lblStatus.setStyle("-fx-background-color: #ff9f43");
@@ -136,7 +136,7 @@ public class MobClient2Controller implements ClientListener {
                 if (file.isFile()) {
                     Item item = new Item(file);
                     size += file.length();
-                    container.getChildren().add(new MyBox(item));
+                    container.getChildren().add(new ItemBox(item));
                     items.add(item);
                 }
             }

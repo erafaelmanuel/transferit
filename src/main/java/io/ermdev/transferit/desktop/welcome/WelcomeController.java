@@ -13,16 +13,10 @@ import java.util.ResourceBundle;
 public class WelcomeController implements Initializable {
 
     @FXML
-    private ImageView imgv1;
-
-    @FXML
-    private ImageView imgv2;
+    private ImageView imgv;
 
     @FXML
     private ImageView imgv3dots;
-
-    @FXML
-    private ImageView imgvbubbles;
 
     @FXML
     private ImageView imgvnext;
@@ -30,12 +24,13 @@ public class WelcomeController implements Initializable {
     @FXML
     private ImageView imgvprev;
 
+    private String images[] = new String[5];
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imgv1.setImage(new Image(getClass().getResource("/image/img1.png").toString()));
-        imgv2.setImage(new Image(getClass().getResource("/image/img2.png").toString()));
+        images[0] = "/image/wlcm-slide/img1.png";
+        imgv.setImage(new Image(getClass().getResource(images[0]).toString()));
         imgv3dots.setImage(new Image(getClass().getResource("/image/img3dots.png").toString()));
-        imgvbubbles.setImage(new Image(getClass().getResource("/image/img_bubbles.gif").toString()));
         imgvnext.setImage(new Image(getClass().getResource("/image/img_next.png").toString()));
         imgvprev.setImage(new Image(getClass().getResource("/image/img_prev.png").toString()));
     }

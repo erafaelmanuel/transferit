@@ -13,37 +13,23 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fx:id="imgvbubbles" fitHeight="138.0" fitWidth="236.0" layoutX="6.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/img_bubbles.gif" />
-               </image>
-            </ImageView>
-            <VBox prefHeight="174.0" prefWidth="247.0" style="-fx-background-color: #dfe6e9;">
+            <VBox prefHeight="174.0" prefWidth="247.0" style="-fx-background-color: #535c68;">
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane layoutX="65.0" layoutY="27.0" prefHeight="120.0" prefWidth="135.0">
-                           <children>
-                              <ImageView fx:id="imgv1" fitHeight="111.0" fitWidth="142.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/img1.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="imgv2" fitHeight="95.0" fitWidth="66.0" layoutX="-19.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/img2.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
+                        <ImageView fx:id="imgv" fitHeight="111.0" fitWidth="149.0" layoutX="68.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../Pictures/ImGRandom/little-bird.png" />
+                           </image>
+                        </ImageView>
                         <ImageView fx:id="imgv3dots" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/img3dots.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="29.0" layoutY="138.0" prefHeight="17.0" prefWidth="189.0" text="Transfer files between your devices" textFill="#636e72">
+                        <Label alignment="CENTER" layoutX="29.0" layoutY="138.0" prefHeight="17.0" prefWidth="189.0" text="Transfer files between your devices" textFill="WHITE">
                            <font>
-                              <Font name="Calibri" size="11.0" />
+                              <Font name="Calibri" size="10.0" />
                            </font>
                         </Label>
                         <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="223.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
@@ -60,12 +46,12 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="230.0" onAction="#onSend" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="246.0" onAction="#onSend" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="283.0" onAction="#onReceive" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="292.0" onAction="#onReceive" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>

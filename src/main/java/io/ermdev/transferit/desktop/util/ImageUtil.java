@@ -12,51 +12,51 @@ public class ImageUtil {
             extension = path.substring(i + 1);
         }
         if (extension.equalsIgnoreCase("mp3")) {
-            return "/image/line/mp3.png";
+            return "/image/extension/mp3.png";
         } else if (extension.equalsIgnoreCase("jpg")) {
-            return "/image/line/jpg.png";
+            return "/image/extension/jpg.png";
         } else if (extension.equalsIgnoreCase("png")) {
-            return "/image/line/png.png";
+            return "/image/extension/png.png";
         } else if (extension.equalsIgnoreCase("mp4")) {
-            return "/image/line/mp4.png";
+            return "/image/extension/mp4.png";
         } else if (extension.equalsIgnoreCase("zip")) {
-            return "/image/line/zip.png";
+            return "/image/extension/zip.png";
         } else if (extension.equalsIgnoreCase("avi")) {
-            return "/image/line/avi.png";
+            return "/image/extension/avi.png";
         } else if (extension.equalsIgnoreCase("css")) {
-            return "/image/line/css.png";
+            return "/image/extension/css.png";
         } else if (extension.equalsIgnoreCase("exe")) {
-            return "/image/line/exe.png";
+            return "/image/extension/exe.png";
         } else if (extension.equalsIgnoreCase("html")) {
-            return "/image/line/html.png";
+            return "/image/extension/html.png";
         } else if (extension.equalsIgnoreCase("javascript")) {
-            return "/image/line/javascript.png";
+            return "/image/extension/javascript.png";
         } else if (extension.equalsIgnoreCase("txt")) {
-            return "/image/line/txt.png";
+            return "/image/extension/txt.png";
         } else if (extension.equalsIgnoreCase("ai")) {
-            return "/image/line/ai.png";
+            return "/image/extension/ai.png";
         } else if (extension.equalsIgnoreCase("csv")) {
-            return "/image/line/csv.png";
+            return "/image/extension/csv.png";
         } else if (extension.equalsIgnoreCase("doc")) {
-            return "/image/line/doc.png";
+            return "/image/extension/doc.png";
         } else if (extension.equalsIgnoreCase("fla")) {
-            return "/image/line/fla.png";
+            return "/image/extension/fla.png";
         } else if (extension.equalsIgnoreCase("iso")) {
-            return "/image/line/iso.png";
+            return "/image/extension/iso.png";
         } else if (extension.equalsIgnoreCase("ppt")) {
-            return "/image/line/ppt.png";
+            return "/image/extension/ppt.png";
         } else if (extension.equalsIgnoreCase("pdf")) {
-            return "/image/line/pdf.png";
+            return "/image/extension/pdf.png";
         } else if (extension.equalsIgnoreCase("json-file")) {
-            return "/image/line/json-file.png";
+            return "/image/extension/json-file.png";
         } else if (extension.equalsIgnoreCase("svg")) {
-            return "/image/line/svg.png";
+            return "/image/extension/svg.png";
         } else if (extension.equalsIgnoreCase("xml")) {
-            return "/image/line/xml.png";
+            return "/image/extension/xml.png";
         } else if (extension.equalsIgnoreCase("xls")) {
-            return "/image/line/xls.png";
+            return "/image/extension/xls.png";
         } else {
-            return "/image/line/file.png";
+            return "/image/extension/file.png";
         }
     }
 }

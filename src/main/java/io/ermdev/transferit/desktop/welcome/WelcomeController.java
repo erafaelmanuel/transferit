@@ -30,9 +30,9 @@ public class WelcomeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         images[0] = "/image/wlcm-slide/img1.png";
         imgv.setImage(new Image(getClass().getResource(images[0]).toString()));
-        imgv3dots.setImage(new Image(getClass().getResource("/image/img3dots.png").toString()));
-        imgvnext.setImage(new Image(getClass().getResource("/image/img_next.png").toString()));
-        imgvprev.setImage(new Image(getClass().getResource("/image/img_prev.png").toString()));
+        imgv3dots.setImage(new Image(getClass().getResource("/image/system/img3dots.png").toString()));
+        imgvnext.setImage(new Image(getClass().getResource("/image/system/img_next.png").toString()));
+        imgvprev.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
     }
 
     @FXML

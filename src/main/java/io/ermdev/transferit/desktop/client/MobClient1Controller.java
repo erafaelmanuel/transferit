@@ -19,17 +19,23 @@ import java.util.ResourceBundle;
 
 public class MobClient1Controller implements Initializable, Subscriber {
 
-    @FXML ImageView imgv1;
+    @FXML
+    ImageView imgv1;
 
-    @FXML ImageView imgvback;
+    @FXML
+    ImageView imgvback;
 
-    @FXML JFXButton btnConnect;
+    @FXML
+    JFXButton btnConnect;
 
-    @FXML JFXButton btnSendFile;
+    @FXML
+    JFXButton btnSendFile;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML JFXTextField txtHost;
+    @FXML
+    JFXTextField txtHost;
 
     private WelcomeStage welcomeStage;
 
@@ -45,8 +51,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
     public void initialize(URL location, ResourceBundle resources) {
         endpoint = new Endpoint();
         endpoint.subscribe(this);
-        imgv1.setImage(new Image(getClass().getResource("/image/img1_client1.png").toString()));
-        imgvback.setImage(new Image(getClass().getResource("/image/img_prev.png").toString()));
+        imgv1.setImage(new Image(getClass().getResource("/image/bg-cl/img1.png").toString()));
+        imgvback.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
     }
 
     @Override
@@ -80,7 +86,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
         this.welcomeStage = welcomeStage;
     }
 
-    @FXML void onConnection() {
+    @FXML
+    void onConnection() {
         connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -110,13 +117,15 @@ public class MobClient1Controller implements Initializable, Subscriber {
         connector.start();
     }
 
-    @FXML void onFile() {
+    @FXML
+    void onFile() {
         client2Stage.getController().setClient(client);
         client2Stage.getController().initialize();
         client2Stage.showAndWait();
     }
 
-    @FXML void onBack(MouseEvent event) {
+    @FXML
+    void onBack(MouseEvent event) {
         Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
 

@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class MobClientStage extends Stage {
+public class MobClient1Stage extends Stage {
 
     private MobClient1Controller clientUIController;
     private OnWelcomeClose onWelcomeClose;
 
-    public MobClientStage(OnWelcomeClose onWelcomeClose) {
+    public MobClient1Stage(OnWelcomeClose onWelcomeClose) {
         this.onWelcomeClose = onWelcomeClose;
         createClientStage();
     }

@@ -24,7 +24,7 @@
                         </ImageView>
                         <ImageView fx:id="imgv3dots" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/img3dots.png" />
+                              <Image url="@../image/system/img3dots.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" layoutX="29.0" layoutY="138.0" prefHeight="17.0" prefWidth="189.0" text="Transfer files between your devices" textFill="WHITE">
@@ -34,12 +34,12 @@
                         </Label>
                         <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="223.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/img_next.png" />
+                              <Image url="@../image/system/img_next.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="imgvprev" fitHeight="19.0" fitWidth="22.0" layoutX="6.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/img_prev.png" />
+                              <Image url="@../image/system/img_prev.png" />
                            </image>
                         </ImageView>
                      </children>

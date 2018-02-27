@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.server;
 
-import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
+import io.ermdev.transferit.desktop.welcome.WelcomeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,10 +11,10 @@ import java.net.URL;
 public class MobServerStage extends Stage {
 
     private MobServerController serverController;
-    private OnWelcomeClose onWelcomeClose;
+    private WelcomeListener welcomeListener;
 
-    public MobServerStage(OnWelcomeClose onWelcomeClose) {
-        this.onWelcomeClose = onWelcomeClose;
+    public MobServerStage(WelcomeListener welcomeListener) {
+        this.welcomeListener = welcomeListener;
         createServerStage();
     }
 
@@ -49,7 +49,7 @@ public class MobServerStage extends Stage {
         this.serverController = serverController;
     }
 
-    public OnWelcomeClose getOnWelcomeClose() {
-        return onWelcomeClose;
+    public WelcomeListener getWelcomeListener() {
+        return welcomeListener;
     }
 }

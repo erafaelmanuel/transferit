@@ -10,10 +10,10 @@ import java.net.URL;
 public class WelcomeStage extends Stage {
 
     private WelcomeController welcomeController;
-    private OnWelcomeClose onWelcomeClose;
+    private WelcomeListener welcomeListener;
 
-    public WelcomeStage(OnWelcomeClose onWelcomeClose) {
-        this.onWelcomeClose = onWelcomeClose;
+    public WelcomeStage(WelcomeListener welcomeListener) {
+        this.welcomeListener = welcomeListener;
         createWelcomeStage();
     }
 
@@ -38,7 +38,7 @@ public class WelcomeStage extends Stage {
         show();
     }
 
-    public WelcomeController getWelcomeController() {
+    public WelcomeController getController() {
         return welcomeController;
     }
 
@@ -46,7 +46,7 @@ public class WelcomeStage extends Stage {
         this.welcomeController = welcomeController;
     }
 
-    public OnWelcomeClose getOnWelcomeClose() {
-        return onWelcomeClose;
+    public WelcomeListener getWelcomeListener() {
+        return welcomeListener;
     }
 }

@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
+import io.ermdev.transferit.desktop.welcome.WelcomeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,9 +11,9 @@ import java.net.URL;
 public class ClientStage extends Stage {
 
     private ClientController clientUIController;
-    private OnWelcomeClose onWelcomeClose;
+    private WelcomeListener onWelcomeClose;
 
-    public ClientStage(OnWelcomeClose onWelcomeClose) {
+    public ClientStage(WelcomeListener onWelcomeClose) {
         this.onWelcomeClose = onWelcomeClose;
         createClientStage();
     }
@@ -42,7 +42,7 @@ public class ClientStage extends Stage {
         this.clientUIController = clientUIController;
     }
 
-    public OnWelcomeClose getOnWelcomeClose() {
+    public WelcomeListener getOnWelcomeClose() {
         return onWelcomeClose;
     }
 }

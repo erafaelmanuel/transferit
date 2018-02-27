@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
+import io.ermdev.transferit.desktop.welcome.WelcomeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,10 +11,10 @@ import java.net.URL;
 public class MobClient1Stage extends Stage {
 
     private MobClient1Controller clientUIController;
-    private OnWelcomeClose onWelcomeClose;
+    private WelcomeListener welcomeListener;
 
-    public MobClient1Stage(OnWelcomeClose onWelcomeClose) {
-        this.onWelcomeClose = onWelcomeClose;
+    public MobClient1Stage(WelcomeListener welcomeListener) {
+        this.welcomeListener = welcomeListener;
         createClientStage();
     }
 
@@ -49,7 +49,7 @@ public class MobClient1Stage extends Stage {
         this.clientUIController = clientUIController;
     }
 
-    public OnWelcomeClose getOnWelcomeClose() {
-        return onWelcomeClose;
+    public WelcomeListener getWelcomeListener() {
+        return welcomeListener;
     }
 }

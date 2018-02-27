@@ -3,11 +3,11 @@ package io.ermdev.transferit;
 import io.ermdev.transferit.desktop.client.MobClient1Stage;
 import io.ermdev.transferit.desktop.server.MobServerStage;
 import io.ermdev.transferit.desktop.welcome.WelcomeStage;
-import io.ermdev.transferit.desktop.welcome.OnWelcomeClose;
+import io.ermdev.transferit.desktop.welcome.WelcomeListener;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class MainApplication extends Application implements OnWelcomeClose {
+public class MainApplication extends Application implements WelcomeListener {
 
     private WelcomeStage welcomeStage;
 
@@ -17,12 +17,6 @@ public class MainApplication extends Application implements OnWelcomeClose {
 
     @Override
     public void start(Stage primaryStage) {
-
-        Stage stage = new Stage();
-//        Scene scene = new Scene(new Cover1(), 247, 174);
-//        stage.setScene(scene);
-//        stage.show();
-
         welcomeStage = new WelcomeStage(this);
         welcomeStage.display();
     }

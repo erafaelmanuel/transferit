@@ -1,32 +1,31 @@
 package io.ermdev.transferit.desktop.welcome;
 
 import io.ermdev.transferit.desktop.component.Cover;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javax.swing.*;
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class WelcomeController implements Initializable {
 
-    @FXML ImageView imgv3dots;
+    @FXML
+    ImageView imgv3dots;
 
-    @FXML ImageView imgvnext;
+    @FXML
+    ImageView imgvnext;
 
-    @FXML ImageView imgvprev;
+    @FXML
+    ImageView imgvprev;
 
-    @FXML AnchorPane container;
+    @FXML
+    AnchorPane container;
 
     private final OptionMenu optionMenu = new OptionMenu();
 
@@ -54,14 +53,14 @@ public class WelcomeController implements Initializable {
     void onSend(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
         stage.hide();
-        stage.getOnWelcomeClose().onClose(false);
+        stage.getWelcomeListener().onClose(false);
     }
 
     @FXML
     void onReceive(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
         stage.hide();
-        stage.getOnWelcomeClose().onClose(true);
+        stage.getWelcomeListener().onClose(true);
     }
 
 

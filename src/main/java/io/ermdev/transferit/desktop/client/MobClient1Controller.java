@@ -8,19 +8,16 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MobClient1Controller implements Initializable, Subscriber {
-
-    @FXML
-    ImageView imgv1;
 
     @FXML
     ImageView imgvback;
@@ -32,10 +29,10 @@ public class MobClient1Controller implements Initializable, Subscriber {
     JFXButton btnSendFile;
 
     @FXML
-    Label lblStatus;
+    JFXTextField txtHost;
 
     @FXML
-    JFXTextField txtHost;
+    AnchorPane container;
 
     private WelcomeStage welcomeStage;
 
@@ -49,9 +46,9 @@ public class MobClient1Controller implements Initializable, Subscriber {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        container.getChildren().add(0, new CoverInfo());
         endpoint = new Endpoint();
         endpoint.subscribe(this);
-        imgv1.setImage(new Image(getClass().getResource("/image/cover/dog.png").toString()));
         imgvback.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
     }
 
@@ -60,8 +57,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
         Thread thread = new Thread(() -> {
             if (book.getContent() instanceof Boolean && (Boolean) book.getContent()) {
                 Platform.runLater(() -> {
-                    lblStatus.setText("Connection Successful");
-                    lblStatus.setStyle("-fx-text-fill:#6ab04c");
+                    container.getChildren().remove(0);
+                    container.getChildren().add(0, new CoverSuccess());
                     btnConnect.setText("Disconnect");
                     btnConnect.setStyle("-fx-background-color:#ff7675");
                     btnConnect.setDisable(false);
@@ -69,8 +66,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
                 });
             } else {
                 Platform.runLater(() -> {
-                    lblStatus.setText("You are disconnected");
-                    lblStatus.setStyle("-fx-text-fill:#000");
+                    container.getChildren().remove(0);
+                    container.getChildren().add(0, new CoverError());
                     btnConnect.setText("Connect");
                     btnConnect.setStyle("-fx-background-color:#00b894");
                     btnConnect.setDisable(false);
@@ -91,9 +88,11 @@ public class MobClient1Controller implements Initializable, Subscriber {
         connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
-                    lblStatus.setVisible(true);
-                    lblStatus.setStyle("-fx-text-fill:#000");
-                    lblStatus.setText("Connecting . . .");
+                    CoverInfo coverInfo = new CoverInfo();
+                    coverInfo.setLabelText("Connecting");
+
+                    container.getChildren().remove(0);
+                    container.getChildren().add(0, coverInfo);
                     btnConnect.setDisable(true);
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {
@@ -106,8 +105,11 @@ public class MobClient1Controller implements Initializable, Subscriber {
                 }
             } catch (ClientException e) {
                 Platform.runLater(() -> {
-                    lblStatus.setText("Connection Failed");
-                    lblStatus.setStyle("-fx-text-fill:#eb4d4b");
+                    CoverError coverError = new CoverError();
+                    coverError.setLabelText(e.getMessage());
+
+                    container.getChildren().remove(0);
+                    container.getChildren().add(0, coverError);
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(true);
                 });

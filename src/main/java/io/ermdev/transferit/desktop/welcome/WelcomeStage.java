@@ -24,13 +24,18 @@ public class WelcomeStage extends Stage {
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 247, 400);
-
             setTitle("Transferit v1.0");
             setScene(scene);
             setController(fxmlLoader.getController());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void display() {
+        setResizable(false);
+        sizeToScene();
+        show();
     }
 
     public WelcomeController getWelcomeController() {

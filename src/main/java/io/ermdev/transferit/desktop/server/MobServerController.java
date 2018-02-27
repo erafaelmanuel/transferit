@@ -149,7 +149,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         server.stop();
         server = null;
         if (welcomeStage != null) {
-            welcomeStage.show();
+            welcomeStage.display();
         }
     }
 

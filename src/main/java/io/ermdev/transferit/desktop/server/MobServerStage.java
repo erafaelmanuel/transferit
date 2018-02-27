@@ -35,6 +35,12 @@ public class MobServerStage extends Stage {
         }
     }
 
+    public void display() {
+        setResizable(false);
+        sizeToScene();
+        show();
+    }
+
     public MobServerController getController() {
         return serverController;
     }

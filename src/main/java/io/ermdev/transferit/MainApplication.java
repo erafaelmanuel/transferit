@@ -18,7 +18,7 @@ public class MainApplication extends Application implements OnWelcomeClose {
     @Override
     public void start(Stage primaryStage) {
         welcomeStage = new WelcomeStage(this);
-        welcomeStage.show();
+        welcomeStage.display();
     }
 
     @Override
@@ -27,14 +27,14 @@ public class MainApplication extends Application implements OnWelcomeClose {
             try {
                 MobServerStage serverStage = new MobServerStage(this);
                 serverStage.getController().setWelcomeStage(welcomeStage);
-                serverStage.show();
+                serverStage.display();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             MobClient1Stage clientStage = new MobClient1Stage(this);
             clientStage.getController().setWelcomeStage(welcomeStage);
-            clientStage.show();
+            clientStage.display();
         }
     }
 }

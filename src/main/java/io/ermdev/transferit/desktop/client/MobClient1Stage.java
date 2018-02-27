@@ -35,6 +35,12 @@ public class MobClient1Stage extends Stage {
         }
     }
 
+    public void display() {
+        setResizable(false);
+        sizeToScene();
+        show();
+    }
+
     public MobClient1Controller getController() {
         return clientUIController;
     }

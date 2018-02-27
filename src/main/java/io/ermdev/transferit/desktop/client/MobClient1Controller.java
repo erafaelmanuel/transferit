@@ -121,7 +121,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
     void onFile() {
         client2Stage.getController().setClient(client);
         client2Stage.getController().initialize();
-        client2Stage.showAndWait();
+        client2Stage.display();
     }
 
     @FXML
@@ -133,7 +133,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
             client.disconnect();
         }
         if (welcomeStage != null) {
-            welcomeStage.show();
+            welcomeStage.display();
         }
     }
 }

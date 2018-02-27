@@ -7,7 +7,7 @@ public class Cover1 extends Cover {
 
     public Cover1() {
         setBackgroundColor("#e58e26");
-        setImage("/image/wlcm-slide/img4.png");
+        setImage("/image/cover/kangaroo.png");
         setLabelText("Transfer files between your devices");
         setLabelColor("#543e11");
     }

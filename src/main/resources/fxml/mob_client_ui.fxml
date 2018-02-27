@@ -19,9 +19,9 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="imgv1" fitHeight="117.0" fitWidth="115.0" layoutX="66.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 2, 0.0 , 0 , 1 );">
+                        <ImageView fx:id="imgv1" fitHeight="117.0" fitWidth="115.0" layoutX="66.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/bg-cl/img3.png" />
+                              <Image url="@../image/cover/dog.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" layoutX="16.0" layoutY="146.0" prefHeight="17.0" prefWidth="215.0" text="Find your friends" textFill="#ff00c8">

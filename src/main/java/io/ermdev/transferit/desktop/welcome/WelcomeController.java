@@ -1,5 +1,6 @@
 package io.ermdev.transferit.desktop.welcome;
 
+import io.ermdev.transferit.desktop.component.Cover;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,12 +25,18 @@ public class WelcomeController implements Initializable {
 
     @FXML AnchorPane container;
 
-    private String images[] = new String[5];
+    private Cover covers[] = new Cover[5];
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        container.getChildren().add(0, new Cover1());
-        images[0] = "/image/wlcm-slide/img1.png";
+
+        covers[0] = new Cover1();
+        covers[1] = new Cover2();
+        covers[2] = new Cover3();
+        covers[3] = new Cover4();
+
+        container.getChildren().add(0, covers[(int)((Math.random() * 4))]);
+
         imgv3dots.setImage(new Image(getClass().getResource("/image/system/img3dots.png").toString()));
         imgvnext.setImage(new Image(getClass().getResource("/image/system/img_next.png").toString()));
         imgvprev.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));

@@ -2,6 +2,9 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import io.ermdev.transferit.desktop.component.cover.CoverError;
+import io.ermdev.transferit.desktop.component.cover.CoverInfo;
+import io.ermdev.transferit.desktop.component.cover.CoverSuccess;
 import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;

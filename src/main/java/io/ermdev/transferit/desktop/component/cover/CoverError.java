@@ -1,7 +1,6 @@
-package io.ermdev.transferit.desktop.client;
+package io.ermdev.transferit.desktop.component.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
-
 
 public class CoverError extends Cover {
 

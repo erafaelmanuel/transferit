@@ -1,7 +1,6 @@
-package io.ermdev.transferit.desktop.welcome;
+package io.ermdev.transferit.desktop.component.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
-
 
 public class Cover2 extends Cover {
 

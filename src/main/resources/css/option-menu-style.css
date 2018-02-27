@@ -1,0 +1,16 @@
+#settings:hover {
+    -fx-background-color: #c7ecee;
+}
+
+#help:hover {
+    -fx-background-color: #c7ecee;
+}
+
+#about:hover {
+    -fx-background-color: #c7ecee;
+}
+
+#options {
+    -fx-border-color: #3742fa;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 5, 0.0 , 0 , 1 );
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="options" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="83.0" prefWidth="171.0" spacing="2.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.welcome.OptionMenuController">
+   <children>
+      <HBox fx:id="settings" alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
+         <children>
+            <ImageView fx:id="imgvSettings" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/settings.png" />
+               </image>
+            </ImageView>
+            <Label text="Settings" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="5.0" top="2.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="help" alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
+         <children>
+            <ImageView fx:id="imgvHelp" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/info.png" />
+               </image>
+            </ImageView>
+            <Label text="Help" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="5.0" top="2.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="about" alignment="CENTER_LEFT" layoutX="10.0" layoutY="37.0" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
+         <children>
+            <ImageView fx:id="imgvAbout" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/care-about-planet.png" />
+               </image>
+            </ImageView>
+            <Label text="About" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="5.0" top="2.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

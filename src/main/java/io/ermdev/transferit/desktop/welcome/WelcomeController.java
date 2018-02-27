@@ -4,10 +4,14 @@ import io.ermdev.transferit.desktop.component.Cover;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +29,8 @@ public class WelcomeController implements Initializable {
 
     @FXML AnchorPane container;
 
+    private final OptionMenu optionMenu = new OptionMenu();
+
     private Cover covers[] = new Cover[5];
 
     @Override
@@ -40,19 +46,31 @@ public class WelcomeController implements Initializable {
         imgv3dots.setImage(new Image(getClass().getResource("/image/system/img3dots.png").toString()));
         imgvnext.setImage(new Image(getClass().getResource("/image/system/img_next.png").toString()));
         imgvprev.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
+
+        optionMenu.getScene().getStylesheets()
+                .add(getClass().getResource("/css/option-menu-style.css").toExternalForm());
     }
 
     @FXML
-    public void onSend(ActionEvent event) {
+    void onSend(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
         stage.hide();
         stage.getOnWelcomeClose().onClose(false);
     }
 
     @FXML
-    public void onReceive(ActionEvent event) {
+    void onReceive(ActionEvent event) {
         WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
         stage.hide();
         stage.getOnWelcomeClose().onClose(true);
     }
+
+    @FXML void onOption(MouseEvent me) {
+        if (!optionMenu.isDisplayed()) {
+            optionMenu.setX(me.getScreenX());
+            optionMenu.setY(me.getScreenY());
+            optionMenu.display();
+        }
+    }
+
 }

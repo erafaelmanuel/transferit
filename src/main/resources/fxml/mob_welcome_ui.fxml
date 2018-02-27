@@ -17,7 +17,7 @@
                <children>
                   <AnchorPane fx:id="container" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="imgv3dots" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgv3dots" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" onMouseClicked="#onOption" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/system/img3dots.png" />
                            </image>

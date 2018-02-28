@@ -5,9 +5,9 @@ import io.ermdev.transferit.desktop.component.Cover;
 public class Cover3 extends Cover {
 
     public Cover3() {
-        setBackgroundColor("#535c68");
+        setBackgroundColor("#ccae62");
         setImage("/image/cover/chick.png");
         setLabelText("Transfer files between your devices");
-        setLabelColor("#fff");
+        setLabelColor("#7c5017");
     }
 }

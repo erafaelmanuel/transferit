@@ -1,10 +1,7 @@
 package io.ermdev.transferit.desktop.welcome;
 
-import io.ermdev.transferit.desktop.component.*;
-import io.ermdev.transferit.desktop.component.cover.Cover1;
-import io.ermdev.transferit.desktop.component.cover.Cover2;
-import io.ermdev.transferit.desktop.component.cover.Cover3;
-import io.ermdev.transferit.desktop.component.cover.Cover4;
+import io.ermdev.transferit.desktop.component.Cover;
+import io.ermdev.transferit.desktop.component.cover.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,17 +16,13 @@ import java.util.ResourceBundle;
 
 public class WelcomeController implements Initializable {
 
-    @FXML
-    ImageView imgv3dots;
+    @FXML ImageView imgv3dots;
 
-    @FXML
-    ImageView imgvnext;
+    @FXML ImageView imgvnext;
 
-    @FXML
-    ImageView imgvprev;
+    @FXML ImageView imgvprev;
 
-    @FXML
-    AnchorPane container;
+    @FXML AnchorPane container;
 
     private final OptionMenu optionMenu = new OptionMenu();
 
@@ -42,10 +35,10 @@ public class WelcomeController implements Initializable {
         covers[1] = new Cover2();
         covers[2] = new Cover3();
         covers[3] = new Cover4();
+        covers[4] = new Cover5();
 
-        container.getChildren().add(0, covers[(int) ((Math.random() * 4))]);
-
-        imgv3dots.setImage(new Image(getClass().getResource("/image/system/img3dots.png").toString()));
+        container.getChildren().add(0, covers[(int) ((Math.random() * 5))]);
+        imgv3dots.setImage(new Image(getClass().getResource("/image/system/more.png").toString()));
         imgvnext.setImage(new Image(getClass().getResource("/image/system/img_next.png").toString()));
         imgvprev.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
 

@@ -2,12 +2,12 @@ package io.ermdev.transferit.desktop.component.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
 
-public class Cover2 extends Cover {
+public class Cover5 extends Cover {
 
-    public Cover2() {
-        setBackgroundColor("#ced6e0");
-        setImage("/image/cover/dog.png");
+    public Cover5() {
+        setBackgroundColor("#f7d794");
+        setImage("/image/cover/fox.png");
         setLabelText("Transfer files between your devices");
-        setLabelColor("#2f3542");
+        setLabelColor("#4d2c2c");
     }
 }

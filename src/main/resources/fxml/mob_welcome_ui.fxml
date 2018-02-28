@@ -19,15 +19,15 @@
                      <children>
                         <ImageView fx:id="imgv3dots" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" onMouseClicked="#onOption" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/system/img3dots.png" />
+                              <Image url="@../image/system/more.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="223.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvnext" fitHeight="19.0" fitWidth="22.0" layoutX="223.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../image/system/img_next.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="imgvprev" fitHeight="19.0" fitWidth="22.0" layoutX="6.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvprev" fitHeight="19.0" fitWidth="22.0" layoutX="6.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../image/system/img_prev.png" />
                            </image>

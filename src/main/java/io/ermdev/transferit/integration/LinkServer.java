@@ -115,4 +115,9 @@ public class LinkServer implements Server, ProtocolListener {
     public void onFile(String name, long size) {
         serverListener.onNewFile(name, size);
     }
+
+    @Override
+    public void onScan() {
+        protocol.dispatch(Status.INFO);
+    }
 }

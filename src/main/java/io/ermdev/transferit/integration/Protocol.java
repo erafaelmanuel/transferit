@@ -98,6 +98,10 @@ public class Protocol {
                     }
                 } else if (status == 101) {
                     endpoint.setConnected(true);
+                } else if (status == 103) {
+                    if (protocolListener != null) {
+                        protocolListener.onScan();
+                    }
                 } else if (status == 200) {
                     endpoint.setConnected(false);
                     stopListening();

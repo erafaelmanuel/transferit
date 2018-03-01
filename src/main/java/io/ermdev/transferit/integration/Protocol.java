@@ -96,12 +96,12 @@ public class Protocol {
                     if (protocolListener != null) {
                         protocolListener.onCreate();
                     }
+                } else if (status == 101) {
+                    endpoint.setConnected(true);
                 } else if (status == 200) {
                     endpoint.setConnected(false);
                     stopListening();
-                } else if (status == 300) {
-                    endpoint.setConnected(true);
-                } else if (status == 400) {
+                } else if (status == 201) {
                     endpoint.setConnected(false);
                     stopListening();
                 } else {

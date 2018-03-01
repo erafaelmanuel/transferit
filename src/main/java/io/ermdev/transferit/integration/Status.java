@@ -2,7 +2,7 @@ package io.ermdev.transferit.integration;
 
 public enum Status {
 
-   CREATE(100), STOP(200), ACCEPT(300), REJECT(400);
+   CREATE(100), ACCEPT(101), INFO(102), SCAN(103), STOP(200), REJECT(201);
 
     private int code;
 

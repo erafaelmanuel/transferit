@@ -8,7 +8,10 @@ public interface Server {
 
     void accept();
 
+    void reject();
+
     void stop();
 
+    @Deprecated
     void receiveFile(InputStream inputStream);
 }

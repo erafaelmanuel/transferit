@@ -23,6 +23,8 @@ public class LinkServer implements Server, ProtocolListener {
 
     private Thread acceptor;
 
+    private Thread rejecter;
+
     private Thread opener;
 
     public LinkServer(Endpoint endpoint) {
@@ -76,6 +78,19 @@ public class LinkServer implements Server, ProtocolListener {
             acceptor = null;
         });
         acceptor.start();
+    }
+
+    @Override
+    public void reject() {
+        rejecter = new Thread(() -> {
+            try {
+                protocol.dispatch(Status.REJECT);
+            } catch (Exception e) {
+                protocol.stopListening();
+            }
+            rejecter = null;
+        });
+        rejecter.start();
     }
 
     @Override

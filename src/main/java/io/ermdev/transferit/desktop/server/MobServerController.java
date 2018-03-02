@@ -99,7 +99,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
                 lblStatus.setText("Connected");
                 lblStatus.setStyle("-fx-background-color: #00b894");
             } else {
-                server.stop();
+                server.reject();
             }
         });
     }

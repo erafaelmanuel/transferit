@@ -20,7 +20,7 @@ public class ConfirmDialog extends Stage {
             initModality(Modality.APPLICATION_MODAL);
             initStyle(StageStyle.UTILITY);
             setScene(scene);
-            setTitle("Confirmation");
+            setTitle("Sender Invitation");
             setController(loader.getController());
             getController().setListener(confirmDialogListener);
             setOnCloseRequest(event -> {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,7 +12,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.welcome.WelcomeController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;">
          <children>
             <VBox prefHeight="174.0" prefWidth="247.0">
                <children>
@@ -36,21 +37,24 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="246.0" onAction="#onSend" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #0984e3;" text="Send" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="246.0" onAction="#onSend" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #f1f2f6; -fx-border-color: #2f3542;" text="Send">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="292.0" onAction="#onReceive" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #00b894;" text="Receive" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="292.0" onAction="#onReceive" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #f1f2f6; -fx-border-color: #2f3542;" text="Receive">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
             <Label alignment="CENTER" layoutX="56.0" layoutY="190.0" prefHeight="17.0" prefWidth="135.0" text="Transferit v1.0" textFill="#1b1818" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="381.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #dfe4ea;" text="Copyright © 2018" textAlignment="CENTER" textFill="#616161">
+            <Label contentDisplay="CENTER" layoutY="381.0" prefHeight="19.0" prefWidth="247.0" style="-fx-background-color: #f1f2f6;" text="IP Address: 192.168.0.102" textAlignment="CENTER" textFill="#404040">
                <font>
                   <Font size="10.0" />
                </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Label>
          </children>
       </AnchorPane>

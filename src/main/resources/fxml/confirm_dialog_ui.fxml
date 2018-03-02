@@ -17,7 +17,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <JFXButton buttonType="RAISED" layoutX="63.0" layoutY="89.0" prefHeight="27.0" prefWidth="90.0" style="-fx-background-color: #ffffff; -fx-border-color: #57606f;" text="Accept" />
-      <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="89.0" prefHeight="27.0" prefWidth="90.0" style="-fx-background-color: #ffffff; -fx-border-color: #747d8c;" text="Cancel" />
+      <JFXButton buttonType="RAISED" layoutX="63.0" layoutY="89.0" onAction="#onAccept" prefHeight="27.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #ffffff; -fx-border-color: #57606f;" text="Accept" />
+      <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="89.0" onAction="#onCancel" prefHeight="27.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #ffffff; -fx-border-color: #747d8c;" text="Cancel" />
    </children>
 </AnchorPane>

@@ -85,6 +85,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
             Platform.runLater(() -> {
                 ConfirmDialog confirmDialog = new ConfirmDialog(this);
                 confirmDialog.display();
+                confirmDialog.getController().setLabelText("You want to accept " + endpoint.getHost() + " ?");
                 summoner = null;
             }));
         summoner.start();

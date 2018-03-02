@@ -23,6 +23,9 @@ public class ConfirmDialog extends Stage {
             setTitle("Confirmation");
             setController(loader.getController());
             getController().setListener(confirmDialogListener);
+            setOnCloseRequest(event -> {
+                if (confirmDialogListener != null) confirmDialogListener.onChoose(false);
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

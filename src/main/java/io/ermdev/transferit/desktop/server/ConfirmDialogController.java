@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -17,6 +18,9 @@ public class ConfirmDialogController implements Initializable {
 
     @FXML
     ImageView imgv;
+
+    @FXML
+    Label label;
 
     public void setListener(ConfirmDialogListener confirmDialogListener) {
         this.confirmDialogListener = confirmDialogListener;
@@ -43,5 +47,11 @@ public class ConfirmDialogController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         imgv.setImage(new Image(getClass().getResource("/image/system/cards.png").toExternalForm()));
+    }
+
+    public void setLabelText(String text) {
+        if (label != null) {
+            label.setText(text);
+        }
     }
 }

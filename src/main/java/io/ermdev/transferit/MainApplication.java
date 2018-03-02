@@ -18,7 +18,7 @@ public class MainApplication extends Application implements WelcomeListener {
     @Override
     public void start(Stage primaryStage) {
         welcomeStage = new WelcomeStage(this);
-        welcomeStage.display();
+        welcomeStage.show();
     }
 
     @Override

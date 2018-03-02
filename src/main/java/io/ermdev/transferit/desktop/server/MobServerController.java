@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -85,6 +86,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
                 boolean isAccepted = (JOptionPane.showConfirmDialog(null, "You want to accept "
                                 + endpoint.getHost() + " ?", null,
                         JOptionPane.YES_NO_OPTION) == 0);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.show();
                 if (isAccepted) {
                     server.accept();
                     lblStatus.setText("Connected");

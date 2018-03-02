@@ -6,14 +6,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="312.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="312.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.server.ConfirmDialogController">
    <children>
-      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="139.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgv" fitHeight="35.0" fitWidth="35.0" layoutX="139.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../../../Downloads/cards.png" />
          </image></ImageView>
-      <Label alignment="CENTER" layoutX="5.0" layoutY="53.0" prefHeight="17.0" prefWidth="312.0" text="You want to accept [Hotaru]?" />
-      <Button layoutX="69.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Accept" />
-      <Button layoutX="161.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Cancel" />
+      <Label fx:id="label" alignment="CENTER" layoutX="5.0" layoutY="53.0" prefHeight="17.0" prefWidth="312.0" text="You want to accept [Hotaru]?" />
+      <Button layoutX="69.0" layoutY="92.0" mnemonicParsing="false" onAction="#onAccept" prefHeight="25.0" prefWidth="83.0" text="Accept" />
+      <Button layoutX="161.0" layoutY="92.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="25.0" prefWidth="83.0" text="Cancel" />
    </children>
 </AnchorPane>

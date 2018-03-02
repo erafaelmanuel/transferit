@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MobServerController implements ServerListener, Subscriber, Initializable {
+public class MobServerController implements ServerListener, Subscriber, Initializable, ConfirmDialogListener {
 
     private WelcomeStage welcomeStage;
 
@@ -81,24 +81,26 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @Override
     public void onInvite() {
-        summoner = new Thread(() -> {
+        summoner = new Thread(() ->
             Platform.runLater(() -> {
-                boolean isAccepted = (JOptionPane.showConfirmDialog(null, "You want to accept "
-                                + endpoint.getHost() + " ?", null,
-                        JOptionPane.YES_NO_OPTION) == 0);
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.show();
-                if (isAccepted) {
-                    server.accept();
-                    lblStatus.setText("Connected");
-                    lblStatus.setStyle("-fx-background-color: #00b894");
-                } else {
-                    server.stop();
-                }
-            });
-            summoner = null;
-        });
+                ConfirmDialog confirmDialog = new ConfirmDialog(this);
+                confirmDialog.display();
+                summoner = null;
+            }));
         summoner.start();
+    }
+
+    @Override
+    public void onChoose(boolean accept) {
+        Platform.runLater(() -> {
+            if (accept) {
+                server.accept();
+                lblStatus.setText("Connected");
+                lblStatus.setStyle("-fx-background-color: #00b894");
+            } else {
+                server.stop();
+            }
+        });
     }
 
     @Override

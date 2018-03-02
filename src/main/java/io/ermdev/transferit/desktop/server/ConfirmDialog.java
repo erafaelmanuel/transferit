@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 
 public class ConfirmDialog extends Stage {
 
-    private ConfirmDialogListener confirmDialogListener;
+    private ConfirmDialogController confirmDialogController;
 
     public ConfirmDialog(ConfirmDialogListener confirmDialogListener) {
         try {
@@ -21,7 +21,8 @@ public class ConfirmDialog extends Stage {
             initStyle(StageStyle.UTILITY);
             setScene(scene);
             setTitle("Confirmation");
-            loader.getController().setListener(confirmDialogListener);
+            setController(loader.getController());
+            getController().setListener(confirmDialogListener);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,4 +34,11 @@ public class ConfirmDialog extends Stage {
         show();
     }
 
+    public ConfirmDialogController getController() {
+        return confirmDialogController;
+    }
+
+    public void setController(ConfirmDialogController confirmDialogController) {
+        this.confirmDialogController = confirmDialogController;
+    }
 }

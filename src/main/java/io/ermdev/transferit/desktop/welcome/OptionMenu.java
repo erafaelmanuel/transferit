@@ -17,7 +17,7 @@ public class OptionMenu extends Stage {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/option_ui.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 170, 82);
+            Scene scene = new Scene(root, 170, 81);
 
             initStyle(StageStyle.UNDECORATED);
 

@@ -36,20 +36,25 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="256.0" onAction="#onSend" prefHeight="35.0" prefWidth="157.0" ripplerFill="BLACK" style="-fx-background-color: #273c75; -fx-border-color: #2f3542;" text="Send" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="265.0" onAction="#onSend" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #747d8c; -fx-border-color: #ffa502;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="45.0" layoutY="302.0" onAction="#onReceive" prefHeight="35.0" prefWidth="157.0" ripplerFill="WHITE" style="-fx-background-color: #f1f2f6; -fx-border-color: #273c75;" text="Receive">
+            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="304.0" onAction="#onReceive" prefHeight="28.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #1e90ff; -fx-border-color: #3742fa;" text="Receive" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <Label alignment="CENTER" layoutX="56.0" layoutY="198.0" prefHeight="17.0" prefWidth="135.0" text="Transferit v1.0">
+            <Label alignment="CENTER" layoutX="58.0" layoutY="210.0" prefHeight="17.0" prefWidth="135.0" text="Transferit">
                <font>
-                  <Font size="13.0" />
+                  <Font size="18.0" />
                </font></Label>
+            <Label layoutX="101.0" layoutY="230.0" text="IO.ERMDEV" textFill="#807b7b">
+               <font>
+                  <Font name="Calibri" size="10.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

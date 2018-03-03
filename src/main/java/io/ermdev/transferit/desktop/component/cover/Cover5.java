@@ -6,7 +6,7 @@ public class Cover5 extends Cover {
 
     public Cover5() {
         setBackgroundColor("#f7d794");
-        setImage("/image/cover/fox.png");
+        setImage("/image/cover/bee.png");
         setLabelText("Transfer files between your devices");
         setLabelColor("#4d2c2c");
     }

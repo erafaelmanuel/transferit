@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import io.ermdev.transferit.desktop.component.cover.CoverError;
 import io.ermdev.transferit.desktop.component.cover.CoverInfo;
 import io.ermdev.transferit.desktop.component.cover.CoverSuccess;
+import io.ermdev.transferit.desktop.component.cover.CoverWait;
 import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
@@ -63,7 +64,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
                     container.getChildren().remove(0);
                     container.getChildren().add(0, new CoverSuccess());
                     btnConnect.setText("Disconnect");
-                    btnConnect.setStyle("-fx-background-color:#ff7675");
+                    btnConnect.setStyle("-fx-background-color: #747d8c; -fx-border-color: #e84393;");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(false);
                 });
@@ -72,7 +73,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
                     container.getChildren().remove(0);
                     container.getChildren().add(0, new CoverError());
                     btnConnect.setText("Connect");
-                    btnConnect.setStyle("-fx-background-color:#00b894");
+                    btnConnect.setStyle("-fx-background-color: #747d8c; -fx-border-color: #ffa502;");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(true);
                     client2Stage.close();
@@ -91,11 +92,11 @@ public class MobClient1Controller implements Initializable, Subscriber {
         connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
-                    CoverInfo coverInfo = new CoverInfo();
-                    coverInfo.setLabelText("Connecting");
+                    CoverWait coverWait = new CoverWait();
+                    coverWait.setLabelText("Connecting");
 
                     container.getChildren().remove(0);
-                    container.getChildren().add(0, coverInfo);
+                    container.getChildren().add(0, coverWait);
                     btnConnect.setDisable(true);
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {

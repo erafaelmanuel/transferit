@@ -2,11 +2,11 @@ package io.ermdev.transferit.desktop.component.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
 
-public class CoverInfo extends Cover {
+public class CoverWait extends Cover {
 
-    public CoverInfo() {
-        setBackgroundColor("#CAD3C8");
-        setImage("/image/cover/robot.png");
+    public CoverWait() {
+        setBackgroundColor("#f6e58d");
+        setImage("/image/cover/robot-wait.png");
         setLabelText("Find your friends");
         setLabelColor("#000");
     }

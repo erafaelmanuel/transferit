@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.welcome.WelcomeController">
+<StackPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.welcome.WelcomeController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f1f2f6;">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
             <VBox prefHeight="174.0" prefWidth="247.0">
                <children>
@@ -36,12 +36,12 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="265.0" onAction="#onSend" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #747d8c; -fx-border-color: #ffa502;" text="Send" textFill="WHITE">
+            <JFXButton fx:id="btnSend" buttonType="RAISED" layoutX="56.0" layoutY="265.0" onAction="#onSend" prefHeight="27.0" prefWidth="135.0" style=": ;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="56.0" layoutY="304.0" onAction="#onReceive" prefHeight="28.0" prefWidth="135.0" ripplerFill="WHITE" style="-fx-background-color: #1e90ff; -fx-border-color: #3742fa;" text="Receive" textFill="WHITE">
+            <JFXButton fx:id="btnReceive" buttonType="RAISED" layoutX="56.0" layoutY="304.0" onAction="#onReceive" prefHeight="28.0" prefWidth="135.0" ripplerFill="WHITE" text="Receive" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>

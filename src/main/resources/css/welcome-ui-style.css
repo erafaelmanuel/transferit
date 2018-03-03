@@ -1,0 +1,23 @@
+#wrapper {
+     -fx-background-color: #f1f2f6;
+}
+
+#btnSend {
+    -fx-text-fill: #fff;
+    -fx-background-color: #747d8c;
+    -fx-border-color: #ffa502;
+}
+
+#btnReceive {
+    -fx-text-fill: #fff;
+    -fx-background-color: #1e90ff;
+    -fx-border-color: #3742fa;
+}
+
+#btnSend: hover {
+    -fx-background-color: #a4b0be;
+}
+
+#btnReceive: hover {
+    -fx-background-color: #70a1ff;
+}

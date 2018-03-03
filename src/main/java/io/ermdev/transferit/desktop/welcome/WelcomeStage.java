@@ -19,11 +19,14 @@ public class WelcomeStage extends Stage {
 
     private void createWelcomeStage() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = this.getClass().getResource("/fxml/mob_welcome_ui.fxml");
+            final FXMLLoader fxmlLoader = new FXMLLoader();
+            final URL location = this.getClass().getResource("/fxml/mob_welcome_ui.fxml");
+            final String style = getClass().getResource("/css/welcome-ui-style.css").toExternalForm();
+
             fxmlLoader.setLocation(location);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 247, 400);
+            scene.getStylesheets().add(style);
             setTitle("Transferit v1.0");
             setScene(scene);
             setController(fxmlLoader.getController());

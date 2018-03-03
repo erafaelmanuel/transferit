@@ -12,17 +12,13 @@ public class WelcomeStage extends Stage {
     private WelcomeController wc;
 
     public WelcomeStage() {
-        createWelcomeStage();
-    }
-
-    private void createWelcomeStage() {
         try {
-            final String FXML_URL = "/fxml/mob_welcome_ui.fxml";
-            final String CSS_URL = "/css/welcome-ui-style.css";
+            final String FXML = "/fxml/welcome.fxml";
+            final String CSS = "/css/welcome-ui-style.css";
 
             final FXMLLoader loader = new FXMLLoader();
-            final URL location = this.getClass().getResource(FXML_URL);
-            final String style = getClass().getResource(CSS_URL).toExternalForm();
+            final URL location = this.getClass().getResource(FXML);
+            final String style = getClass().getResource(CSS).toExternalForm();
             loader.setLocation(location);
 
             final Parent root = loader.load();

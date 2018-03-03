@@ -11,18 +11,22 @@ import java.util.ResourceBundle;
 public class OptionMenuController implements Initializable {
 
     @FXML
-    ImageView imgvSettings;
+    ImageView imgvsettings;
 
     @FXML
-    ImageView imgvHelp;
+    ImageView imgvhelp;
 
     @FXML
-    ImageView imgvAbout;
+    ImageView imgvabout;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imgvSettings.setImage(new Image(getClass().getResource("/image/system/settings.png").toExternalForm()));
-        imgvHelp.setImage(new Image(getClass().getResource("/image/system/help.png").toExternalForm()));
-        imgvAbout.setImage(new Image(getClass().getResource("/image/system/about.png").toExternalForm()));
+        final String IMAGE_SETTINGS = "/image/system/settings.png";
+        final String IMAGE_HELP = "/image/system/help.png";
+        final String IMAGE_ABOUT = "/image/system/about.png";
+
+        imgvsettings.setImage(new Image(getClass().getResource(IMAGE_SETTINGS).toExternalForm()));
+        imgvhelp.setImage(new Image(getClass().getResource(IMAGE_HELP).toExternalForm()));
+        imgvabout.setImage(new Image(getClass().getResource(IMAGE_ABOUT).toExternalForm()));
     }
 }

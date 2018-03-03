@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class WelcomeController implements Initializable {
 
-    private final OptionMenu optionMenu = new OptionMenu();
+    private final OptionMenuStage optionMenu = new OptionMenuStage();
 
     private final Cover covers[] = new Cover[5];
 

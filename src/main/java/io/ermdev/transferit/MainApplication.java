@@ -36,6 +36,7 @@ public class MainApplication extends Application implements WelcomeInteract.Welc
         final SenderDashboardStage stage = new SenderDashboardStage();
         stage.getController().setWelcomeInteract(wi);
         stage.display();
+        ws.hide();
     }
 
     @Override
@@ -43,5 +44,6 @@ public class MainApplication extends Application implements WelcomeInteract.Welc
         MobServerStage stage = new MobServerStage();
         stage.getController().setWelcomeInteract(wi);
         stage.display();
+        ws.hide();
     }
 }

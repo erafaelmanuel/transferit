@@ -11,7 +11,7 @@
    <children>
       <HBox fx:id="settings" alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
          <children>
-            <ImageView fx:id="imgvSettings" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgvsettings" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../Downloads/settings.png" />
                </image>
@@ -24,7 +24,7 @@
       </HBox>
       <HBox fx:id="help" alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
          <children>
-            <ImageView fx:id="imgvHelp" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgvhelp" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../Downloads/info.png" />
                </image>
@@ -37,7 +37,7 @@
       </HBox>
       <HBox fx:id="about" alignment="CENTER_LEFT" layoutX="10.0" layoutY="37.0" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
          <children>
-            <ImageView fx:id="imgvAbout" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgvabout" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../Downloads/care-about-planet.png" />
                </image>

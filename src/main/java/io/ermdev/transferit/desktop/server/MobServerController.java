@@ -1,21 +1,19 @@
 package io.ermdev.transferit.desktop.server;
 
 import io.ermdev.transferit.desktop.component.ItemBox;
-import io.ermdev.transferit.desktop.welcome.WelcomeStage;
+import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class MobServerController implements ServerListener, Subscriber, Initializable, ConfirmDialogListener {
 
-    private WelcomeStage welcomeStage;
+    private WelcomeInteract wi;
 
     private LinkServer server;
 
@@ -59,9 +57,9 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     public void initialize(URL location, ResourceBundle resources) {
         initialize();
         File directory = new File("files");
-       if (!(directory.exists() || directory.mkdir())) {
-           throw new RuntimeException("File folder is missing");
-       }
+        if (!(directory.exists() || directory.mkdir())) {
+            throw new RuntimeException("File folder is missing");
+        }
         endpoint = new Endpoint(23411);
         endpoint.subscribe(this);
         server = new LinkServer(endpoint);
@@ -75,19 +73,19 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         container.getChildren().add(browser);
     }
 
-    public void setWelcomeStage(WelcomeStage welcomeStage) {
-        this.welcomeStage = welcomeStage;
+    public void setWelcomeInteract(WelcomeInteract wi) {
+        this.wi = wi;
     }
 
     @Override
     public void onInvite() {
         summoner = new Thread(() ->
-            Platform.runLater(() -> {
-                ConfirmDialog confirmDialog = new ConfirmDialog(this);
-                confirmDialog.display();
-                confirmDialog.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
-                summoner = null;
-            }));
+                Platform.runLater(() -> {
+                    ConfirmDialog confirmDialog = new ConfirmDialog(this);
+                    confirmDialog.display();
+                    confirmDialog.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
+                    summoner = null;
+                }));
         summoner.start();
     }
 
@@ -152,10 +150,12 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     void onCancel(ActionEvent event) {
         initialize();
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+
         server.stop();
         server = null;
-        if (welcomeStage != null) {
-            welcomeStage.display();
+
+        if (wi != null) {
+            wi.setDisplay();
         }
     }
 

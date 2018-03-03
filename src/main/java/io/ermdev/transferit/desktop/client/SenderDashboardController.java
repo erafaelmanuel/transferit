@@ -6,6 +6,7 @@ import io.ermdev.transferit.desktop.component.cover.CoverError;
 import io.ermdev.transferit.desktop.component.cover.CoverInfo;
 import io.ermdev.transferit.desktop.component.cover.CoverSuccess;
 import io.ermdev.transferit.desktop.component.cover.CoverWait;
+import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
 import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MobClient1Controller implements Initializable, Subscriber {
+public class SenderDashboardController implements Initializable, Subscriber {
 
     @FXML
     ImageView imgvback;
@@ -38,7 +39,7 @@ public class MobClient1Controller implements Initializable, Subscriber {
     @FXML
     AnchorPane container;
 
-    private WelcomeStage welcomeStage;
+    private WelcomeInteract wi;
 
     private Client client;
 
@@ -47,6 +48,10 @@ public class MobClient1Controller implements Initializable, Subscriber {
     private Thread connector;
 
     private MobClient2Stage client2Stage = new MobClient2Stage();
+
+    public void setWelcomeInteract(WelcomeInteract wi) {
+        this.wi = wi;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,10 +86,6 @@ public class MobClient1Controller implements Initializable, Subscriber {
             }
         });
         thread.start();
-    }
-
-    public void setWelcomeStage(WelcomeStage welcomeStage) {
-        this.welcomeStage = welcomeStage;
     }
 
     @FXML
@@ -138,8 +139,8 @@ public class MobClient1Controller implements Initializable, Subscriber {
         if (client != null) {
             client.disconnect();
         }
-        if (welcomeStage != null) {
-            welcomeStage.display();
+        if (wi != null) {
+            wi.setDisplay();
         }
     }
 }

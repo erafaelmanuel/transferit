@@ -1,15 +1,17 @@
 package io.ermdev.transferit;
 
-import io.ermdev.transferit.desktop.client.MobClient1Stage;
+import io.ermdev.transferit.desktop.client.SenderDashboardStage;
 import io.ermdev.transferit.desktop.server.MobServerStage;
+import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
+import io.ermdev.transferit.desktop.welcome.WelcomeInteractImpl;
 import io.ermdev.transferit.desktop.welcome.WelcomeStage;
-import io.ermdev.transferit.desktop.welcome.WelcomeListener;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class MainApplication extends Application implements WelcomeListener {
+public class MainApplication extends Application implements WelcomeInteract.WelcomeListener {
 
-    private WelcomeStage welcomeStage;
+    private WelcomeStage ws;
+    private WelcomeInteract wi;
 
     public static void main(String args[]) {
         launch(args);
@@ -17,24 +19,29 @@ public class MainApplication extends Application implements WelcomeListener {
 
     @Override
     public void start(Stage primaryStage) {
-        welcomeStage = new WelcomeStage(this);
-        welcomeStage.display();
+        ws = new WelcomeStage();
+        ws.getController().setWelcomeListener(this);
+
+        wi = new WelcomeInteractImpl(this);
+        wi.setDisplay();
     }
 
     @Override
-    public void onClose(boolean isServer) {
-        if (isServer) {
-            try {
-                MobServerStage serverStage = new MobServerStage(this);
-                serverStage.getController().setWelcomeStage(welcomeStage);
-                serverStage.display();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            MobClient1Stage clientStage = new MobClient1Stage(this);
-            clientStage.getController().setWelcomeStage(welcomeStage);
-            clientStage.display();
-        }
+    public void onShow() {
+        ws.display();
+    }
+
+    @Override
+    public void onSelectSend() {
+        final SenderDashboardStage stage = new SenderDashboardStage();
+        stage.getController().setWelcomeInteract(wi);
+        stage.display();
+    }
+
+    @Override
+    public void onSelectReceive() {
+        MobServerStage stage = new MobServerStage();
+        stage.getController().setWelcomeInteract(wi);
+        stage.display();
     }
 }

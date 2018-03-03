@@ -1,6 +1,5 @@
 package io.ermdev.transferit.desktop.client;
 
-import io.ermdev.transferit.desktop.welcome.WelcomeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,27 +7,23 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class MobClient1Stage extends Stage {
+final public class SenderDashboardStage extends Stage {
 
-    private MobClient1Controller clientUIController;
-    private WelcomeListener welcomeListener;
+    private SenderDashboardController sdc;
 
-    public MobClient1Stage(WelcomeListener welcomeListener) {
-        this.welcomeListener = welcomeListener;
-        createClientStage();
-    }
-
-    private void createClientStage() {
+    public SenderDashboardStage() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = getClass().getResource("/fxml/mob_client_ui.fxml");
-            fxmlLoader.setLocation(location);
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 247, 400);
+            final String FXML_URL = "/fxml/sender-dashboard.fxml";
+            final FXMLLoader loader = new FXMLLoader();
+            final URL location = getClass().getResource(FXML_URL);
+            loader.setLocation(location);
+
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root, 247, 400);
 
             setTitle("Transferit v1.0");
             setScene(scene);
-            setController(fxmlLoader.getController());
+            setController(loader.getController());
             setOnCloseRequest(e -> System.exit(0));
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,15 +36,11 @@ public class MobClient1Stage extends Stage {
         show();
     }
 
-    public MobClient1Controller getController() {
-        return clientUIController;
+    public SenderDashboardController getController() {
+        return sdc;
     }
 
-    public void setController(MobClient1Controller clientUIController) {
-        this.clientUIController = clientUIController;
-    }
-
-    public WelcomeListener getWelcomeListener() {
-        return welcomeListener;
+    public void setController(SenderDashboardController sdc) {
+        this.sdc = sdc;
     }
 }

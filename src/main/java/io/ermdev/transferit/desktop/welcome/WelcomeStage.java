@@ -9,27 +9,29 @@ import java.net.URL;
 
 public class WelcomeStage extends Stage {
 
-    private WelcomeController welcomeController;
-    private WelcomeListener welcomeListener;
+    private WelcomeController wc;
 
-    public WelcomeStage(WelcomeListener welcomeListener) {
-        this.welcomeListener = welcomeListener;
+    public WelcomeStage() {
         createWelcomeStage();
     }
 
     private void createWelcomeStage() {
         try {
-            final FXMLLoader fxmlLoader = new FXMLLoader();
-            final URL location = this.getClass().getResource("/fxml/mob_welcome_ui.fxml");
-            final String style = getClass().getResource("/css/welcome-ui-style.css").toExternalForm();
+            final String FXML_URL = "/fxml/mob_welcome_ui.fxml";
+            final String CSS_URL = "/css/welcome-ui-style.css";
 
-            fxmlLoader.setLocation(location);
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 247, 400);
+            final FXMLLoader loader = new FXMLLoader();
+            final URL location = this.getClass().getResource(FXML_URL);
+            final String style = getClass().getResource(CSS_URL).toExternalForm();
+            loader.setLocation(location);
+
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root, 247, 400);
+
             scene.getStylesheets().add(style);
             setTitle("Transferit v1.0");
             setScene(scene);
-            setController(fxmlLoader.getController());
+            setController(loader.getController());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,14 +44,10 @@ public class WelcomeStage extends Stage {
     }
 
     public WelcomeController getController() {
-        return welcomeController;
+        return wc;
     }
 
-    public void setController(WelcomeController welcomeController) {
-        this.welcomeController = welcomeController;
-    }
-
-    public WelcomeListener getWelcomeListener() {
-        return welcomeListener;
+    public void setController(WelcomeController wc) {
+        this.wc = wc;
     }
 }

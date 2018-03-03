@@ -5,7 +5,6 @@ import io.ermdev.transferit.desktop.component.cover.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,20 +15,21 @@ import java.util.ResourceBundle;
 
 public class WelcomeController implements Initializable {
 
-    @FXML ImageView imgv3dots;
+    private final OptionMenu optionMenu = new OptionMenu();
 
-    @FXML ImageView imgvnext;
+    private final Cover covers[] = new Cover[5];
 
-    @FXML ImageView imgvprev;
+    private WelcomeInteract.WelcomeListener wc;
+
+    @FXML ImageView option;
 
     @FXML AnchorPane container;
 
-    private final OptionMenu optionMenu = new OptionMenu();
-
-    private Cover covers[] = new Cover[5];
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        final String CSS = "/css/option-menu-style.css";
+        final String IMAGE_OPTION = "/image/system/more.png";
+        final int GENERATED_NUMBER = (int) ((Math.random() * 5));
 
         covers[0] = new Cover1();
         covers[1] = new Cover2();
@@ -37,32 +37,25 @@ public class WelcomeController implements Initializable {
         covers[3] = new Cover4();
         covers[4] = new Cover5();
 
-        container.getChildren().add(0, covers[(int) ((Math.random() * 5))]);
-        imgv3dots.setImage(new Image(getClass().getResource("/image/system/more.png").toString()));
-        imgvnext.setImage(new Image(getClass().getResource("/image/system/img_next.png").toString()));
-        imgvprev.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
-
-        optionMenu.getScene().getStylesheets()
-                .add(getClass().getResource("/css/option-menu-style.css").toExternalForm());
+        container.getChildren().add(0, covers[GENERATED_NUMBER]);
+        option.setImage(new Image(getClass().getResource(IMAGE_OPTION).toString()));
+        optionMenu.getScene().getStylesheets().add(getClass().getResource(CSS).toExternalForm());
     }
 
-    @FXML
-    void onSend(ActionEvent event) {
-        WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
-        stage.hide();
-        stage.getWelcomeListener().onClose(false);
+    public void setWelcomeListener(WelcomeInteract.WelcomeListener wc) {
+        this.wc = wc;
     }
 
-    @FXML
-    void onReceive(ActionEvent event) {
-        WelcomeStage stage = ((WelcomeStage) ((Node) event.getSource()).getScene().getWindow());
-        stage.hide();
-        stage.getWelcomeListener().onClose(true);
+    @FXML void onSend(ActionEvent event) {
+        wc.onSelectSend();
+    }
+
+    @FXML void onReceive(ActionEvent event) {
+        wc.onSelectReceive();
     }
 
 
-    @FXML
-    void onOption(MouseEvent me) {
+    @FXML void onOption(MouseEvent me) {
         if (!optionMenu.isDisplayed()) {
             optionMenu.setX(me.getScreenX());
             optionMenu.setY(me.getScreenY());
@@ -72,5 +65,4 @@ public class WelcomeController implements Initializable {
             optionMenu.setDisplay(false);
         }
     }
-
 }

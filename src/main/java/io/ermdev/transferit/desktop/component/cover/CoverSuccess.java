@@ -8,6 +8,6 @@ public class CoverSuccess extends Cover {
         setBackgroundColor("#74b9ff");
         setImage("/image/cover/robot-happy.png");
         setLabelText("Connection Successful");
-        setLabelColor("#386b22");
+        setLabelColor("#fff");
     }
 }

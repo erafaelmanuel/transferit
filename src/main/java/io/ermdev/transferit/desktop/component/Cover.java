@@ -25,6 +25,7 @@ public class Cover extends VBox {
         label.setFont(Font.font("Calibri", 10));
 
         getChildren().add(imageView);
+        getChildren().add(label);
     }
 
     public void setBackgroundColor(String color) {

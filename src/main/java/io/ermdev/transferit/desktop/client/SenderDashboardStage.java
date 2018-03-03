@@ -13,9 +13,9 @@ final public class SenderDashboardStage extends Stage {
 
     public SenderDashboardStage() {
         try {
-            final String FXML_URL = "/fxml/sender-dashboard.fxml";
+            final String FXML = "/fxml/sender-dashboard.fxml";
             final FXMLLoader loader = new FXMLLoader();
-            final URL location = getClass().getResource(FXML_URL);
+            final URL location = getClass().getResource(FXML);
             loader.setLocation(location);
 
             final Parent root = loader.load();

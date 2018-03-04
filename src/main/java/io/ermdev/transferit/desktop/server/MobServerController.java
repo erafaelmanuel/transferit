@@ -81,7 +81,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     public void onInvite() {
         summoner = new Thread(() ->
                 Platform.runLater(() -> {
-                    ConfirmDialog confirmDialog = new ConfirmDialog(this);
+                    InvitationDialogStage confirmDialog = new InvitationDialogStage(this);
                     confirmDialog.display();
                     confirmDialog.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
                     summoner = null;

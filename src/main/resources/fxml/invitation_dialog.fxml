@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="312.0" style="-fx-background-color: #dff9fb;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.server.ConfirmDialogController">
+<AnchorPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="312.0" style="-fx-background-color: #dff9fb;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.server.ConfirmDialogController">
    <children>
       <ImageView fx:id="imgv" fitHeight="35.0" fitWidth="35.0" layoutX="139.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -17,7 +17,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <JFXButton buttonType="RAISED" layoutX="63.0" layoutY="89.0" onAction="#onAccept" prefHeight="27.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #ffffff; -fx-border-color: #57606f;" text="Accept" />
-      <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="89.0" onAction="#onCancel" prefHeight="27.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #ffffff; -fx-border-color: #747d8c;" text="Cancel" />
+      <JFXButton fx:id="btnAccept" buttonType="RAISED" layoutX="63.0" layoutY="89.0" onAction="#onAccept" prefHeight="27.0" prefWidth="90.0" ripplerFill="WHITE" text="Accept" />
+      <JFXButton fx:id="btnCancel" buttonType="RAISED" layoutX="170.0" layoutY="89.0" onAction="#onCancel" prefHeight="27.0" prefWidth="90.0" ripplerFill="WHITE" text="Cancel" />
    </children>
 </AnchorPane>

@@ -1,0 +1,25 @@
+#wrapper {
+    -fx-background-color : #dff9fb;
+}
+
+#btnAccept {
+    -fx-text-fill : #57606f;
+    -fx-background-color : #fff;
+    -fx-border-color : #57606f;
+}
+
+#btnCancel {
+    -fx-text-fill : #57606f;
+    -fx-background-color : #fff;
+    -fx-border-color : #57606f;
+}
+
+#btnAccept:hover {
+    -fx-text-fill : #fff;
+    -fx-background-color : #57606f;
+}
+
+#btnCancel:hover {
+    -fx-text-fill : #fff;
+    -fx-background-color : #57606f;
+}

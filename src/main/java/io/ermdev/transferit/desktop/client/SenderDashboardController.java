@@ -31,7 +31,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     private Thread connector;
 
-    private SenderBrowserStage client2Stage = new SenderBrowserStage();
+    private SenderBrowserStage sbs = new SenderBrowserStage();
 
     @FXML ImageView imgvback;
 
@@ -50,9 +50,11 @@ public class SenderDashboardController implements Initializable, Subscriber {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         container.getChildren().add(0, new CoverInfo());
+        imgvback.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
+
+        sbs = new SenderBrowserStage();
         endpoint = new Endpoint();
         endpoint.subscribe(this);
-        imgvback.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
     }
 
     @Override
@@ -75,15 +77,14 @@ public class SenderDashboardController implements Initializable, Subscriber {
                     btnConnect.setStyle("-fx-background-color: #747d8c; -fx-border-color: #ffa502;");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(true);
-                    client2Stage.close();
+                    sbs.close();
                 });
             }
         });
         thread.start();
     }
 
-    @FXML
-    void onConnection() {
+    @FXML void onConnection() {
         connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -118,15 +119,13 @@ public class SenderDashboardController implements Initializable, Subscriber {
         connector.start();
     }
 
-    @FXML
-    void onFile() {
-        client2Stage.getController().setClient(client);
-        client2Stage.getController().initialize();
-        client2Stage.display();
+    @FXML void onFile() {
+        sbs.getController().setClient(client);
+        sbs.getController().initialize();
+        sbs.display();
     }
 
-    @FXML
-    void onBack(MouseEvent event) {
+    @FXML void onBack(MouseEvent event) {
         Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
 

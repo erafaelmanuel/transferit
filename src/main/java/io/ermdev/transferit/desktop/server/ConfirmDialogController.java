@@ -14,33 +14,29 @@ import java.util.ResourceBundle;
 
 public class ConfirmDialogController implements Initializable {
 
-    private ConfirmDialogListener confirmDialogListener;
+    private ConfirmDialogListener cdl;
 
-    @FXML
-    ImageView imgv;
+    @FXML ImageView imgv;
 
-    @FXML
-    Label label;
+    @FXML Label label;
 
-    public void setListener(ConfirmDialogListener confirmDialogListener) {
-        this.confirmDialogListener = confirmDialogListener;
+    public void setListener(ConfirmDialogListener cdl) {
+        this.cdl = cdl;
     }
 
-    @FXML
-    void onAccept(ActionEvent event) {
+    @FXML void onAccept(ActionEvent event) {
         final Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         stage.close();
-        if (confirmDialogListener != null) {
-            confirmDialogListener.onChoose(true);
+        if (cdl != null) {
+            cdl.onChoose(true);
         }
     }
 
-    @FXML
-    void onCancel(ActionEvent event) {
+    @FXML void onCancel(ActionEvent event) {
         final Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         stage.close();
-        if (confirmDialogListener != null) {
-            confirmDialogListener.onChoose(false);
+        if (cdl != null) {
+            cdl.onChoose(false);
         }
     }
 

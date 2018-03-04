@@ -14,7 +14,7 @@ public class WelcomeStage extends Stage {
     public WelcomeStage() {
         try {
             final String FXML = "/fxml/welcome.fxml";
-            final String CSS = "/css/welcome-ui-style.css";
+            final String CSS = "/css/welcome-style.css";
 
             final FXMLLoader loader = new FXMLLoader();
             final URL location = this.getClass().getResource(FXML);

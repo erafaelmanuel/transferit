@@ -23,6 +23,14 @@ import java.util.List;
 
 public class SenderBrowserController implements ClientListener {
 
+    final private List<Item> items = new ArrayList<>();
+
+    private ItemClient client;
+
+    private Thread sender;
+
+    private volatile boolean okSend;
+
     @FXML VBox container;
 
     @FXML Label lblStatus;
@@ -32,14 +40,6 @@ public class SenderBrowserController implements ClientListener {
     @FXML Button btnSend;
 
     @FXML Button btnClear;
-
-    private ItemClient client;
-
-    private List<Item> items = new ArrayList<>();
-
-    private Thread sender;
-
-    private volatile boolean okSend;
 
     public void initialize() {
         onClear();

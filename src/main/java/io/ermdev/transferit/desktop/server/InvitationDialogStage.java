@@ -7,21 +7,28 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ConfirmDialog extends Stage {
+public class InvitationDialogStage extends Stage {
 
-    private ConfirmDialogController confirmDialogController;
+    private ConfirmDialogController cdc;
 
-    public ConfirmDialog(ConfirmDialogListener confirmDialogListener) {
+    InvitationDialogStage(ConfirmDialogListener confirmDialogListener) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/confirm_dialog_ui.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 312, 138);
+            final String FXML = "/fxml/invitation_dialog.fxml";
+            final String CSS = "/css/invitation-dialog-style.css";
+
+            final FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(FXML));
+
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root, 312, 138);
+            scene.getStylesheets().add(getClass().getResource(CSS).toExternalForm());
+
             initModality(Modality.APPLICATION_MODAL);
             initStyle(StageStyle.UTILITY);
             setScene(scene);
             setTitle("Sender Invitation");
-            setController(loader.getController());
+
+            cdc = loader.getController();
             getController().setListener(confirmDialogListener);
             setOnCloseRequest(event -> {
                 if (confirmDialogListener != null) confirmDialogListener.onChoose(false);
@@ -38,10 +45,6 @@ public class ConfirmDialog extends Stage {
     }
 
     public ConfirmDialogController getController() {
-        return confirmDialogController;
-    }
-
-    public void setController(ConfirmDialogController confirmDialogController) {
-        this.confirmDialogController = confirmDialogController;
+        return cdc;
     }
 }

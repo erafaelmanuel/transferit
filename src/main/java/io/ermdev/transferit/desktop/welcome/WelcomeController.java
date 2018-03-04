@@ -1,7 +1,7 @@
 package io.ermdev.transferit.desktop.welcome;
 
 import io.ermdev.transferit.desktop.component.Cover;
-import io.ermdev.transferit.desktop.component.cover.*;
+import io.ermdev.transferit.desktop.cover.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

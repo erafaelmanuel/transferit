@@ -2,10 +2,10 @@ package io.ermdev.transferit.desktop.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import io.ermdev.transferit.desktop.component.cover.CoverError;
-import io.ermdev.transferit.desktop.component.cover.CoverInfo;
-import io.ermdev.transferit.desktop.component.cover.CoverSuccess;
-import io.ermdev.transferit.desktop.component.cover.CoverWait;
+import io.ermdev.transferit.desktop.cover.CoverError;
+import io.ermdev.transferit.desktop.cover.CoverInfo;
+import io.ermdev.transferit.desktop.cover.CoverSuccess;
+import io.ermdev.transferit.desktop.cover.CoverWait;
 import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
@@ -23,21 +23,6 @@ import java.util.ResourceBundle;
 
 public class SenderDashboardController implements Initializable, Subscriber {
 
-    @FXML
-    ImageView imgvback;
-
-    @FXML
-    JFXButton btnConnect;
-
-    @FXML
-    JFXButton btnSendFile;
-
-    @FXML
-    JFXTextField txtHost;
-
-    @FXML
-    AnchorPane container;
-
     private WelcomeInteract wi;
 
     private Client client;
@@ -47,6 +32,16 @@ public class SenderDashboardController implements Initializable, Subscriber {
     private Thread connector;
 
     private SenderBrowserStage client2Stage = new SenderBrowserStage();
+
+    @FXML ImageView imgvback;
+
+    @FXML JFXButton btnConnect;
+
+    @FXML JFXButton btnSendFile;
+
+    @FXML JFXTextField txtHost;
+
+    @FXML AnchorPane container;
 
     public void setWelcomeInteract(WelcomeInteract wi) {
         this.wi = wi;

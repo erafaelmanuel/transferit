@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.client.MobClient2Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.client.SenderBrowserController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -32,8 +32,8 @@
                </content>
             </ScrollPane>
             <Label fx:id="lblStatus" alignment="CENTER" prefHeight="25.0" prefWidth="247.0" textFill="WHITE" />
-            <JFXButton fx:id="btnClear" layoutX="42.0" layoutY="29.0" onAction="#onClear" prefHeight="27.0" prefWidth="77.0" ripplerFill="WHITE" style="-fx-background-color: #fff; -fx-border-color: #1e90ff;" text="Clear" textFill="DODGERBLUE" />
-            <JFXButton fx:id="btnSend" layoutX="129.0" layoutY="29.0" onAction="#onSend" prefHeight="25.0" prefWidth="77.0" ripplerFill="WHITE" style="-fx-background-color: #fff; -fx-border-color: #1e90ff;" text="Send" textFill="DODGERBLUE" />
+            <JFXButton fx:id="btnClear" layoutX="42.0" layoutY="29.0" onAction="#onClear" prefHeight="27.0" prefWidth="77.0" ripplerFill="WHITE" text="Clear" textFill="DODGERBLUE" />
+            <JFXButton fx:id="btnSend" layoutX="129.0" layoutY="29.0" onAction="#onSend" prefHeight="25.0" prefWidth="77.0" ripplerFill="WHITE" text="Send" textFill="DODGERBLUE" />
          </children>
       </AnchorPane>
    </children>

@@ -7,7 +7,6 @@ import io.ermdev.transferit.desktop.component.cover.CoverInfo;
 import io.ermdev.transferit.desktop.component.cover.CoverSuccess;
 import io.ermdev.transferit.desktop.component.cover.CoverWait;
 import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
-import io.ermdev.transferit.desktop.welcome.WelcomeStage;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -47,7 +46,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     private Thread connector;
 
-    private MobClient2Stage client2Stage = new MobClient2Stage();
+    private SenderBrowserStage client2Stage = new SenderBrowserStage();
 
     public void setWelcomeInteract(WelcomeInteract wi) {
         this.wi = wi;

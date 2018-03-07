@@ -12,31 +12,31 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ConfirmDialogController implements Initializable {
+public class InvitationDialogController implements Initializable {
 
-    private ConfirmDialogListener cdl;
+    private InvitationDialogListener idl;
 
     @FXML ImageView imgv;
 
     @FXML Label label;
 
-    public void setListener(ConfirmDialogListener cdl) {
-        this.cdl = cdl;
+    public void setListener(InvitationDialogListener idl) {
+        this.idl = idl;
     }
 
     @FXML void onAccept(ActionEvent event) {
         final Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         stage.close();
-        if (cdl != null) {
-            cdl.onChoose(true);
+        if (idl != null) {
+            idl.onChoose(true);
         }
     }
 
     @FXML void onCancel(ActionEvent event) {
         final Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         stage.close();
-        if (cdl != null) {
-            cdl.onChoose(false);
+        if (idl != null) {
+            idl.onChoose(false);
         }
     }
 

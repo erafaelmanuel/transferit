@@ -9,9 +9,9 @@ import javafx.stage.StageStyle;
 
 public class InvitationDialogStage extends Stage {
 
-    private ConfirmDialogController cdc;
+    private InvitationDialogController idc;
 
-    InvitationDialogStage(ConfirmDialogListener confirmDialogListener) {
+    InvitationDialogStage(InvitationDialogListener confirmDialogListener) {
         try {
             final String FXML = "/fxml/invitation_dialog.fxml";
             final String CSS = "/css/invitation-dialog-style.css";
@@ -28,7 +28,7 @@ public class InvitationDialogStage extends Stage {
             setScene(scene);
             setTitle("Sender Invitation");
 
-            cdc = loader.getController();
+            idc = loader.getController();
             getController().setListener(confirmDialogListener);
             setOnCloseRequest(event -> {
                 if (confirmDialogListener != null) confirmDialogListener.onChoose(false);
@@ -44,7 +44,7 @@ public class InvitationDialogStage extends Stage {
         show();
     }
 
-    public ConfirmDialogController getController() {
-        return cdc;
+    public InvitationDialogController getController() {
+        return idc;
     }
 }

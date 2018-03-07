@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MobServerController implements ServerListener, Subscriber, Initializable, ConfirmDialogListener {
+public class MobServerController implements ServerListener, Subscriber, Initializable, InvitationDialogListener {
 
     private WelcomeInteract wi;
 
@@ -81,9 +81,9 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     public void onInvite() {
         summoner = new Thread(() ->
                 Platform.runLater(() -> {
-                    InvitationDialogStage confirmDialog = new InvitationDialogStage(this);
-                    confirmDialog.display();
-                    confirmDialog.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
+                    final InvitationDialogStage stage = new InvitationDialogStage(this);
+                    stage.display();
+                    stage.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
                     summoner = null;
                 }));
         summoner.start();

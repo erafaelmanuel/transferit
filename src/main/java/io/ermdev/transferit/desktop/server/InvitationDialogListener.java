@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.server;
 
-public interface ConfirmDialogListener {
+public interface InvitationDialogListener {
 
     void onChoose(boolean accept);
 }

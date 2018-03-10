@@ -8,6 +8,6 @@ public class CoverWait extends Cover {
         setBackgroundColor("#f6e58d");
         setImage("/image/cover/robot-wait.png");
         setLabelText("Find your friends");
-        setLabelColor("#fff");
+        setLabelColor("#000");
     }
 }

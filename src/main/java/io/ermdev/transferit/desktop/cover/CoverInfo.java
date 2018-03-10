@@ -8,6 +8,6 @@ public class CoverInfo extends Cover {
         setBackgroundColor("#CAD3C8");
         setImage("/image/cover/robot.png");
         setLabelText("Find your friends");
-        setLabelColor("#fff");
+        setLabelColor("#000");
     }
 }

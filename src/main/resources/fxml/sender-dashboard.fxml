@@ -33,8 +33,8 @@
                </children>
             </VBox>
             <JFXTextField fx:id="txtHost" focusColor="#636e72" labelFloat="true" layoutX="56.0" layoutY="239.0" prefHeight="25.0" prefWidth="135.0" promptText="Enter host" unFocusColor="#636e72" />
-            <JFXButton fx:id="btnConnect" buttonType="RAISED" layoutX="56.0" layoutY="280.0" onAction="#onConnection" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #747d8c; -fx-border-color: #ffa502;" text="Connect" textFill="WHITE" />
-            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="56.0" layoutY="316.0" onAction="#onFile" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #1e90ff; -fx-border-color: #3742fa;" text="Send File" textFill="WHITE" />
+            <JFXButton fx:id="btnConnect" buttonType="RAISED" layoutX="56.0" layoutY="280.0" onAction="#onConnection" prefHeight="27.0" prefWidth="135.0" text="Connect" textFill="WHITE" />
+            <JFXButton fx:id="btnSendFile" buttonType="RAISED" disable="true" layoutX="56.0" layoutY="316.0" onAction="#onFile" prefHeight="27.0" prefWidth="135.0" text="Send File" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

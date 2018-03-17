@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="25.0" layoutY="52.0" text="Save To" textFill="DODGERBLUE">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="104.0" layoutY="7.0" text="Settings" />
+      <Line endX="100.0" layoutX="125.0" layoutY="70.0" startX="-100.0" stroke="DODGERBLUE" />
+      <Label layoutX="26.0" layoutY="89.0" text="Save received files to : ">
+         <font>
+            <Font name="Calibri" size="10.0" />
+         </font></Label>
+      <JFXButton layoutX="174.0" layoutY="233.0" style="-fx-border-color: #1e90ff; -fx-background-color: #fff;" text="Cancel" textFill="DODGERBLUE" />
+      <JFXButton layoutX="112.0" layoutY="233.0" prefHeight="27.0" prefWidth="54.0" style="-fx-border-color: #1e90ff; -fx-background-color: #fff;" text="Save" textFill="DODGERBLUE" />
+      <JFXTextField focusColor="BLACK" layoutX="26.0" layoutY="101.0" prefHeight="25.0" prefWidth="201.0" promptText="C:\Users\Hotaru\Downloads" />
+   </children>
+</AnchorPane>

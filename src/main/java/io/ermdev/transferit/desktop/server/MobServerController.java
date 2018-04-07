@@ -35,6 +35,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private List<Item> items = new ArrayList<>();
 
+    final InvitationDialogStage stage;
+
     @FXML
     VBox container;
 
@@ -52,6 +54,10 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @FXML
     Button btnCancel;
+
+    public MobServerController() {
+        stage = new InvitationDialogStage(this);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,7 +87,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     public void onInvite() {
         summoner = new Thread(() ->
                 Platform.runLater(() -> {
-                    final InvitationDialogStage stage = new InvitationDialogStage(this);
+
                     stage.display();
                     stage.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
                     summoner = null;
@@ -140,8 +146,12 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
             });
         } else {
             Platform.runLater(() -> {
-                lblStatus.setText("Disconnected");
-                lblStatus.setStyle("-fx-background-color: #d63031");
+                if (stage.isShowing()) {
+                    stage.hide();
+                } else {
+                    lblStatus.setText("Disconnected");
+                    lblStatus.setStyle("-fx-background-color: #d63031");
+                }
             });
         }
     }

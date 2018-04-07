@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+@Deprecated
 public class ClientController implements Subscriber, Initializable, ClientListener {
 
     private Client client;

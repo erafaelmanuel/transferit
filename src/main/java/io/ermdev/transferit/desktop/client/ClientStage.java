@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
+@Deprecated
 public class ClientStage extends Stage {
 
     private ClientController clientUIController;

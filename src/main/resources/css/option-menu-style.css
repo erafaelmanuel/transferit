@@ -11,6 +11,6 @@
 }
 
 #options {
-    -fx-border-color: #3742fa;
+    -fx-border-color: #1e90ff;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 5, 0.0 , 0 , 1 );
 }

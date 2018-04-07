@@ -1,23 +1,27 @@
 #wrapper {
-     -fx-background-color: #f1f2f6;
+    -fx-background-color: #f1f2f6;
 }
 
 #btnSend {
     -fx-text-fill: #fff;
     -fx-background-color: #1e90ff;
-    -fx-border-color: #fff;
+    -fx-border-color: #1e90ff;
 }
 
 #btnReceive {
     -fx-text-fill: #fff;
     -fx-background-color: #1e90ff;
-    -fx-border-color: #fff;
+    -fx-border-color: #1e90ff;
 }
 
 #btnSend: hover {
-    -fx-background-color: #70a1ff;
+    -fx-text-fill: #1e90ff;
+    -fx-background-color: #fff;
+    -fx-border-color: #1e90ff;
 }
 
 #btnReceive: hover {
-    -fx-background-color: #70a1ff;
+    -fx-text-fill: #1e90ff;
+    -fx-background-color: #fff;
+    -fx-border-color: #1e90ff;
 }

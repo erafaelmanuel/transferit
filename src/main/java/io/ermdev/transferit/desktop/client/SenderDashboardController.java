@@ -65,18 +65,20 @@ public class SenderDashboardController implements Initializable, Subscriber {
                     container.getChildren().remove(0);
                     container.getChildren().add(0, new CoverSuccess());
                     btnConnect.setText("Disconnect");
-                    btnConnect.setStyle("-fx-background-color: #747d8c; -fx-border-color: #e84393;");
+                    btnConnect.setId("btnDisconnect");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(false);
+                    txtHost.setDisable(true);
                 });
             } else {
                 Platform.runLater(() -> {
                     container.getChildren().remove(0);
                     container.getChildren().add(0, new CoverError());
                     btnConnect.setText("Connect");
-                    btnConnect.setStyle("-fx-background-color: #747d8c; -fx-border-color: #ffa502;");
+                    btnConnect.setId("btnConnect");
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(true);
+                    txtHost.setDisable(false);
                     sbs.close();
                 });
             }

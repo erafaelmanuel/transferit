@@ -5,9 +5,9 @@ import io.ermdev.transferit.desktop.component.Cover;
 public class CoverInfo extends Cover {
 
     public CoverInfo() {
-        setBackgroundColor("#CAD3C8");
-        setImage("/image/cover/robot.png");
-        setLabelText("Find your friends");
-        setLabelColor("#000");
+        setBackgroundColor("#25CCF7");
+        setImage("/image/cover/balloons.png");
+        setLabelText("Connect with your friends");
+        setLabelColor("#ffffff");
     }
 }

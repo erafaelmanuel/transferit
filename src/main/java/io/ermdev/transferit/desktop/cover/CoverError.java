@@ -6,8 +6,8 @@ public class CoverError extends Cover {
 
     public CoverError() {
         setBackgroundColor("#fab1a0");
-        setImage("/image/cover/robot-error.png");
+        setImage("/image/cover/bear-sad.png");
         setLabelText("You are disconnected");
-        setLabelColor("#000");
+        setLabelColor("#ED4C67");
     }
 }

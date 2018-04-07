@@ -22,7 +22,7 @@ public class Cover extends VBox {
 
         imageView.setFitHeight(90);
         imageView.setFitWidth(90);
-        label.setFont(Font.font("Calibri", 10));
+        label.setFont(Font.font("Calibri", 11));
 
         getChildren().add(imageView);
         getChildren().add(label);

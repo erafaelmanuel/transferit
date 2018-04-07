@@ -6,8 +6,8 @@ public class CoverWait extends Cover {
 
     public CoverWait() {
         setBackgroundColor("#f6e58d");
-        setImage("/image/cover/robot-wait.png");
-        setLabelText("Find your friends");
-        setLabelColor("#000");
+        setImage("/image/cover/ball.png");
+        setLabelText("Waiting...");
+        setLabelColor("#2C3A47");
     }
 }

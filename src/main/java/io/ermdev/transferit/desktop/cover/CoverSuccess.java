@@ -5,9 +5,9 @@ import io.ermdev.transferit.desktop.component.Cover;
 public class CoverSuccess extends Cover {
 
     public CoverSuccess() {
-        setBackgroundColor("#74b9ff");
-        setImage("/image/cover/robot-happy.png");
-        setLabelText("Connection Successful");
-        setLabelColor("#000");
+        setBackgroundColor("#7bed9f");
+        setImage("/image/cover/star-happy.png");
+        setLabelText("You are connected");
+        setLabelColor("#006266");
     }
 }

@@ -69,6 +69,9 @@ public class SenderDashboardController implements Initializable, Subscriber {
                     btnConnect.setDisable(false);
                     btnSendFile.setDisable(false);
                     txtHost.setDisable(true);
+                    if (txtHost.getText().isEmpty()) {
+                        txtHost.setText("127.0.0.1");
+                    }
                 });
             } else {
                 Platform.runLater(() -> {
@@ -90,9 +93,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
         connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
-                    CoverWait coverWait = new CoverWait();
-                    coverWait.setLabelText("Connecting");
-
+                    final CoverWait coverWait = new CoverWait();
                     container.getChildren().remove(0);
                     container.getChildren().add(0, coverWait);
                     btnConnect.setDisable(true);
@@ -107,7 +108,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
                 }
             } catch (ClientException e) {
                 Platform.runLater(() -> {
-                    CoverError coverError = new CoverError();
+                    final CoverError coverError = new CoverError();
                     coverError.setLabelText(e.getMessage());
 
                     container.getChildren().remove(0);

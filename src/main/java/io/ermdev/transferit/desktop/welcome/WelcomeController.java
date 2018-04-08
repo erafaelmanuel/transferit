@@ -55,10 +55,10 @@ public class WelcomeController implements Initializable {
     }
 
 
-    @FXML void onOption(MouseEvent me) {
+    @FXML void onOption(MouseEvent event) {
         if (!optionMenu.isDisplayed()) {
-            optionMenu.setX(me.getScreenX());
-            optionMenu.setY(me.getScreenY());
+            optionMenu.setX(event.getScreenX());
+            optionMenu.setY(event.getScreenY());
             optionMenu.display();
         } else {
             optionMenu.hide();

@@ -39,6 +39,12 @@ final public class SenderDashboardStage extends Stage {
         show();
     }
 
+    public void display(double x, double y) {
+        setX(x);
+        setY(y);
+        display();
+    }
+
     public SenderDashboardController getController() {
         return sdc;
     }

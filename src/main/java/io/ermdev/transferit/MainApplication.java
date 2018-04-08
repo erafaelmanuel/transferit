@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 public class MainApplication extends Application implements WelcomeInteract.WelcomeListener {
 
     private WelcomeStage ws;
+
     private WelcomeInteract wi;
 
     public static void main(String args[]) {
@@ -21,21 +22,24 @@ public class MainApplication extends Application implements WelcomeInteract.Welc
     public void start(Stage primaryStage) {
         ws = new WelcomeStage();
         ws.getController().setWelcomeListener(this);
-
         wi = new WelcomeInteractImpl(this);
-        wi.setDisplay();
+        wi.setDisplay(0, 0);
     }
 
     @Override
-    public void onShow() {
-        ws.display();
+    public void onShow(double x, double y) {
+        if (x > 0 && y > 0) {
+            ws.display(x, y);
+        } else {
+            ws.display();
+        }
     }
 
     @Override
     public void onSelectSend() {
         final SenderDashboardStage stage = new SenderDashboardStage();
         stage.getController().setWelcomeInteract(wi);
-        stage.display();
+        stage.display(ws.getX(), ws.getY());
         ws.hide();
     }
 
@@ -43,7 +47,7 @@ public class MainApplication extends Application implements WelcomeInteract.Welc
     public void onSelectReceive() {
         MobServerStage stage = new MobServerStage();
         stage.getController().setWelcomeInteract(wi);
-        stage.display();
+        stage.display(ws.getX(), ws.getY());
         ws.hide();
     }
 }

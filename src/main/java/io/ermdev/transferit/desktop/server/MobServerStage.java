@@ -38,6 +38,12 @@ public class MobServerStage extends Stage {
         show();
     }
 
+    public void display(double x, double y) {
+        setX(x);
+        setY(y);
+        display();
+    }
+
     public MobServerController getController() {
         return serverController;
     }

@@ -39,6 +39,12 @@ public class WelcomeStage extends Stage {
         show();
     }
 
+    public void display(double x, double y) {
+        setX(x);
+        setY(y);
+        display();
+    }
+
     public WelcomeController getController() {
         return wc;
     }

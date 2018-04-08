@@ -9,6 +9,7 @@ import io.ermdev.transferit.desktop.cover.CoverWait;
 import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -122,21 +123,21 @@ public class SenderDashboardController implements Initializable, Subscriber {
         connector.start();
     }
 
-    @FXML void onFile() {
+    @FXML void onFile(ActionEvent event) {
+        final Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         sbs.getController().setClient(client);
         sbs.getController().initialize();
-        sbs.display();
+        sbs.display(stage.getX() + 247 + 10, stage.getY());
     }
 
     @FXML void onBack(MouseEvent event) {
-        Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+        final Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
-
         if (client != null) {
             client.disconnect();
         }
         if (wi != null) {
-            wi.setDisplay();
+            wi.setDisplay(stage.getX(), stage.getY());
         }
     }
 }

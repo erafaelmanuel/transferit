@@ -9,7 +9,7 @@ public class WelcomeInteractImpl implements WelcomeInteract {
     }
 
     @Override
-    public void setDisplay() {
-        wl.onShow();
+    public void setDisplay(double x, double y) {
+        wl.onShow(x, y);
     }
 }

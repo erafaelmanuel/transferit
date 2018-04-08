@@ -159,13 +159,14 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     @FXML
     void onCancel(ActionEvent event) {
         initialize();
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
+        stage.close();
 
         server.stop();
         server = null;
 
         if (wi != null) {
-            wi.setDisplay();
+            wi.setDisplay(stage.getX(), stage.getY());
         }
     }
 

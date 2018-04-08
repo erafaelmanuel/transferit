@@ -1,26 +1,26 @@
 #btnConnect {
     -fx-text-fill: #fff;
-    -fx-background-color: #00b894;
-    -fx-border-color: #00b894;
+    -fx-background-color: #2f3542;
+    -fx-border-color: #2f3542;
 }
 
 #btnConnect: hover {
-    -fx-text-fill: #00b894;
+    -fx-text-fill: #2f3542;
     -fx-background-color: #fff;
-    -fx-border-color: #00b894;
+    -fx-border-color: #2f3542;
 }
 
 
 #btnDisconnect {
     -fx-text-fill: #fff;
-    -fx-background-color: #d63031;
-    -fx-border-color: #d63031;
+    -fx-background-color: #ff4757;
+    -fx-border-color: #ff4757;
 }
 
 #btnDisconnect: hover {
-    -fx-text-fill: #d63031;
+    -fx-text-fill: #ff4757;
     -fx-background-color: #fff;
-    -fx-border-color: #d63031;
+    -fx-border-color: #ff4757;
 }
 
 

@@ -20,8 +20,8 @@ public class Cover extends VBox {
         setPrefSize(247, 174);
         setMaxSize(247, 174);
 
-        imageView.setFitHeight(90);
-        imageView.setFitWidth(90);
+        imageView.setFitHeight(85);
+        imageView.setFitWidth(85);
         label.setFont(Font.font("Calibri", 11));
 
         getChildren().add(imageView);

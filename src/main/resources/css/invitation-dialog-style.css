@@ -3,23 +3,23 @@
 }
 
 #btnAccept {
-    -fx-text-fill : #57606f;
-    -fx-background-color : #fff;
-    -fx-border-color : #57606f;
+    -fx-text-fill : #fff;
+    -fx-background-color : #1e90ff;
+    -fx-border-color : #1e90ff;
 }
 
 #btnCancel {
-    -fx-text-fill : #57606f;
-    -fx-background-color : #fff;
-    -fx-border-color : #57606f;
+    -fx-text-fill : #fff;
+    -fx-background-color : #ff4757;
+    -fx-border-color : #ff4757;
 }
 
 #btnAccept:hover {
-    -fx-text-fill : #fff;
-    -fx-background-color : #57606f;
+    -fx-text-fill : #1e90ff;
+    -fx-background-color : #fff;
 }
 
 #btnCancel:hover {
-    -fx-text-fill : #fff;
-    -fx-background-color : #57606f;
+    -fx-text-fill : #ff4757;
+    -fx-background-color : #fff;
 }

@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.welcome;
+package io.ermdev.transferit.desktop.ui.welcome;
 
 import io.ermdev.transferit.desktop.component.Cover;
 import io.ermdev.transferit.desktop.cover.*;

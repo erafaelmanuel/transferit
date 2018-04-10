@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.server;
 
 import io.ermdev.transferit.integration.*;
 import io.ermdev.transferit.desktop.component.ItemBox;
-import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.welcome;
+package io.ermdev.transferit.desktop.ui.client;
 
 import io.ermdev.transferit.desktop.component.BaseStage;
 import javafx.fxml.FXMLLoader;
@@ -7,26 +7,29 @@ import javafx.scene.Scene;
 
 import java.net.URL;
 
-public class WelcomeStage extends BaseStage {
+public class SenderBrowserStage extends BaseStage {
 
-    private WelcomeController wc;
+    private SenderBrowserController sbc;
 
-    public WelcomeStage() {
+    public SenderBrowserStage() {
+        createClientStage();
+    }
+
+    private void createClientStage() {
         try {
+            final URL fxml = classLoader.getResource("fxml/sender-browser.fxml");
+            final URL style = classLoader.getResource("css/sender-browser-style.css");
             final FXMLLoader loader = new FXMLLoader();
-            final URL fxml = classLoader.getResource("fxml/welcome.fxml");
-            final URL style = classLoader.getResource("css/welcome-style.css");
-
             loader.setLocation(fxml);
 
             final Parent root = loader.load();
             final Scene scene = new Scene(root, 247, 400);
-
             if (style != null) {
                 scene.getStylesheets().add(style.toExternalForm());
             }
+            //initModality(Modality.APPLICATION_MODAL);
             setScene(scene);
-            setController(loader.getController());
+            sbc = loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,11 +47,8 @@ public class WelcomeStage extends BaseStage {
         display();
     }
 
-    public WelcomeController getController() {
-        return wc;
+    public SenderBrowserController getController() {
+        return sbc;
     }
 
-    public void setController(WelcomeController wc) {
-        this.wc = wc;
-    }
 }

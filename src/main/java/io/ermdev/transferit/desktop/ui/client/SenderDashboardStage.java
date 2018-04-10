@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.client;
+package io.ermdev.transferit.desktop.ui.client;
 
 import io.ermdev.transferit.desktop.component.BaseStage;
 import javafx.fxml.FXMLLoader;

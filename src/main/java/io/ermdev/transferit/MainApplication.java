@@ -1,10 +1,10 @@
 package io.ermdev.transferit;
 
-import io.ermdev.transferit.desktop.client.SenderDashboardStage;
+import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
 import io.ermdev.transferit.desktop.server.MobServerStage;
-import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
-import io.ermdev.transferit.desktop.welcome.WelcomeInteractImpl;
-import io.ermdev.transferit.desktop.welcome.WelcomeStage;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteractImpl;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,26 +20,24 @@ public class MainApplication extends Application implements WelcomeInteract.Welc
 
     @Override
     public void start(Stage primaryStage) {
+
         ws = new WelcomeStage();
         ws.getController().setWelcomeListener(this);
+
         wi = new WelcomeInteractImpl(this);
         wi.setDisplay(0, 0);
     }
 
     @Override
     public void onShow(double x, double y) {
-        if (x > 0 && y > 0) {
-            ws.display(x, y);
-        } else {
-            ws.display();
-        }
+        ws.display(x, y);
     }
 
     @Override
     public void onSelectSend() {
-        final SenderDashboardStage stage = new SenderDashboardStage();
-        stage.getController().setWelcomeInteract(wi);
-        stage.display(ws.getX(), ws.getY());
+        final SenderDashboardStage sds = new SenderDashboardStage();
+        sds.getController().setWelcomeInteract(wi);
+        sds.display(ws.getX(), ws.getY());
         ws.hide();
     }
 

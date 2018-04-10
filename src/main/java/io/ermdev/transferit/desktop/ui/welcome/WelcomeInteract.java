@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.welcome;
+package io.ermdev.transferit.desktop.ui.welcome;
 
 public interface WelcomeInteract {
 

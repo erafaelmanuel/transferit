@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.client;
+package io.ermdev.transferit.desktop.ui.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -7,7 +7,7 @@ import io.ermdev.transferit.desktop.cover.CoverError;
 import io.ermdev.transferit.desktop.cover.CoverInfo;
 import io.ermdev.transferit.desktop.cover.CoverSuccess;
 import io.ermdev.transferit.desktop.cover.CoverWait;
-import io.ermdev.transferit.desktop.welcome.WelcomeInteract;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
 
-public class CoverSuccess extends Cover {
+final public class CoverSuccess extends Cover {
 
     public CoverSuccess() {
         setBackgroundColor("#a4b0be");

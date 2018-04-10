@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
 
-public class CoverInfo extends Cover {
+final public class CoverInfo extends Cover {
 
     public CoverInfo() {
         setBackgroundColor("#25CCF7");

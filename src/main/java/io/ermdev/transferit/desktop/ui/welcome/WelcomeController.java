@@ -18,13 +18,17 @@ public class WelcomeController implements Initializable {
 
     private final Cover covers[] = new Cover[5];
 
-    private WelcomeInteract.WelcomeListener wl;
+    private WelcomeInteract welcomeInteract;
 
     @FXML
     ImageView option;
 
     @FXML
     AnchorPane container;
+
+    public void setWelcomeInteract(WelcomeInteract welcomeInteract) {
+        this.welcomeInteract = welcomeInteract;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,21 +52,17 @@ public class WelcomeController implements Initializable {
         }
     }
 
-    public void setWelcomeListener(WelcomeInteract.WelcomeListener wl) {
-        this.wl = wl;
-    }
-
     @FXML
     void onSend() {
-        if (wl != null) {
-            wl.onSelectSend();
+        if (welcomeInteract != null) {
+            welcomeInteract.selectSend();
         }
     }
 
     @FXML
     void onReceive() {
-        if (wl != null) {
-            wl.onSelectReceive();
+        if (welcomeInteract != null) {
+            welcomeInteract.selectReceive();
         }
     }
 

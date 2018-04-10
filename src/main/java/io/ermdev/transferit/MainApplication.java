@@ -22,15 +22,15 @@ public class MainApplication extends Application implements WelcomeInteract.Welc
     public void start(Stage primaryStage) {
 
         ws = new WelcomeStage();
-        ws.getController().setWelcomeListener(this);
-
         wi = new WelcomeInteractImpl(this);
-        wi.setDisplay(0, 0);
+
+        ws.getController().setWelcomeInteract(wi);
+        wi.display(0, 0);
     }
 
     @Override
     public void onShow(double x, double y) {
-        ws.display(x, y);
+        ws.show(x, y);
     }
 
     @Override

@@ -177,7 +177,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         server = null;
 
         if (wi != null) {
-            wi.setDisplay(stage.getX(), stage.getY());
+            wi.display(stage.getX(), stage.getY());
         }
     }
 

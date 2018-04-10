@@ -30,7 +30,7 @@ public class WelcomeStage extends BaseStage {
         }
     }
 
-    public void display(double x, double y) {
+    public void show(double x, double y) {
         if (x > 0 && y > 0) {
             setX(x);
             setY(y);

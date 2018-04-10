@@ -2,7 +2,11 @@ package io.ermdev.transferit.desktop.ui.welcome;
 
 public interface WelcomeInteract {
 
-    void setDisplay(double x, double y);
+    void display(double x, double y);
+
+    void selectSend();
+
+    void selectReceive();
 
     interface WelcomeListener {
 

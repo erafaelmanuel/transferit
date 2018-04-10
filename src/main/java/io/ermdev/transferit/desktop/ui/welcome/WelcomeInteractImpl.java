@@ -2,14 +2,24 @@ package io.ermdev.transferit.desktop.ui.welcome;
 
 public class WelcomeInteractImpl implements WelcomeInteract {
 
-    private WelcomeListener wl;
+    private WelcomeListener listener;
 
-    public WelcomeInteractImpl(WelcomeListener wl)  {
-        this.wl = wl;
+    public WelcomeInteractImpl(WelcomeListener listener) {
+        this.listener = listener;
     }
 
     @Override
-    public void setDisplay(double x, double y) {
-        wl.onShow(x, y);
+    public void display(double x, double y) {
+        listener.onShow(x, y);
+    }
+
+    @Override
+    public void selectSend() {
+        listener.onSelectSend();
+    }
+
+    @Override
+    public void selectReceive() {
+        listener.onSelectReceive();
     }
 }

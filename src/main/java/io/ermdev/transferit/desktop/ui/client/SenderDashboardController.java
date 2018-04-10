@@ -137,7 +137,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
             client.disconnect();
         }
         if (wi != null) {
-            wi.setDisplay(stage.getX(), stage.getY());
+            wi.display(stage.getX(), stage.getY());
         }
     }
 }

@@ -7,9 +7,10 @@ import java.util.Optional;
 public class ItemServer {
 
     private List<Item> items;
-    private String path = "files";
 
-    public void setPath(String path) {
+    private String path;
+
+    public ItemServer(final String path) {
         this.path = path;
     }
 
@@ -18,20 +19,24 @@ public class ItemServer {
     }
 
     public void receiveFile(InputStream inputStream) {
-        try {
-            final DataInputStream dis = new DataInputStream(new BufferedInputStream(inputStream));
-            final String fileName = dis.readUTF();
-            final Optional<Item> o = items.parallelStream().filter(item -> item.getName().equals(fileName)).findFirst();
+        if (path != null) {
             final File directory = new File(path);
             if (!(directory.exists() || directory.mkdirs())) {
                 throw new RuntimeException("File folder is missing");
             }
-            File file = new File((path != null ? path : "files") + ("/" + fileName));
+        }
+        try {
+            final DataInputStream dis = new DataInputStream(new BufferedInputStream(inputStream));
+            final String name = dis.readUTF();
+            final Optional<Item> o = items.parallelStream().filter(item -> item.getName().equals(name)).findFirst();
+            final File file = new File(path + "/" + name);
+
             byte buffer[] = new byte[10240];
             if (o.isPresent() && (!file.exists() || file.delete())) {
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
                 Item item = o.get();
                 item.notifyBefore();
+
                 int total = 0;
                 int read;
                 while ((read = dis.read(buffer)) != -1) {

@@ -30,8 +30,6 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private int port;
 
-    private String dir;
-
     private WelcomeInteract wi;
 
     private LinkServer server;
@@ -67,12 +65,13 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         try {
             properties.load(classLoader.getResourceAsStream("config/application.properties"));
         } catch (Exception e) {
+            e.printStackTrace();
         }
         invitationDialogStage = new InvitationDialogStage(this);
+
+        itemServer = new ItemServer(properties.getProperty("app.dir", "files"));
+
         port = Integer.parseInt(properties.getProperty("app.port", "0"));
-        dir = properties.getProperty("app.dir", "files");
-        itemServer = new ItemServer();
-        itemServer.setPath(dir);
     }
 
     public void reset() {

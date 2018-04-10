@@ -1,7 +1,7 @@
 package io.ermdev.transferit;
 
 import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
-import io.ermdev.transferit.desktop.server.MobServerStage;
+import io.ermdev.transferit.desktop.ui.server.MobServerStage;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteractImpl;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;

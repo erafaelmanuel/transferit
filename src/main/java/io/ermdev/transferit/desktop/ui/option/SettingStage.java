@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.option;
+package io.ermdev.transferit.desktop.ui.option;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

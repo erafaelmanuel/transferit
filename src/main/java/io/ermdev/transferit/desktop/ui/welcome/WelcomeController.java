@@ -2,7 +2,6 @@ package io.ermdev.transferit.desktop.ui.welcome;
 
 import io.ermdev.transferit.desktop.component.Cover;
 import io.ermdev.transferit.desktop.cover.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -19,16 +18,19 @@ public class WelcomeController implements Initializable {
 
     private final Cover covers[] = new Cover[5];
 
-    private WelcomeInteract.WelcomeListener wc;
+    private WelcomeInteract.WelcomeListener wl;
 
-    @FXML ImageView option;
+    @FXML
+    ImageView option;
 
-    @FXML AnchorPane container;
+    @FXML
+    AnchorPane container;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        final String CSS = "/css/option-menu-style.css";
-        final String IMAGE_OPTION = "/image/system/more.png";
+        final ClassLoader classLoader = getClass().getClassLoader();
+        final URL style = classLoader.getResource("css/option-menu-style.css");
+        final URL image = classLoader.getResource("image/system/more.png");
         final int GENERATED_NUMBER = (int) ((Math.random() * 5));
 
         covers[0] = new Cover1();
@@ -38,24 +40,34 @@ public class WelcomeController implements Initializable {
         covers[4] = new Cover5();
 
         container.getChildren().add(0, covers[GENERATED_NUMBER]);
-        option.setImage(new Image(getClass().getResource(IMAGE_OPTION).toString()));
-        optionMenu.getScene().getStylesheets().add(getClass().getResource(CSS).toExternalForm());
+        if (image != null) {
+            option.setImage(new Image(image.toString()));
+        }
+        if (style != null) {
+            optionMenu.getScene().getStylesheets().add(style.toExternalForm());
+        }
     }
 
-    public void setWelcomeListener(WelcomeInteract.WelcomeListener wc) {
-        this.wc = wc;
+    public void setWelcomeListener(WelcomeInteract.WelcomeListener wl) {
+        this.wl = wl;
     }
 
-    @FXML void onSend(ActionEvent event) {
-        wc.onSelectSend();
+    @FXML
+    void onSend() {
+        if (wl != null) {
+            wl.onSelectSend();
+        }
     }
 
-    @FXML void onReceive(ActionEvent event) {
-        wc.onSelectReceive();
+    @FXML
+    void onReceive() {
+        if (wl != null) {
+            wl.onSelectReceive();
+        }
     }
 
-
-    @FXML void onOption(MouseEvent event) {
+    @FXML
+    void onOption(MouseEvent event) {
         if (!optionMenu.isDisplayed()) {
             optionMenu.setX(event.getScreenX());
             optionMenu.setY(event.getScreenY());

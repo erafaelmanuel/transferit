@@ -1,13 +1,13 @@
 package io.ermdev.transferit.desktop.server;
 
+import io.ermdev.transferit.desktop.component.BaseStage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class MobServerStage extends Stage {
+public class MobServerStage extends BaseStage {
 
     private MobServerController serverController;
 
@@ -17,13 +17,13 @@ public class MobServerStage extends Stage {
 
     private void createServerStage() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            URL location = this.getClass().getResource("/fxml/mob_server_ui.fxml");
-            fxmlLoader.setLocation(location);
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 247, 400);
+            final FXMLLoader fxmlLoader = new FXMLLoader();
+            final URL fxml = classLoader.getResource("fxml/mob_server_ui.fxml");
+            fxmlLoader.setLocation(fxml);
 
-            setTitle("Transferit v1.0");
+            final Parent root = fxmlLoader.load();
+            final Scene scene = new Scene(root, 247, 400);
+
             setScene(scene);
             setController(fxmlLoader.getController());
             setOnCloseRequest(e -> System.exit(0));

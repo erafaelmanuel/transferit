@@ -19,9 +19,18 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class MobServerController implements ServerListener, Subscriber, Initializable, InvitationDialogListener {
+
+    private InvitationDialogStage invitationDialogStage;
+
+    private ItemServer itemServer;
+
+    private int port;
+
+    private String dir;
 
     private WelcomeInteract wi;
 
@@ -31,11 +40,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private Endpoint endpoint;
 
-    private ItemServer itemServer = new ItemServer();
 
     private List<Item> items = new ArrayList<>();
-
-    final InvitationDialogStage stage;
 
     @FXML
     VBox container;
@@ -56,24 +62,20 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     Button btnCancel;
 
     public MobServerController() {
-        stage = new InvitationDialogStage(this);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initialize();
-        File directory = new File("files");
-        if (!(directory.exists() || directory.mkdir())) {
-            throw new RuntimeException("File folder is missing");
+        final ClassLoader classLoader = getClass().getClassLoader();
+        final Properties properties = new Properties();
+        try {
+            properties.load(classLoader.getResourceAsStream("config/application.properties"));
+        } catch (Exception e) {
         }
-        endpoint = new Endpoint(23411);
-        endpoint.subscribe(this);
-        server = new LinkServer(endpoint);
-        server.setServerListener(this);
-        server.open();
+        invitationDialogStage = new InvitationDialogStage(this);
+        port = Integer.parseInt(properties.getProperty("app.port", "0"));
+        dir = properties.getProperty("app.dir", "files");
+        itemServer = new ItemServer();
+        itemServer.setPath(dir);
     }
 
-    public void initialize() {
+    public void reset() {
         lblBrowser.setText("0 Receive file(s)");
         container.getChildren().clear();
         container.getChildren().add(browser);
@@ -84,12 +86,22 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     }
 
     @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        reset();
+        endpoint = new Endpoint(port);
+        endpoint.subscribe(this);
+        server = new LinkServer(endpoint);
+        server.setServerListener(this);
+        server.open();
+    }
+
+    @Override
     public void onInvite() {
         summoner = new Thread(() ->
                 Platform.runLater(() -> {
-
-                    stage.display();
-                    stage.getController().setLabelText("You want to accept " + endpoint.getHost() + "?");
+                    invitationDialogStage.display();
+                    invitationDialogStage.getController()
+                            .setLabelText("You want to accept " + endpoint.getHost() + "?");
                     summoner = null;
                 }));
         summoner.start();
@@ -146,8 +158,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
             });
         } else {
             Platform.runLater(() -> {
-                if (stage.isShowing()) {
-                    stage.hide();
+                if (invitationDialogStage.isShowing()) {
+                    invitationDialogStage.hide();
                 } else {
                     lblStatus.setText("Disconnected");
                     lblStatus.setStyle("-fx-background-color: #d63031");
@@ -158,7 +170,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @FXML
     void onCancel(ActionEvent event) {
-        initialize();
+        reset();
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
         stage.close();
 
@@ -172,6 +184,6 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @FXML
     void onClear() {
-        initialize();
+        reset();
     }
 }

@@ -1,30 +1,29 @@
 package io.ermdev.transferit.desktop.client;
 
+import io.ermdev.transferit.desktop.component.BaseStage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.net.URL;
 
-final public class SenderDashboardStage extends Stage {
+final public class SenderDashboardStage extends BaseStage {
 
     private SenderDashboardController sdc;
 
     public SenderDashboardStage() {
         try {
-            final String FXML = "/fxml/sender-dashboard.fxml";
-            final String CSS = "/css/sender-dashboard-style.css";
+            final URL fxml = classLoader.getResource("fxml/sender-dashboard.fxml");
+            final URL style = classLoader.getResource("css/sender-dashboard-style.css");
             final FXMLLoader loader = new FXMLLoader();
-            final URL location = getClass().getResource(FXML);
-            final String style = getClass().getResource(CSS).toExternalForm();
-            loader.setLocation(location);
+            loader.setLocation(fxml);
 
             final Parent root = loader.load();
             final Scene scene = new Scene(root, 247, 400);
-            scene.getStylesheets().add(style);
+            if (style != null) {
+                scene.getStylesheets().add(style.toExternalForm());
+            }
 
-            setTitle("Transferit v1.0");
             setScene(scene);
             setController(loader.getController());
             setOnCloseRequest(e -> System.exit(0));

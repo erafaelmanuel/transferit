@@ -1,27 +1,31 @@
 package io.ermdev.transferit.desktop.server;
 
+import io.ermdev.transferit.desktop.component.BaseStage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class InvitationDialogStage extends Stage {
+import java.net.URL;
+
+public class InvitationDialogStage extends BaseStage {
 
     private InvitationDialogController idc;
 
     InvitationDialogStage(InvitationDialogListener confirmDialogListener) {
         try {
-            final String FXML = "/fxml/invitation_dialog.fxml";
-            final String CSS = "/css/invitation-dialog-style.css";
+            final URL fxml = classLoader.getResource("fxml/invitation_dialog.fxml");
+            final URL style = classLoader.getResource("css/invitation-dialog-style.css");
 
             final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(FXML));
+            loader.setLocation(fxml);
 
             final Parent root = loader.load();
             final Scene scene = new Scene(root, 312, 138);
-            scene.getStylesheets().add(getClass().getResource(CSS).toExternalForm());
+            if (style != null) {
+                scene.getStylesheets().add(style.toExternalForm());
+            }
 
             initModality(Modality.APPLICATION_MODAL);
             initStyle(StageStyle.UTILITY);

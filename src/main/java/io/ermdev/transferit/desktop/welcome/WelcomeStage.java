@@ -13,13 +13,11 @@ public class WelcomeStage extends BaseStage {
 
     public WelcomeStage() {
         try {
-            final String FXML = "fxml/welcome.fxml";
-            final String CSS = "css/welcome-style.css";
-
             final FXMLLoader loader = new FXMLLoader();
-            final URL location = classLoader.getResource(FXML);
-            final URL style = classLoader.getResource(CSS);
-            loader.setLocation(location);
+            final URL fxml = classLoader.getResource("fxml/welcome.fxml");
+            final URL style = classLoader.getResource("css/welcome-style.css");
+
+            loader.setLocation(fxml);
 
             final Parent root = loader.load();
             final Scene scene = new Scene(root, 247, 400);

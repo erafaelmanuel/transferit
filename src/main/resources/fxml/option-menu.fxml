@@ -9,7 +9,7 @@
 
 <VBox fx:id="options" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="171.0" spacing="2.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.ui.welcome.option.OptionMenuController">
    <children>
-      <HBox fx:id="settings" alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
+      <HBox fx:id="settings" alignment="CENTER_LEFT" onMouseClicked="#onSettings" prefHeight="25.0" prefWidth="210.0" spacing="10.0">
          <children>
             <ImageView fx:id="imgvsettings" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                <image>

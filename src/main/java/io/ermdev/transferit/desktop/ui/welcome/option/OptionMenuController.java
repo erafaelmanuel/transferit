@@ -1,5 +1,6 @@
 package io.ermdev.transferit.desktop.ui.welcome.option;
 
+import io.ermdev.transferit.desktop.ui.option.SettingStage;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -28,5 +29,11 @@ public class OptionMenuController implements Initializable {
         imgvsettings.setImage(new Image(getClass().getResource(IMAGE_SETTINGS).toExternalForm()));
         imgvhelp.setImage(new Image(getClass().getResource(IMAGE_HELP).toExternalForm()));
         imgvabout.setImage(new Image(getClass().getResource(IMAGE_ABOUT).toExternalForm()));
+    }
+
+    @FXML
+    void onSettings() {
+        final SettingStage settingStage = new SettingStage();
+        settingStage.show();
     }
 }

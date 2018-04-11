@@ -5,9 +5,9 @@ import io.ermdev.transferit.desktop.component.Cover;
 final public class CoverWait extends Cover {
 
     public CoverWait() {
-        setBackgroundColor("#f6e58d");
-        setImage("/image/cover/ball.png");
+        setBackgroundColor("#a4b0be");
+        setImage("/image/cover/connection.png");
         setLabelText("Connecting");
-        setLabelColor("#2C3A47");
+        setLabelColor("#2f3542");
     }
 }

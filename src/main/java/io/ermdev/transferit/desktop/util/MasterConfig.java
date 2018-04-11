@@ -11,8 +11,9 @@ public class MasterConfig {
     final private ClassLoader classLoader = getClass().getClassLoader();
 
     public Property getUserConfig() throws PropertyException {
+        final Properties properties = new Properties();
+        final Property property = new Property();
         try {
-            final Properties properties = new Properties();
             properties.load(classLoader.getResourceAsStream("config/application.properties"));
 
             final String path = properties.getProperty("app.user_config.path");
@@ -21,12 +22,21 @@ public class MasterConfig {
             if (file.exists()) {
                 properties.clear();
                 properties.load(new FileInputStream(file));
-                String dir = properties.getProperty("app.dir");
-                int port = Integer.parseInt(properties.getProperty("app.port", "0"));
-                final Property property = new Property();
-                property.setDir(dir);
-                property.setPort(port);
-                property.setCover(0);
+                try {
+                    property.setDir(properties.getProperty("app.dir"));
+                } catch (Exception e) {
+                    property.setDir("files");
+                }
+                try {
+                    property.setPort(Integer.parseInt(properties.getProperty("app.port")));
+                } catch (Exception e) {
+                    property.setPort(1);
+                }
+                try {
+                    property.setCover(Integer.parseInt(properties.getProperty("app.cover")));
+                } catch (Exception e) {
+                    property.setCover(-1);
+                }
                 return property;
             } else {
                 throw new PropertyException("No user config found!");
@@ -37,23 +47,30 @@ public class MasterConfig {
     }
 
     public Property getDefaultConfig() {
+        final Properties properties = new Properties();
+        final Property property = new Property();
         try {
-            final Properties properties = new Properties();
             properties.load(classLoader.getResourceAsStream("config/application.properties"));
-            String dir = properties.getProperty("app.dir");
-            int port = Integer.parseInt(properties.getProperty("app.port"));
-            int cover = Integer.parseInt(properties.getProperty("app.user_config.cover"));
-
-            final Property property = new Property();
-            property.setDir(dir);
-            property.setPort(port);
-            property.setCover(cover);
+            try {
+                property.setDir(properties.getProperty("app.dir"));
+            } catch (Exception e) {
+                property.setDir("files");
+            }
+            try {
+                property.setPort(Integer.parseInt(properties.getProperty("app.port")));
+            } catch (Exception e) {
+                property.setPort(1);
+            }
+            try {
+                property.setCover(Integer.parseInt(properties.getProperty("app.cover")));
+            } catch (Exception e) {
+                property.setCover(-1);
+            }
             return property;
         } catch (Exception e) {
-            final Property property = new Property();
             property.setDir("files");
             property.setPort(1);
-            property.setCover(0);
+            property.setCover(-1);
             return property;
         }
     }
@@ -84,16 +101,16 @@ public class MasterConfig {
         }
     }
 
-    public int getConverOrRandom() {
+    public int getCoverOrRandom() {
         try {
-            int port = getUserConfig().getPort();
-            if (port > 0 && port <= 65535) {
-                return port;
+            final int cover = getUserConfig().getCover();
+            if (cover > -1) {
+                return cover;
             } else {
-                return getDefaultConfig().getPort();
+                return (int) ((Math.random() * 5));
             }
         } catch (PropertyException e) {
-            return getDefaultConfig().getPort();
+            return (int) ((Math.random() * 5));
         }
     }
 

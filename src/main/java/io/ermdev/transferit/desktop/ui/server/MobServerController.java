@@ -171,7 +171,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         server = null;
 
         WelcomeStage welcomeStage = new WelcomeStage();
-        welcomeStage.show(stage.getX(), stage.getY());
+        welcomeStage.display(stage.getX(), stage.getY());
     }
 
     @FXML

@@ -27,14 +27,4 @@ final public class SenderDashboardStage extends BaseStage {
             e.printStackTrace();
         }
     }
-
-    public void show(double x, double y) {
-        if (x > 0 || y > 0) {
-            setX(x);
-            setY(y);
-        }
-        setResizable(false);
-        sizeToScene();
-        show();
-    }
 }

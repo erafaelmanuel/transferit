@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SenderDashboardController implements Initializable, Subscriber {
@@ -29,6 +30,8 @@ public class SenderDashboardController implements Initializable, Subscriber {
     private Endpoint endpoint;
 
     private Thread connector;
+
+    private int port;
 
     private SenderBrowserStage sbs = new SenderBrowserStage();
 
@@ -46,6 +49,17 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     @FXML
     AnchorPane container;
+
+    public SenderDashboardController() {
+        final ClassLoader classLoader = getClass().getClassLoader();
+        final Properties properties = new Properties();
+        try {
+            properties.load(classLoader.getResourceAsStream("config/application.properties"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        port = Integer.parseInt(properties.getProperty("app.port", "0"));
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -101,7 +115,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {
                     endpoint.setHost(txtHost.getText());
-                    endpoint.setPort(23411);
+                    endpoint.setPort(port);
                     client = new LinkClient(endpoint);
                     client.connect();
                 } else {
@@ -139,6 +153,6 @@ public class SenderDashboardController implements Initializable, Subscriber {
             client.disconnect();
         }
         WelcomeStage welcomeStage = new WelcomeStage();
-        welcomeStage.show(stage.getX(), stage.getY());
+        welcomeStage.display(stage.getX(), stage.getY());
     }
 }

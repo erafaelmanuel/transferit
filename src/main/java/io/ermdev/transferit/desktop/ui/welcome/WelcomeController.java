@@ -72,14 +72,14 @@ public class WelcomeController implements Initializable, WelcomeView {
     @Override
     public void navigateSend(Stage stage) {
         final SenderDashboardStage senderDashboardStage = new SenderDashboardStage();
-        senderDashboardStage.show(stage.getX(), stage.getY());
+        senderDashboardStage.display(stage.getX(), stage.getY());
         stage.hide();
     }
 
     @Override
     public void navigateReceive(Stage stage) {
         final MobServerStage serverStage = new MobServerStage();
-        serverStage.show(stage.getX(), stage.getY());
+        serverStage.display(stage.getX(), stage.getY());
         stage.hide();
     }
 

@@ -2,7 +2,24 @@ package io.ermdev.transferit.desktop.ui.welcome;
 
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.Properties;
+
 public class WelcomeInteractImpl implements WelcomeInteract {
+
+    private int port = 0;
+
+    WelcomeInteractImpl() {
+        try {
+            final ClassLoader classLoader = getClass().getClassLoader();
+            final Properties properties = new Properties();
+            properties.load(classLoader.getResourceAsStream("config/application.properties"));
+            port = Integer.parseInt(properties.getProperty("app.port", "0"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void selectSend(Stage stage, WelcomeListener listener) {
@@ -15,9 +32,20 @@ public class WelcomeInteractImpl implements WelcomeInteract {
 
     @Override
     public void selectReceive(Stage stage, WelcomeListener listener) {
-        if (true) {
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(port);
+            serverSocket.setReuseAddress(true);
+            serverSocket.close();
             listener.onReceive(stage);
-        } else {
+        } catch (Exception e) {
+            if (serverSocket != null) {
+                try {
+                    serverSocket.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
             listener.onUnableToReceive();
         }
     }
@@ -26,5 +54,4 @@ public class WelcomeInteractImpl implements WelcomeInteract {
     public void selectOption(double x, double y, WelcomeListener listener) {
         listener.onOption(x, y);
     }
-
 }

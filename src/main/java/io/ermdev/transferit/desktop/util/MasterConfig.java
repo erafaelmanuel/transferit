@@ -23,7 +23,11 @@ public class MasterConfig {
                 properties.load(new FileInputStream(file));
                 String dir = properties.getProperty("app.dir");
                 int port = Integer.parseInt(properties.getProperty("app.port", "0"));
-                return new Property(dir, port);
+                final Property property = new Property();
+                property.setDir(dir);
+                property.setPort(port);
+                property.setCover(0);
+                return property;
             } else {
                 throw new PropertyException("No user config found!");
             }
@@ -38,9 +42,19 @@ public class MasterConfig {
             properties.load(classLoader.getResourceAsStream("config/application.properties"));
             String dir = properties.getProperty("app.dir");
             int port = Integer.parseInt(properties.getProperty("app.port"));
-            return new Property(dir, port);
+            int cover = Integer.parseInt(properties.getProperty("app.user_config.cover"));
+
+            final Property property = new Property();
+            property.setDir(dir);
+            property.setPort(port);
+            property.setCover(cover);
+            return property;
         } catch (Exception e) {
-            return new Property("files", 1);
+            final Property property = new Property();
+            property.setDir("files");
+            property.setPort(1);
+            property.setCover(0);
+            return property;
         }
     }
 
@@ -58,6 +72,19 @@ public class MasterConfig {
     }
 
     public int getPortOrDefault() {
+        try {
+            int port = getUserConfig().getPort();
+            if (port > 0 && port <= 65535) {
+                return port;
+            } else {
+                return getDefaultConfig().getPort();
+            }
+        } catch (PropertyException e) {
+            return getDefaultConfig().getPort();
+        }
+    }
+
+    public int getConverOrRandom() {
         try {
             int port = getUserConfig().getPort();
             if (port > 0 && port <= 65535) {
@@ -119,10 +146,7 @@ public class MasterConfig {
 
         private int port;
 
-        public Property(String dir, int port) {
-            this.dir = dir;
-            this.port = port;
-        }
+        private int cover;
 
         public String getDir() {
             return dir;
@@ -138,6 +162,14 @@ public class MasterConfig {
 
         public void setPort(int port) {
             this.port = port;
+        }
+
+        public int getCover() {
+            return cover;
+        }
+
+        public void setCover(int cover) {
+            this.cover = cover;
         }
     }
 }

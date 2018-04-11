@@ -6,6 +6,7 @@ import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
 import io.ermdev.transferit.desktop.ui.dialog.MessageDialogStage;
 import io.ermdev.transferit.desktop.ui.server.MobServerStage;
 import io.ermdev.transferit.desktop.ui.welcome.option.OptionMenuStage;
+import io.ermdev.transferit.desktop.util.MasterConfig;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +28,8 @@ public class WelcomeController implements Initializable, WelcomeView {
 
     final private WelcomePresenter presenter;
 
+    final private MasterConfig masterConfig = new MasterConfig();
+
     @FXML ImageView option;
 
     @FXML AnchorPane container;
@@ -43,12 +46,12 @@ public class WelcomeController implements Initializable, WelcomeView {
         final URL image = classLoader.getResource("image/system/more.png");
         final int GENERATED_NUMBER = (int) ((Math.random() * 5));
 
-        covers[0] = new Cover3();
+        covers[0] = new Cover1();
         covers[1] = new Cover2();
         covers[2] = new Cover3();
         covers[3] = new Cover4();
-        covers[4] = new Cover3();
-        container.getChildren().add(0, covers[GENERATED_NUMBER]);
+        covers[4] = new Cover5();
+        container.getChildren().add(0, covers[2]);
         if (image != null) {
             option.setImage(new Image(image.toString()));
         }

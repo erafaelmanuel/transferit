@@ -15,7 +15,7 @@ public class WelcomeInteractImpl implements WelcomeInteract {
 
     @Override
     public void selectReceive(Stage stage, WelcomeListener listener) {
-        if (false) {
+        if (true) {
             listener.onReceive(stage);
         } else {
             listener.onUnableToReceive();

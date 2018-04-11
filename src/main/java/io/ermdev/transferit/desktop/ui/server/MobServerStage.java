@@ -9,8 +9,6 @@ import java.net.URL;
 
 public class MobServerStage extends BaseStage {
 
-    private MobServerController serverController;
-
     public MobServerStage() {
         createServerStage();
     }
@@ -25,30 +23,19 @@ public class MobServerStage extends BaseStage {
             final Scene scene = new Scene(root, 247, 400);
 
             setScene(scene);
-            setController(fxmlLoader.getController());
             setOnCloseRequest(e -> System.exit(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void display() {
+    public void show(double x, double y) {
+        if (x > 0 || y > 0) {
+            setX(x);
+            setY(y);
+        }
         setResizable(false);
         sizeToScene();
         show();
-    }
-
-    public void display(double x, double y) {
-        setX(x);
-        setY(y);
-        display();
-    }
-
-    public MobServerController getController() {
-        return serverController;
-    }
-
-    public void setController(MobServerController serverController) {
-        this.serverController = serverController;
     }
 }

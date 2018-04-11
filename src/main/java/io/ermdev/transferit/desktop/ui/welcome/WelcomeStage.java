@@ -9,8 +9,6 @@ import java.net.URL;
 
 public class WelcomeStage extends BaseStage {
 
-    private WelcomeController wc;
-
     public WelcomeStage() {
         try {
             final URL fxml = classLoader.getResource("fxml/welcome.fxml");
@@ -24,23 +22,18 @@ public class WelcomeStage extends BaseStage {
                 scene.getStylesheets().add(style.toExternalForm());
             }
             setScene(scene);
-            wc = loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void show(double x, double y) {
-        if (x > 0 && y > 0) {
+        if (x > 0 || y > 0) {
             setX(x);
             setY(y);
         }
         setResizable(false);
         sizeToScene();
         show();
-    }
-
-    public WelcomeController getController() {
-        return wc;
     }
 }

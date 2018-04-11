@@ -9,8 +9,6 @@ import java.net.URL;
 
 final public class SenderDashboardStage extends BaseStage {
 
-    private SenderDashboardController sdc;
-
     public SenderDashboardStage() {
         try {
             final URL fxml = classLoader.getResource("fxml/sender-dashboard.fxml");
@@ -23,32 +21,20 @@ final public class SenderDashboardStage extends BaseStage {
             if (style != null) {
                 scene.getStylesheets().add(style.toExternalForm());
             }
-
             setScene(scene);
-            setController(loader.getController());
             setOnCloseRequest(e -> System.exit(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void display() {
+    public void show(double x, double y) {
+        if (x > 0 || y > 0) {
+            setX(x);
+            setY(y);
+        }
         setResizable(false);
         sizeToScene();
         show();
-    }
-
-    public void display(double x, double y) {
-        setX(x);
-        setY(y);
-        display();
-    }
-
-    public SenderDashboardController getController() {
-        return sdc;
-    }
-
-    public void setController(SenderDashboardController sdc) {
-        this.sdc = sdc;
     }
 }

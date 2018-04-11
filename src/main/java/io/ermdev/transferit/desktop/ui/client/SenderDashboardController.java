@@ -2,12 +2,12 @@ package io.ermdev.transferit.desktop.ui.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
-import io.ermdev.transferit.integration.*;
 import io.ermdev.transferit.desktop.cover.CoverError;
 import io.ermdev.transferit.desktop.cover.CoverInfo;
 import io.ermdev.transferit.desktop.cover.CoverSuccess;
 import io.ermdev.transferit.desktop.cover.CoverWait;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
+import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,8 +24,6 @@ import java.util.ResourceBundle;
 
 public class SenderDashboardController implements Initializable, Subscriber {
 
-    private WelcomeInteract wi;
-
     private Client client;
 
     private Endpoint endpoint;
@@ -34,19 +32,20 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     private SenderBrowserStage sbs = new SenderBrowserStage();
 
-    @FXML ImageView imgvback;
+    @FXML
+    ImageView imgvback;
 
-    @FXML JFXButton btnConnect;
+    @FXML
+    JFXButton btnConnect;
 
-    @FXML JFXButton btnSendFile;
+    @FXML
+    JFXButton btnSendFile;
 
-    @FXML JFXTextField txtHost;
+    @FXML
+    JFXTextField txtHost;
 
-    @FXML AnchorPane container;
-
-    public void setWelcomeInteract(WelcomeInteract wi) {
-        this.wi = wi;
-    }
+    @FXML
+    AnchorPane container;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,7 +89,8 @@ public class SenderDashboardController implements Initializable, Subscriber {
         thread.start();
     }
 
-    @FXML void onConnection() {
+    @FXML
+    void onConnection() {
         connector = new Thread(() -> {
             try {
                 Platform.runLater(() -> {
@@ -123,21 +123,22 @@ public class SenderDashboardController implements Initializable, Subscriber {
         connector.start();
     }
 
-    @FXML void onFile(ActionEvent event) {
+    @FXML
+    void onFile(ActionEvent event) {
         final Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         sbs.getController().setClient(client);
         sbs.getController().initialize();
         sbs.display(stage.getX() + 247 + 10, stage.getY());
     }
 
-    @FXML void onBack(MouseEvent event) {
+    @FXML
+    void onBack(MouseEvent event) {
         final Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         stage.close();
         if (client != null) {
             client.disconnect();
         }
-        if (wi != null) {
-            //wi.display(stage.getX(), stage.getY());
-        }
+        WelcomeStage welcomeStage = new WelcomeStage();
+        welcomeStage.show(stage.getX(), stage.getY());
     }
 }

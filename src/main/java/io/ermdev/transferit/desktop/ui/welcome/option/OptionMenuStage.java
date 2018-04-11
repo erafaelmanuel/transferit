@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.ui.welcome;
+package io.ermdev.transferit.desktop.ui.welcome.option;
 
 import io.ermdev.transferit.desktop.component.BaseStage;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ public class OptionMenuStage extends BaseStage {
 
     private volatile boolean okDisplay;
 
-    OptionMenuStage() {
+    public OptionMenuStage() {
         try {
             final URL fxml = classLoader.getResource("fxml/option-menu.fxml");
             final FXMLLoader loader = new FXMLLoader();

@@ -2,23 +2,31 @@ package io.ermdev.transferit.desktop.ui.welcome;
 
 import io.ermdev.transferit.desktop.component.Cover;
 import io.ermdev.transferit.desktop.cover.*;
+import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
+import io.ermdev.transferit.desktop.ui.server.MobServerStage;
+import io.ermdev.transferit.desktop.ui.welcome.option.OptionMenuStage;
+import io.ermdev.transferit.desktop.ui.welcome.v2.WelcomePresenter;
+import io.ermdev.transferit.desktop.ui.welcome.v2.WelcomePresenterImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WelcomeController implements Initializable {
+public class WelcomeController implements Initializable, WelcomeView {
 
-    private final OptionMenuStage optionMenu = new OptionMenuStage();
+    final private OptionMenuStage optionMenu = new OptionMenuStage();
 
-    private final Cover covers[] = new Cover[5];
+    final private Cover covers[] = new Cover[5];
 
-    private WelcomeInteract welcomeInteract;
+    final private WelcomePresenter presenter;
+
+    private Stage stage;
 
     @FXML
     ImageView option;
@@ -26,8 +34,14 @@ public class WelcomeController implements Initializable {
     @FXML
     AnchorPane container;
 
-    public void setWelcomeInteract(WelcomeInteract welcomeInteract) {
-        this.welcomeInteract = welcomeInteract;
+    public WelcomeController() {
+        io.ermdev.transferit.desktop.ui.welcome.v2.WelcomeInteractImpl interact =
+                new io.ermdev.transferit.desktop.ui.welcome.v2.WelcomeInteractImpl();
+        presenter = new WelcomePresenterImpl(this, interact);
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     @Override
@@ -54,16 +68,12 @@ public class WelcomeController implements Initializable {
 
     @FXML
     void onSend() {
-        if (welcomeInteract != null) {
-            welcomeInteract.selectSend();
-        }
+        presenter.clickSend();
     }
 
     @FXML
     void onReceive() {
-        if (welcomeInteract != null) {
-            welcomeInteract.selectReceive();
-        }
+        presenter.clickReceive();
     }
 
     @FXML
@@ -76,5 +86,33 @@ public class WelcomeController implements Initializable {
             optionMenu.hide();
             optionMenu.setDisplay(false);
         }
+    }
+
+    @Override
+    public void navigateSend() {
+        if (stage != null) {
+            final SenderDashboardStage sds = new SenderDashboardStage();
+            sds.display(stage.getX(), stage.getY());
+            stage.hide();
+        }
+    }
+
+    @Override
+    public void navigateReceive() {
+        if (stage != null) {
+            MobServerStage stage = new MobServerStage();
+            stage.display(stage.getX(), stage.getY());
+            stage.hide();
+        }
+    }
+
+    @Override
+    public void onErrorSend() {
+        System.out.println("Send error");
+    }
+
+    @Override
+    public void onErrorReceive() {
+        System.out.println("Receive error");
     }
 }

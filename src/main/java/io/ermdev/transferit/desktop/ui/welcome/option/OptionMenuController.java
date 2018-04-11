@@ -1,4 +1,4 @@
-package io.ermdev.transferit.desktop.ui.welcome;
+package io.ermdev.transferit.desktop.ui.welcome.option;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

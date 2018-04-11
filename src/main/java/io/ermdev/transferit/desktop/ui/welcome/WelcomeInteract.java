@@ -1,19 +1,25 @@
 package io.ermdev.transferit.desktop.ui.welcome;
 
+import javafx.stage.Stage;
+
 public interface WelcomeInteract {
 
-    void display(double x, double y);
+    void selectSend(Stage stage, WelcomeListener listener);
 
-    void selectSend();
+    void selectReceive(Stage stage, WelcomeListener listener);
 
-    void selectReceive();
+    void selectOption(double x, double y, WelcomeListener listener);
 
     interface WelcomeListener {
 
-        void onShow(double x, double y);
+        void onSend(Stage stage);
 
-        void onSelectSend();
+        void onReceive(Stage stage);
 
-        void onSelectReceive();
+        void onUnableToSend();
+
+        void onUnableToReceive();
+
+        void onOption(double x, double y);
     }
 }

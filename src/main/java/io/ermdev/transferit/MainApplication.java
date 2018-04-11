@@ -6,16 +6,13 @@ import javafx.stage.Stage;
 
 public class MainApplication extends Application {
 
-    private WelcomeStage ws;
-
     public static void main(String args[]) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        ws = new WelcomeStage();
-        ws.getController().setStage(ws);
+        final WelcomeStage ws = new WelcomeStage();
         ws.show(0, 0);
     }
 }

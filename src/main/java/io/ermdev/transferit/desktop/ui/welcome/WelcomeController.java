@@ -5,10 +5,10 @@ import io.ermdev.transferit.desktop.cover.*;
 import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
 import io.ermdev.transferit.desktop.ui.server.MobServerStage;
 import io.ermdev.transferit.desktop.ui.welcome.option.OptionMenuStage;
-import io.ermdev.transferit.desktop.ui.welcome.v2.WelcomePresenter;
-import io.ermdev.transferit.desktop.ui.welcome.v2.WelcomePresenterImpl;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,22 +26,13 @@ public class WelcomeController implements Initializable, WelcomeView {
 
     final private WelcomePresenter presenter;
 
-    private Stage stage;
+    @FXML ImageView option;
 
-    @FXML
-    ImageView option;
-
-    @FXML
-    AnchorPane container;
+    @FXML AnchorPane container;
 
     public WelcomeController() {
-        io.ermdev.transferit.desktop.ui.welcome.v2.WelcomeInteractImpl interact =
-                new io.ermdev.transferit.desktop.ui.welcome.v2.WelcomeInteractImpl();
+        final WelcomeInteract interact = new WelcomeInteractImpl();
         presenter = new WelcomePresenterImpl(this, interact);
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 
     @Override
@@ -56,7 +47,6 @@ public class WelcomeController implements Initializable, WelcomeView {
         covers[2] = new Cover3();
         covers[3] = new Cover4();
         covers[4] = new Cover5();
-
         container.getChildren().add(0, covers[GENERATED_NUMBER]);
         if (image != null) {
             option.setImage(new Image(image.toString()));
@@ -66,44 +56,30 @@ public class WelcomeController implements Initializable, WelcomeView {
         }
     }
 
-    @FXML
-    void onSend() {
-        presenter.clickSend();
+    @FXML void onSend(ActionEvent event) {
+        presenter.clickSend((Stage)((Node) event.getSource()).getScene().getWindow());
     }
 
-    @FXML
-    void onReceive() {
-        presenter.clickReceive();
+    @FXML void onReceive(ActionEvent event) {
+        presenter.clickReceive((Stage)((Node) event.getSource()).getScene().getWindow());
     }
 
-    @FXML
-    void onOption(MouseEvent event) {
-        if (!optionMenu.isDisplayed()) {
-            optionMenu.setX(event.getScreenX());
-            optionMenu.setY(event.getScreenY());
-            optionMenu.display();
-        } else {
-            optionMenu.hide();
-            optionMenu.setDisplay(false);
-        }
+    @FXML void onOption(MouseEvent event) {
+        presenter.clickOption(event.getScreenX(), event.getScreenY());
     }
 
     @Override
-    public void navigateSend() {
-        if (stage != null) {
-            final SenderDashboardStage sds = new SenderDashboardStage();
-            sds.display(stage.getX(), stage.getY());
-            stage.hide();
-        }
+    public void navigateSend(Stage stage) {
+        final SenderDashboardStage senderDashboardStage = new SenderDashboardStage();
+        senderDashboardStage.display(stage.getX(), stage.getY());
+        stage.hide();
     }
 
     @Override
-    public void navigateReceive() {
-        if (stage != null) {
-            MobServerStage stage = new MobServerStage();
-            stage.display(stage.getX(), stage.getY());
-            stage.hide();
-        }
+    public void navigateReceive(Stage stage) {
+        final MobServerStage serverStage = new MobServerStage();
+        serverStage.display(stage.getX(), stage.getY());
+        stage.hide();
     }
 
     @Override
@@ -114,5 +90,17 @@ public class WelcomeController implements Initializable, WelcomeView {
     @Override
     public void onErrorReceive() {
         System.out.println("Receive error");
+    }
+
+    @Override
+    public void showOptionMenu(double x, double y) {
+        if (!optionMenu.isDisplayed()) {
+            optionMenu.setX(x);
+            optionMenu.setY(y);
+            optionMenu.display();
+        } else {
+            optionMenu.hide();
+            optionMenu.setDisplay(false);
+        }
     }
 }

@@ -1,42 +1,55 @@
 package io.ermdev.transferit.desktop.ui.welcome;
 
+import javafx.stage.Stage;
+
 public class WelcomePresenterImpl implements WelcomePresenter, WelcomeInteract.WelcomeListener {
 
     private WelcomeView view;
-    private WelcomeInteractImpl interact;
 
-    public WelcomePresenterImpl(WelcomeView view, WelcomeInteractImpl interact) {
+    private WelcomeInteract interact;
+
+    WelcomePresenterImpl(WelcomeView view, WelcomeInteract interact) {
         this.view = view;
         this.interact = interact;
     }
 
     @Override
-    public void onShow(double x, double y) {
-        interact.display(x, y);
+    public void clickSend(Stage stage) {
+        interact.selectSend(stage, this);
     }
 
     @Override
-    public void onSelectSend() {
-
+    public void clickReceive(Stage stage) {
+        interact.selectReceive(stage, this);
     }
 
     @Override
-    public void onSelectReceive() {
-
+    public void clickOption(double x, double y) {
+        interact.selectOption(x, y, this);
     }
 
     @Override
-    public void displayWelcome() {
-
+    public void onSend(Stage stage) {
+        view.navigateSend(stage);
     }
 
     @Override
-    public void clickSend() {
-        view.navigateSend();
+    public void onReceive(Stage stage) {
+        view.navigateReceive(stage);
     }
 
     @Override
-    public void clickReceive() {
-        view.navigateReceive();
+    public void onUnableToSend() {
+        view.onErrorSend();
+    }
+
+    @Override
+    public void onUnableToReceive() {
+        view.onErrorReceive();
+    }
+
+    @Override
+    public void onOption(double x, double y) {
+        view.showOptionMenu(x, y);
     }
 }

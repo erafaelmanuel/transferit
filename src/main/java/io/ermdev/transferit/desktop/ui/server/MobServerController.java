@@ -1,8 +1,8 @@
 package io.ermdev.transferit.desktop.ui.server;
 
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
 import io.ermdev.transferit.integration.*;
 import io.ermdev.transferit.desktop.component.ItemBox;
-import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -177,7 +177,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         server = null;
 
         if (wi != null) {
-            wi.display(stage.getX(), stage.getY());
+            //wi.display(stage.getX(), stage.getY());
         }
     }
 

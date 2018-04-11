@@ -1,10 +1,12 @@
 package io.ermdev.transferit.desktop.ui.welcome;
 
+import javafx.stage.Stage;
+
 public interface WelcomePresenter {
 
-    void displayWelcome();
+    void clickSend(Stage stage);
 
-    void clickSend();
+    void clickReceive(Stage stage);
 
-    void clickReceive();
+    void clickOption(double x, double y);
 }

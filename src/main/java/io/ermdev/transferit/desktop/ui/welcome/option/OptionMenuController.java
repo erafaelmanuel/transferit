@@ -34,6 +34,6 @@ public class OptionMenuController implements Initializable {
     @FXML
     void onSettings() {
         final SettingStage settingStage = new SettingStage();
-        settingStage.show();
+        settingStage.display(0, 0);
     }
 }

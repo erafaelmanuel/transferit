@@ -18,7 +18,7 @@ final public class SettingStage extends BaseStage {
             loader.setLocation(fxml);
 
             final Parent root = loader.load();
-            final Scene scene = new Scene(root, 302, 233);
+            final Scene scene = new Scene(root, 302, 300);
             if (style != null) {
                 scene.getStylesheets().add(style.toExternalForm());
             }

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.ui.option.SettingController">
+<AnchorPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.ui.option.SettingController">
    <children>
       <Label layoutX="130.0" layoutY="14.0" text="Settings" />
       <Label layoutX="21.0" layoutY="54.0" text="Save to: ">
@@ -18,10 +18,16 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txDir" editable="false" layoutX="21.0" layoutY="71.0" prefHeight="25.0" prefWidth="206.0" text="C:/Users/Hotaru" />
-      <JFXTextField fx:id="txPort" layoutX="21.0" layoutY="129.0" prefHeight="25.0" prefWidth="206.0" text="1234" />
-      <JFXButton fx:id="btnSave" buttonType="RAISED" focusTraversable="false" layoutX="58.0" layoutY="186.0" onAction="#onSave" prefHeight="25.0" prefWidth="87.0" text="Save" />
-      <JFXButton fx:id="btnCancel" buttonType="RAISED" focusTraversable="false" layoutX="159.0" layoutY="186.0" onAction="#onCancel" prefHeight="25.0" prefWidth="87.0" text="Cancel" />
-      <JFXButton fx:id="btnBrowse" buttonType="RAISED" focusTraversable="false" layoutX="236.0" layoutY="71.0" onAction="#onBrowse" text="Browse" />
+      <JFXTextField fx:id="txDir" editable="false" focusTraversable="false" layoutX="21.0" layoutY="71.0" prefHeight="25.0" prefWidth="206.0" />
+      <JFXTextField fx:id="txPort" focusTraversable="false" layoutX="21.0" layoutY="129.0" prefHeight="25.0" prefWidth="206.0" />
+      <JFXButton fx:id="btnSave" buttonType="RAISED" focusTraversable="false" layoutX="57.0" layoutY="246.0" onAction="#onSave" prefHeight="25.0" prefWidth="87.0" text="Save" />
+      <JFXButton fx:id="btnCancel" buttonType="RAISED" focusTraversable="false" layoutX="158.0" layoutY="246.0" onAction="#onCancel" prefHeight="25.0" prefWidth="87.0" text="Cancel" />
+      <JFXButton fx:id="btnBrowse" layoutX="236.0" layoutY="71.0" onAction="#onBrowse" prefHeight="25.0" prefWidth="58.0" text="Browse" />
+      <Label layoutX="21.0" layoutY="171.0" text="IP Address : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txIP" editable="false" focusTraversable="false" layoutX="21.0" layoutY="188.0" prefHeight="25.0" prefWidth="206.0" />
    </children>
 </AnchorPane>

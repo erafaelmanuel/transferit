@@ -2,6 +2,7 @@ package io.ermdev.transferit.desktop.ui.server;
 
 import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
+import io.ermdev.transferit.desktop.util.MasterConfig;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,7 +20,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class MobServerController implements ServerListener, Subscriber, Initializable, InvitationDialogListener {
@@ -28,14 +28,13 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private ItemServer itemServer;
 
-    private int port;
-
     private LinkServer server;
 
     private Thread summoner;
 
     private Endpoint endpoint;
 
+    final private MasterConfig masterConfig = new MasterConfig();
 
     private List<Item> items = new ArrayList<>();
 
@@ -58,18 +57,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     Button btnCancel;
 
     public MobServerController() {
-        final ClassLoader classLoader = getClass().getClassLoader();
-        final Properties properties = new Properties();
-        try {
-            properties.load(classLoader.getResourceAsStream("config/application.properties"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         invitationDialogStage = new InvitationDialogStage(this);
-
-        itemServer = new ItemServer(properties.getProperty("app.dir", "files"));
-
-        port = Integer.parseInt(properties.getProperty("app.port", "0"));
+        itemServer = new ItemServer(masterConfig.getDirOrDefault());
     }
 
     public void reset() {
@@ -81,7 +70,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         reset();
-        endpoint = new Endpoint(port);
+        endpoint = new Endpoint(masterConfig.getPortOrDefault());
         endpoint.subscribe(this);
         server = new LinkServer(endpoint);
         server.setServerListener(this);

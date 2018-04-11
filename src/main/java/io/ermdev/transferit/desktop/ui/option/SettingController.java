@@ -2,6 +2,8 @@ package io.ermdev.transferit.desktop.ui.option;
 
 import com.jfoenix.controls.JFXButton;
 import io.ermdev.transferit.desktop.util.MasterConfig;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,6 +34,8 @@ public class SettingController implements Initializable {
     @FXML
     JFXButton btnBrowse;
 
+    private volatile boolean isFocus = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txDir.setText(new File(masterConfig.getDirOrDefault()).getAbsolutePath());
@@ -43,7 +47,21 @@ public class SettingController implements Initializable {
         btnBrowse.setVisible(false);
         txDir.focusedProperty().addListener((a, b, c) -> {
             if (c) {
+                isFocus = true;
                 btnBrowse.setVisible(true);
+            } else {
+                isFocus = false;
+                Thread thread = new Thread(()-> {
+                    try {
+                        Thread.sleep(800);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (!isFocus) {
+                        btnBrowse.setVisible(false);
+                    }
+                });
+                thread.start();
             }
         });
     }
@@ -57,7 +75,6 @@ public class SettingController implements Initializable {
         if (dir != null) {
             txDir.setText(dir.getAbsolutePath());
         }
-        btnBrowse.setVisible(false);
     }
 
     @FXML

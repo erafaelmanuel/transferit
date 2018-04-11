@@ -1,8 +1,8 @@
 package io.ermdev.transferit.desktop.ui.server;
 
-import io.ermdev.transferit.desktop.ui.welcome.WelcomeInteract;
-import io.ermdev.transferit.integration.*;
 import io.ermdev.transferit.desktop.component.ItemBox;
+import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
+import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,8 +29,6 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     private ItemServer itemServer;
 
     private int port;
-
-    private WelcomeInteract wi;
 
     private LinkServer server;
 
@@ -78,10 +76,6 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         lblBrowser.setText("0 Receive file(s)");
         container.getChildren().clear();
         container.getChildren().add(browser);
-    }
-
-    public void setWelcomeInteract(WelcomeInteract wi) {
-        this.wi = wi;
     }
 
     @Override
@@ -176,9 +170,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         server.stop();
         server = null;
 
-        if (wi != null) {
-            //wi.display(stage.getX(), stage.getY());
-        }
+        WelcomeStage welcomeStage = new WelcomeStage();
+        welcomeStage.show(stage.getX(), stage.getY());
     }
 
     @FXML

@@ -3,6 +3,7 @@ package io.ermdev.transferit.desktop.ui.welcome;
 import io.ermdev.transferit.desktop.component.Cover;
 import io.ermdev.transferit.desktop.cover.*;
 import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
+import io.ermdev.transferit.desktop.ui.dialog.MessageDialogStage;
 import io.ermdev.transferit.desktop.ui.server.MobServerStage;
 import io.ermdev.transferit.desktop.ui.welcome.option.OptionMenuStage;
 import javafx.event.ActionEvent;
@@ -84,12 +85,16 @@ public class WelcomeController implements Initializable, WelcomeView {
 
     @Override
     public void onErrorSend() {
-        System.out.println("Send error");
+        MessageDialogStage messageDialogStage = new MessageDialogStage();
+        messageDialogStage.setMessage("Error!");
+        messageDialogStage.display();
     }
 
     @Override
     public void onErrorReceive() {
-        System.out.println("Receive error");
+        MessageDialogStage messageDialogStage = new MessageDialogStage();
+        messageDialogStage.setMessage("Port is already use!");
+        messageDialogStage.display();
     }
 
     @Override

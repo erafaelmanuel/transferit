@@ -7,6 +7,7 @@ import io.ermdev.transferit.desktop.cover.CoverInfo;
 import io.ermdev.transferit.desktop.cover.CoverSuccess;
 import io.ermdev.transferit.desktop.cover.CoverWait;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
+import io.ermdev.transferit.desktop.util.MasterConfig;
 import io.ermdev.transferit.integration.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,7 +21,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SenderDashboardController implements Initializable, Subscriber {
@@ -31,7 +31,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     private Thread connector;
 
-    private int port;
+    final private MasterConfig masterConfig = new MasterConfig();
 
     private SenderBrowserStage sbs = new SenderBrowserStage();
 
@@ -49,17 +49,6 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     @FXML
     AnchorPane container;
-
-    public SenderDashboardController() {
-        final ClassLoader classLoader = getClass().getClassLoader();
-        final Properties properties = new Properties();
-        try {
-            properties.load(classLoader.getResourceAsStream("config/application.properties"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        port = Integer.parseInt(properties.getProperty("app.port", "0"));
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -115,7 +104,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {
                     endpoint.setHost(txtHost.getText());
-                    endpoint.setPort(port);
+                    endpoint.setPort(masterConfig.getPortOrDefault());
                     client = new LinkClient(endpoint);
                     client.connect();
                 } else {

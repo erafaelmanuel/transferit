@@ -93,7 +93,7 @@ public class WelcomeController implements Initializable, WelcomeView {
     @Override
     public void onErrorReceive() {
         MessageDialogStage messageDialogStage = new MessageDialogStage();
-        messageDialogStage.setMessage("Port is already use!");
+        messageDialogStage.setMessage("The server is busy!");
         messageDialogStage.display();
     }
 

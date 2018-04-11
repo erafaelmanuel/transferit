@@ -1,5 +1,6 @@
 package io.ermdev.transferit.desktop.ui.option;
 
+import io.ermdev.transferit.desktop.util.MasterConfig;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,16 +10,12 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SettingController implements Initializable {
 
-    final private ClassLoader classLoader = getClass().getClassLoader();
-    final private Properties properties = new Properties();
+    final private MasterConfig masterConfig = new MasterConfig();
 
     @FXML
     TextField txDir;
@@ -26,24 +23,14 @@ public class SettingController implements Initializable {
     @FXML
     TextField txPort;
 
-    public SettingController() {
-        try {
-            properties.load(classLoader.getResourceAsStream("config/application.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String dir = properties.getProperty("app.dir", "");
-        if (!dir.isEmpty()) {
-            txDir.setText(new File(dir).getAbsolutePath());
-        }
-        txPort.setText(properties.getProperty("app.port", "0"));
+        txDir.setText(new File(masterConfig.getDirOrDefault()).getAbsolutePath());
+        txPort.setText(String.valueOf(masterConfig.getPortOrDefault()));
     }
 
-    @FXML void onBrowse(ActionEvent event) {
+    @FXML
+    void onBrowse(ActionEvent event) {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Save to");
@@ -53,26 +40,20 @@ public class SettingController implements Initializable {
         }
     }
 
-    @FXML void onSave(ActionEvent event) {
+    @FXML
+    void onSave(ActionEvent event) {
         if (!txDir.getText().isEmpty()) {
-            properties.put("app.dir", txDir.getText());
+            masterConfig.saveDir(txDir.getText());
         }
-        if (!txPort.getText().isEmpty()) {
-            properties.put("app.port", txPort.getText());
-        }
-        try {
-            URL url = classLoader.getResource("config/application.properties");
-            if (url != null) {
-                properties.store(new FileOutputStream(url.toURI().getPath()), "");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!txPort.getText().isEmpty() && txPort.getText().matches("^[0-9]+$")) {
+            masterConfig.savePort(Integer.parseInt(txPort.getText()));
         }
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    @FXML void onCancel(ActionEvent event) {
+    @FXML
+    void onCancel(ActionEvent event) {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }

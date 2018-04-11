@@ -15,22 +15,22 @@
 
 #btnCancel {
     -fx-text-fill : #fff;
-    -fx-background-color : #ff4757;
-    -fx-border-color : #ff4757;
+    -fx-background-color : #1e90ff;
+    -fx-border-color : #1e90ff;
 }
 
 #btnCancel: hover {
-    -fx-text-fill : #ff4757;
+    -fx-text-fill : #1e90ff;
     -fx-background-color : #fff;
 }
 
 #btnBrowse {
     -fx-text-fill : #fff;
-    -fx-background-color : #4059a9;
-    -fx-border-color : #4059a9;
+    -fx-background-color : #ff4757;
+    -fx-border-color : #ff4757;
 }
 
 #btnBrowse: hover {
-    -fx-text-fill : #4059a9;
+    -fx-text-fill : #ff4757;
     -fx-background-color : #fff;
 }

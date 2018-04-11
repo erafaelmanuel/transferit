@@ -1,5 +1,6 @@
 package io.ermdev.transferit.desktop.ui.option;
 
+import com.jfoenix.controls.JFXButton;
 import io.ermdev.transferit.desktop.util.MasterConfig;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,13 +29,23 @@ public class SettingController implements Initializable {
     @FXML
     TextField txIP;
 
+    @FXML
+    JFXButton btnBrowse;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txDir.setText(new File(masterConfig.getDirOrDefault()).getAbsolutePath());
         txPort.setText(String.valueOf(masterConfig.getPortOrDefault()));
         try {
             txIP.setText(Inet4Address.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {}
+        } catch (UnknownHostException e) {
+        }
+        btnBrowse.setVisible(false);
+        txDir.focusedProperty().addListener((a, b, c) -> {
+            if (c) {
+                btnBrowse.setVisible(true);
+            }
+        });
     }
 
     @FXML
@@ -46,6 +57,7 @@ public class SettingController implements Initializable {
         if (dir != null) {
             txDir.setText(dir.getAbsolutePath());
         }
+        btnBrowse.setVisible(false);
     }
 
     @FXML

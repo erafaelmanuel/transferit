@@ -11,14 +11,8 @@ import java.nio.file.Paths;
 
 public class LinkServer implements Server, ProtocolListener {
 
-    /**
-     * Handle the connection, status and list of files to transfer
-     */
     private ServerSocket server1;
 
-    /**
-     * Handle the file-transferring
-     */
     private ServerSocket server2;
 
     private Protocol protocol;
@@ -52,18 +46,21 @@ public class LinkServer implements Server, ProtocolListener {
     @Override
     public void open() {
         opener = new Thread(() -> {
-            while (!endpoint.isConnected()) {
+            while (true) {
                 try {
                     Socket socket = server1.accept();
-                    endpoint.setHost(socket.getInetAddress().getHostAddress());
-                    protocol.setSocket(socket);
-                    protocol.listen();
+                    if (!endpoint.isConnected() && !protocol.isBusy()) {
+                        endpoint.setHost(socket.getInetAddress().getHostAddress());
+                        protocol.setSocket(socket);
+                        protocol.listen();
+                    } else {
+                        Protocol.reject(socket);
+                    }
                 } catch (Exception e) {
                     protocol.stopListening();
                     return;
                 }
             }
-            opener = null;
         });
         opener.start();
     }
@@ -90,6 +87,7 @@ public class LinkServer implements Server, ProtocolListener {
     public void reject() {
         rejecter = new Thread(() -> {
             try {
+                protocol.stopListening();
                 protocol.dispatch(Status.REJECT);
             } catch (Exception e) {
                 protocol.stopListening();

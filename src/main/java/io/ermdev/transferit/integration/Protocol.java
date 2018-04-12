@@ -125,4 +125,24 @@ public class Protocol {
     public void stopListening() {
         okListen = false;
     }
+
+    public boolean isBusy() {
+        return okListen;
+    }
+
+    public static void reject(Socket socket) {
+        try {
+            Status status = Status.REJECT;
+            String message = "content-type=action"
+                    .concat("?")
+                    .concat("status=")
+                    .concat(status.toString())
+                    .concat(";");
+            OutputStream os = socket.getOutputStream();
+            os.write(message.getBytes(StandardCharsets.UTF_8));
+            os.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

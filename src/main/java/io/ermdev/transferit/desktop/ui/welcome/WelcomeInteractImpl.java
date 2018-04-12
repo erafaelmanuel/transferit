@@ -1,25 +1,14 @@
 package io.ermdev.transferit.desktop.ui.welcome;
 
+import io.ermdev.transferit.desktop.util.MasterConfig;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Properties;
 
 public class WelcomeInteractImpl implements WelcomeInteract {
 
-    private int port = 0;
-
-    WelcomeInteractImpl() {
-        try {
-            final ClassLoader classLoader = getClass().getClassLoader();
-            final Properties properties = new Properties();
-            properties.load(classLoader.getResourceAsStream("config/application.properties"));
-            port = Integer.parseInt(properties.getProperty("app.port", "0"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    final private MasterConfig masterConfig = new MasterConfig();
 
     @Override
     public void selectSend(Stage stage, WelcomeListener listener) {
@@ -34,7 +23,7 @@ public class WelcomeInteractImpl implements WelcomeInteract {
     public void selectReceive(Stage stage, WelcomeListener listener) {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(masterConfig.getPortOrDefault());
             serverSocket.setReuseAddress(true);
             serverSocket.close();
             listener.onReceive(stage);

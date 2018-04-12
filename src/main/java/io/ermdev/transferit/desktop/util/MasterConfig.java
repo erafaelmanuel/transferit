@@ -91,7 +91,7 @@ public class MasterConfig {
     public int getPortOrDefault() {
         try {
             int port = getUserConfig().getPort();
-            if (port > 0 && port <= 65535) {
+            if (port > 0 && port < 65535) {
                 return port;
             } else {
                 return getDefaultConfig().getPort();

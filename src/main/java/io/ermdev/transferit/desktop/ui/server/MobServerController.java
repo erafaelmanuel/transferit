@@ -28,7 +28,7 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private ItemServer itemServer;
 
-    private LinkServer server;
+    private LinkServer linkServer;
 
     private Thread summoner;
 
@@ -72,9 +72,9 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         reset();
         endpoint = new Endpoint(masterConfig.getPortOrDefault());
         endpoint.subscribe(this);
-        server = new LinkServer(endpoint);
-        server.setServerListener(this);
-        server.open();
+        linkServer = new LinkServer(endpoint);
+        linkServer.setServerListener(this);
+        linkServer.open();
     }
 
     @Override
@@ -93,11 +93,11 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
     public void onChoose(boolean accept) {
         Platform.runLater(() -> {
             if (accept) {
-                server.accept();
+                linkServer.accept();
                 lblStatus.setText("Connected");
                 lblStatus.setStyle("-fx-background-color: #00b894");
             } else {
-                server.reject();
+                linkServer.reject();
             }
         });
     }
@@ -156,8 +156,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
         stage.close();
 
-        server.stop();
-        server = null;
+        linkServer.stop();
+        linkServer = null;
 
         WelcomeStage welcomeStage = new WelcomeStage();
         welcomeStage.display(stage.getX(), stage.getY());

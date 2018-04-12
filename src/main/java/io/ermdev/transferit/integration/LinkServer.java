@@ -11,8 +11,14 @@ import java.nio.file.Paths;
 
 public class LinkServer implements Server, ProtocolListener {
 
+    /**
+     * Handle the connection, status and list of files to transfer
+     */
     private ServerSocket server1;
 
+    /**
+     * Handle the file-transferring
+     */
     private ServerSocket server2;
 
     private Protocol protocol;

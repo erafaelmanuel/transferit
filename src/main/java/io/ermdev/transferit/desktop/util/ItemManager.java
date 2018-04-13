@@ -1,6 +1,6 @@
 package io.ermdev.transferit.desktop.util;
 
-import io.ermdev.transferit.integration.Item;
+import io.ermdev.transferit.core.Item;
 
 import java.util.List;
 

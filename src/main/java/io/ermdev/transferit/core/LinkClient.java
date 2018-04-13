@@ -1,4 +1,4 @@
-package io.ermdev.transferit.integration;
+package io.ermdev.transferit.core;
 
 import java.io.File;
 import java.net.Socket;

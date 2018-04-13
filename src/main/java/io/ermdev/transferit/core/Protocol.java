@@ -1,4 +1,4 @@
-package io.ermdev.transferit.integration;
+package io.ermdev.transferit.core;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -109,7 +109,7 @@ public class Protocol {
                     endpoint.setConnected(false);
                     stopListening();
                 } else {
-                    throw new TcpException("Unknown status code");
+                    throw new ProtocolException("Unknown status code");
                 }
             } else if (content.equals("file")) {
                 String file = message.split("\\?")[1].split("file=")[1];

@@ -1,6 +1,8 @@
 package io.ermdev.transferit.desktop.ui.client;
 
-import io.ermdev.transferit.integration.*;
+import io.ermdev.transferit.arch.Book;
+import io.ermdev.transferit.arch.Subscriber;
+import io.ermdev.transferit.core.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

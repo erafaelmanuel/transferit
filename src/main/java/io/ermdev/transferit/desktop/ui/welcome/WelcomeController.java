@@ -4,7 +4,7 @@ import io.ermdev.transferit.desktop.component.Cover;
 import io.ermdev.transferit.desktop.cover.*;
 import io.ermdev.transferit.desktop.ui.client.SenderDashboardStage;
 import io.ermdev.transferit.desktop.ui.dialog.MessageDialogStage;
-import io.ermdev.transferit.desktop.ui.server.MobServerStage;
+import io.ermdev.transferit.desktop.ui.server.ReceiverStage;
 import io.ermdev.transferit.desktop.ui.welcome.option.OptionMenuStage;
 import io.ermdev.transferit.desktop.util.MasterConfig;
 import javafx.event.ActionEvent;
@@ -80,7 +80,7 @@ public class WelcomeController implements Initializable, WelcomeView {
 
     @Override
     public void navigateReceive(Stage stage) {
-        final MobServerStage serverStage = new MobServerStage();
+        final ReceiverStage serverStage = new ReceiverStage();
         serverStage.display(stage.getX(), stage.getY());
         stage.hide();
     }

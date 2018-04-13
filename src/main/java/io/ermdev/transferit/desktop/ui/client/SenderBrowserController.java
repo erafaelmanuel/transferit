@@ -2,10 +2,10 @@ package io.ermdev.transferit.desktop.ui.client;
 
 import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
-import io.ermdev.transferit.integration.Client;
-import io.ermdev.transferit.integration.Item;
-import io.ermdev.transferit.integration.ItemClient;
-import io.ermdev.transferit.integration.ClientListener;
+import io.ermdev.transferit.core.Client;
+import io.ermdev.transferit.core.Item;
+import io.ermdev.transferit.core.ItemClient;
+import io.ermdev.transferit.core.ClientListener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

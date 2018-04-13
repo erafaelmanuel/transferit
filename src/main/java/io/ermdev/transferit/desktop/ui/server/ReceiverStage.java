@@ -7,21 +7,16 @@ import javafx.scene.Scene;
 
 import java.net.URL;
 
-public class MobServerStage extends BaseStage {
+public class ReceiverStage extends BaseStage {
 
-    public MobServerStage() {
-        createServerStage();
-    }
-
-    private void createServerStage() {
+    public ReceiverStage() {
         try {
-            final FXMLLoader fxmlLoader = new FXMLLoader();
             final URL fxml = classLoader.getResource("fxml/mob_server_ui.fxml");
+            final FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(fxml);
 
             final Parent root = fxmlLoader.load();
             final Scene scene = new Scene(root, 247, 400);
-
             setScene(scene);
             setOnCloseRequest(e -> System.exit(0));
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package io.ermdev.transferit.integration;
+package io.ermdev.transferit.core;
 
 public interface InteractiveClient {
 

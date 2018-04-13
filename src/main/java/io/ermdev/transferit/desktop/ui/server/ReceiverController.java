@@ -1,9 +1,11 @@
 package io.ermdev.transferit.desktop.ui.server;
 
+import io.ermdev.transferit.arch.Book;
+import io.ermdev.transferit.arch.Subscriber;
 import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
 import io.ermdev.transferit.desktop.util.MasterConfig;
-import io.ermdev.transferit.integration.*;
+import io.ermdev.transferit.core.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MobServerController implements ServerListener, Subscriber, Initializable, InvitationDialogListener {
+public class ReceiverController implements ServerListener, Subscriber, Initializable, InvitationDialogListener {
 
     private InvitationDialogStage invitationDialogStage;
 
@@ -38,40 +40,32 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     private List<Item> items = new ArrayList<>();
 
-    @FXML
-    VBox container;
+    @FXML VBox container;
 
-    @FXML
-    Label lblStatus;
+    @FXML Label lblStatus;
 
-    @FXML
-    StackPane browser;
+    @FXML StackPane browser;
 
-    @FXML
-    Label lblBrowser;
+    @FXML Label lblBrowser;
 
-    @FXML
-    Button btnClear;
+    @FXML Button btnClear;
 
-    @FXML
-    Button btnCancel;
+    @FXML Button btnCancel;
 
-    public MobServerController() {
+    public ReceiverController() {
         invitationDialogStage = new InvitationDialogStage(this);
         itemServer = new ItemServer(masterConfig.getDirOrDefault());
     }
 
-    public void reset() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         lblBrowser.setText("0 Receive file(s)");
         container.getChildren().clear();
         container.getChildren().add(browser);
-    }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        reset();
         endpoint = new Endpoint(masterConfig.getPortOrDefault());
         endpoint.subscribe(this);
+
         linkServer = new LinkServer(endpoint);
         linkServer.setServerListener(this);
         linkServer.open();
@@ -150,9 +144,11 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
         }
     }
 
-    @FXML
-    void onCancel(ActionEvent event) {
-        reset();
+    @FXML void onCancel(ActionEvent event) {
+        lblBrowser.setText("0 Receive file(s)");
+        container.getChildren().clear();
+        container.getChildren().add(browser);
+
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
         stage.close();
 
@@ -165,6 +161,8 @@ public class MobServerController implements ServerListener, Subscriber, Initiali
 
     @FXML
     void onClear() {
-        reset();
+        lblBrowser.setText("0 Receive file(s)");
+        container.getChildren().clear();
+        container.getChildren().add(browser);
     }
 }

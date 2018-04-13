@@ -1,4 +1,4 @@
-package io.ermdev.transferit.integration;
+package io.ermdev.transferit.core;
 
 public class ServerException extends Exception {
 

@@ -30,61 +30,66 @@ public class Protocol {
     }
 
     public void dispatch(Status status) {
-        try {
-            String message = "content-type=action"
-                    .concat("?")
-                    .concat("status=")
-                    .concat(status.toString())
-                    .concat(";");
-            OutputStream os = socket.getOutputStream();
-            os.write(message.getBytes(StandardCharsets.UTF_8));
-            os.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (socket != null) {
+            try {
+                String message = "content-type=action"
+                        .concat("?")
+                        .concat("status=")
+                        .concat(status.toString())
+                        .concat(";");
+                OutputStream os = socket.getOutputStream();
+                os.write(message.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void dispatch(File file) {
-        try {
-            String message = "content-type=file"
-                    .concat("?")
-                    .concat("file=")
-                    .concat(file.getName())
-                    .concat(":")
-                    .concat(String.valueOf(file.length()))
-                    .concat(";");
-            OutputStream os = socket.getOutputStream();
-            os.write(message.getBytes(StandardCharsets.UTF_8));
-            os.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (socket != null) {
+            try {
+                String message = "content-type=file"
+                        .concat("?")
+                        .concat("file=")
+                        .concat(file.getName())
+                        .concat(":")
+                        .concat(String.valueOf(file.length()))
+                        .concat(";");
+                OutputStream os = socket.getOutputStream();
+                os.write(message.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void listen() {
-        postman = new Thread(() -> {
-            try {
-                okListen = true;
-                while (okListen) {
-                    String message = "";
-                    int n;
-                    while ((n = socket.getInputStream().read()) != -1) {
-                        if ((char) n == ';') {
-                            read(message);
-                            message = "";
-                        } else {
-                            message = message.concat(String.valueOf((char) n));
+        if (socket != null) {
+            postman = new Thread(() -> {
+                try {
+                    okListen = true;
+                    while (okListen) {
+                        String message = "";
+                        int n;
+                        while ((n = socket.getInputStream().read()) != -1) {
+                            if ((char) n == ';') {
+                                read(message);
+                                message = "";
+                            } else {
+                                message = message.concat(String.valueOf((char) n));
+                            }
                         }
                     }
+                    postman = null;
+                } catch (Exception e) {
+                    endpoint.setConnected(false);
+                    stopListening();
                 }
-                postman = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                endpoint.setConnected(false);
-                stopListening();
-            }
-        });
-        postman.start();
+            });
+            postman.start();
+        }
     }
 
     private void read(String message) {
@@ -131,18 +136,20 @@ public class Protocol {
     }
 
     public static void reject(Socket socket) {
-        try {
-            Status status = Status.REJECT;
-            String message = "content-type=action"
-                    .concat("?")
-                    .concat("status=")
-                    .concat(status.toString())
-                    .concat(";");
-            OutputStream os = socket.getOutputStream();
-            os.write(message.getBytes(StandardCharsets.UTF_8));
-            os.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (socket != null) {
+            try {
+                Status status = Status.REJECT;
+                String message = "content-type=action"
+                        .concat("?")
+                        .concat("status=")
+                        .concat(status.toString())
+                        .concat(";");
+                OutputStream os = socket.getOutputStream();
+                os.write(message.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

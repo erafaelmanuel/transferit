@@ -1,11 +1,11 @@
 package io.ermdev.transferit.desktop.ui.client;
 
-import io.ermdev.transferit.desktop.component.ItemBox;
-import io.ermdev.transferit.desktop.util.TrafficUtil;
 import io.ermdev.transferit.core.Client;
+import io.ermdev.transferit.core.ClientListener;
 import io.ermdev.transferit.core.Item;
 import io.ermdev.transferit.core.ItemClient;
-import io.ermdev.transferit.core.ClientListener;
+import io.ermdev.transferit.desktop.component.ItemBox;
+import io.ermdev.transferit.desktop.util.TrafficUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,15 +31,20 @@ public class SenderBrowserController implements ClientListener {
 
     private volatile boolean okSend;
 
-    @FXML VBox container;
+    @FXML
+    VBox container;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML StackPane browser;
+    @FXML
+    StackPane browser;
 
-    @FXML Button btnSend;
+    @FXML
+    Button btnSend;
 
-    @FXML Button btnClear;
+    @FXML
+    Button btnClear;
 
     public void initialize() {
         onClear();
@@ -50,7 +55,8 @@ public class SenderBrowserController implements ClientListener {
         client = new ItemClient(c, this);
     }
 
-    @FXML void onClear() {
+    @FXML
+    void onClear() {
         items.clear();
         container.getChildren().clear();
         container.getChildren().add(browser);
@@ -59,7 +65,8 @@ public class SenderBrowserController implements ClientListener {
         btnSend.setDisable(true);
     }
 
-    @FXML void onBrowse() {
+    @FXML
+    void onBrowse() {
         FileChooser fileChooser = new FileChooser();
         List<File> newFiles = fileChooser.showOpenMultipleDialog(null);
         long size = 0;
@@ -77,12 +84,13 @@ public class SenderBrowserController implements ClientListener {
         }
     }
 
-    @FXML void onSend() {
+    @FXML
+    void onSend() {
         if (btnSend.getText().equalsIgnoreCase("Pause")) {
             okSend = false;
             client.pause();
             btnSend.setText("Start");
-        } else if (btnSend.getText().equalsIgnoreCase("Start")){
+        } else if (btnSend.getText().equalsIgnoreCase("Start")) {
             okSend = true;
             client.play();
             btnSend.setText("Pause");
@@ -103,7 +111,8 @@ public class SenderBrowserController implements ClientListener {
                         e.printStackTrace();
                     }
                     for (Item item : items) {
-                        while (!okSend) {}
+                        while (!okSend) {
+                        }
                         client.sendItem(item);
                     }
                     Platform.runLater(() -> {
@@ -120,14 +129,16 @@ public class SenderBrowserController implements ClientListener {
         }
     }
 
-    @FXML void onDrag(DragEvent event) {
+    @FXML
+    void onDrag(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             event.consume();
         }
     }
 
-    @FXML void onDrop(DragEvent event) {
+    @FXML
+    void onDrop(DragEvent event) {
         Dragboard db = event.getDragboard();
         long size = 0;
         if (db.hasFiles()) {

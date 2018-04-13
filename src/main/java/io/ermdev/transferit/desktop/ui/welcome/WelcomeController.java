@@ -30,9 +30,11 @@ public class WelcomeController implements Initializable, WelcomeView {
 
     final private MasterConfig masterConfig = new MasterConfig();
 
-    @FXML ImageView option;
+    @FXML
+    ImageView option;
 
-    @FXML AnchorPane container;
+    @FXML
+    AnchorPane container;
 
     public WelcomeController() {
         final WelcomeInteract interact = new WelcomeInteractImpl();
@@ -59,15 +61,18 @@ public class WelcomeController implements Initializable, WelcomeView {
         }
     }
 
-    @FXML void onSend(ActionEvent event) {
-        presenter.clickSend((Stage)((Node) event.getSource()).getScene().getWindow());
+    @FXML
+    void onSend(ActionEvent event) {
+        presenter.clickSend((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
-    @FXML void onReceive(ActionEvent event) {
-        presenter.clickReceive((Stage)((Node) event.getSource()).getScene().getWindow());
+    @FXML
+    void onReceive(ActionEvent event) {
+        presenter.clickReceive((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
-    @FXML void onOption(MouseEvent event) {
+    @FXML
+    void onOption(MouseEvent event) {
         presenter.clickOption(event.getScreenX(), event.getScreenY());
     }
 

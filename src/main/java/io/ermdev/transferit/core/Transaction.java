@@ -4,6 +4,7 @@ import io.ermdev.transferit.desktop.util.TrafficUtil;
 
 import java.io.File;
 
+@Deprecated
 public class Transaction extends Item {
 
     private String percentage;

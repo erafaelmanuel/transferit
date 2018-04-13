@@ -1,6 +1,4 @@
-package io.ermdev.transferit.core;
-
-import io.ermdev.transferit.arch.Book;
+package io.ermdev.transferit.arch;
 
 public interface ItemPublisher {
 

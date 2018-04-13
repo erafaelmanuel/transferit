@@ -2,10 +2,10 @@ package io.ermdev.transferit.desktop.ui.server;
 
 import io.ermdev.transferit.arch.Book;
 import io.ermdev.transferit.arch.Subscriber;
+import io.ermdev.transferit.core.*;
 import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
 import io.ermdev.transferit.desktop.util.MasterConfig;
-import io.ermdev.transferit.core.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,17 +40,23 @@ public class ReceiverController implements ServerListener, Subscriber, Initializ
 
     private List<Item> items = new ArrayList<>();
 
-    @FXML VBox container;
+    @FXML
+    VBox container;
 
-    @FXML Label lblStatus;
+    @FXML
+    Label lblStatus;
 
-    @FXML StackPane browser;
+    @FXML
+    StackPane browser;
 
-    @FXML Label lblBrowser;
+    @FXML
+    Label lblBrowser;
 
-    @FXML Button btnClear;
+    @FXML
+    Button btnClear;
 
-    @FXML Button btnCancel;
+    @FXML
+    Button btnCancel;
 
     public ReceiverController() {
         invitationDialogStage = new InvitationDialogStage(this);
@@ -144,7 +150,8 @@ public class ReceiverController implements ServerListener, Subscriber, Initializ
         }
     }
 
-    @FXML void onCancel(ActionEvent event) {
+    @FXML
+    void onCancel(ActionEvent event) {
         lblBrowser.setText("0 Receive file(s)");
         container.getChildren().clear();
         container.getChildren().add(browser);

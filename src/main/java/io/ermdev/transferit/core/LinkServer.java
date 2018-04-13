@@ -1,13 +1,7 @@
 package io.ermdev.transferit.core;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class LinkServer implements Server, ProtocolListener {
 
@@ -66,6 +60,18 @@ public class LinkServer implements Server, ProtocolListener {
     }
 
     @Override
+    public void stop() {
+        try {
+            protocol.stopListening();
+            protocol.dispatch(Status.STOP);
+            server1.close();
+            server2.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void accept() {
         acceptor = new Thread(() -> {
             try {
@@ -95,34 +101,6 @@ public class LinkServer implements Server, ProtocolListener {
             rejecter = null;
         });
         rejecter.start();
-    }
-
-    @Override
-    public void stop() {
-        try {
-            protocol.stopListening();
-            protocol.dispatch(Status.STOP);
-            server1.close();
-            server2.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void receiveFile(InputStream inputStream) {
-        try {
-            BufferedInputStream bis = new BufferedInputStream(inputStream);
-            DataInputStream dis = new DataInputStream(bis);
-            String fileName = dis.readUTF();
-            File file = new File(fileName);
-            if (!file.exists() || file.delete()) {
-                Files.copy(dis, Paths.get(fileName));
-            }
-            dis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

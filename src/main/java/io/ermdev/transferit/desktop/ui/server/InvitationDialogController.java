@@ -16,15 +16,18 @@ public class InvitationDialogController implements Initializable {
 
     private InvitationDialogListener idl;
 
-    @FXML ImageView imgv;
+    @FXML
+    ImageView imgv;
 
-    @FXML Label label;
+    @FXML
+    Label label;
 
     public void setListener(InvitationDialogListener idl) {
         this.idl = idl;
     }
 
-    @FXML void onAccept(ActionEvent event) {
+    @FXML
+    void onAccept(ActionEvent event) {
         final Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         stage.close();
         if (idl != null) {
@@ -32,7 +35,8 @@ public class InvitationDialogController implements Initializable {
         }
     }
 
-    @FXML void onCancel(ActionEvent event) {
+    @FXML
+    void onCancel(ActionEvent event) {
         final Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         stage.close();
         if (idl != null) {

@@ -1,6 +1,4 @@
-package io.ermdev.transferit.core;
-
-import io.ermdev.transferit.arch.Subscriber;
+package io.ermdev.transferit.arch;
 
 public interface ItemSubscriber extends Subscriber {
 

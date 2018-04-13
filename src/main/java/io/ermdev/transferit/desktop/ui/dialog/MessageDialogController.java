@@ -14,9 +14,11 @@ import java.util.ResourceBundle;
 
 public class MessageDialogController implements Initializable {
 
-    @FXML ImageView imgv;
+    @FXML
+    ImageView imgv;
 
-    @FXML Label label;
+    @FXML
+    Label label;
 
     @FXML
     void onClose(ActionEvent event) {

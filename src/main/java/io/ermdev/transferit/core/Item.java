@@ -1,6 +1,8 @@
 package io.ermdev.transferit.core;
 
 import io.ermdev.transferit.arch.Book;
+import io.ermdev.transferit.arch.ItemPublisher;
+import io.ermdev.transferit.arch.ItemSubscriber;
 
 import java.io.File;
 import java.util.HashSet;

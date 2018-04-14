@@ -10,9 +10,9 @@ import javafx.scene.text.Font;
 
 public class Cover extends VBox {
 
-    private final Label label = new Label();
+    protected final Label label = new Label();
 
-    private final ImageView imageView = new ImageView();
+    protected final ImageView imageView = new ImageView();
 
     public Cover() {
         setAlignment(Pos.CENTER);

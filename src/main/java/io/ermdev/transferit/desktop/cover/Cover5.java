@@ -2,7 +2,6 @@ package io.ermdev.transferit.desktop.cover;
 
 import io.ermdev.transferit.desktop.component.Cover;
 
-@Deprecated
 final public class Cover5 extends Cover {
 
     public Cover5() {

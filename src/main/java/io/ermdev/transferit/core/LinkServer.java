@@ -26,7 +26,6 @@ public class LinkServer implements Server, ProtocolListener {
             this.endpoint = endpoint;
             server1 = new ServerSocket(endpoint.getPort());
             server2 = new ServerSocket(endpoint.getPort() + 1);
-            protocol = new Protocol(endpoint);
             protocol.setListener(this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +44,7 @@ public class LinkServer implements Server, ProtocolListener {
                     Socket socket = server1.accept();
                     if (!endpoint.isConnected() && !protocol.isBusy()) {
                         endpoint.setHost(socket.getInetAddress().getHostAddress());
-                        protocol.setSocket(socket);
+                        protocol = new Protocol(socket, endpoint);
                         protocol.listen();
                     } else {
                         Protocol.reject(socket);

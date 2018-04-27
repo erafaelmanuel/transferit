@@ -11,12 +11,13 @@ public class LinkClient implements Client {
 
     public LinkClient(Endpoint endpoint) {
         this.endpoint = endpoint;
+        protocol = new Protocol(endpoint);
     }
 
     @Override
     public void connect() throws ClientException {
         try {
-            protocol = new Protocol(newSocket(), endpoint);
+            protocol.setSocket(newSocket());
             protocol.dispatch(Status.CREATE);
             protocol.listen();
         } catch (Exception e) {

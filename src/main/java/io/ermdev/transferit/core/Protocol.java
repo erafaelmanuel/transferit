@@ -17,9 +17,12 @@ public class Protocol {
 
     private ProtocolListener protocolListener;
 
-    public Protocol(Socket socket, Endpoint endpoint) {
-        this.socket = socket;
+    public Protocol(Endpoint endpoint) {
         this.endpoint = endpoint;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 
     public void setListener(ProtocolListener protocolListener) {

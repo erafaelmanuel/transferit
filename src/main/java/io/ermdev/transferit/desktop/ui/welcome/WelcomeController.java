@@ -46,13 +46,20 @@ public class WelcomeController implements Initializable, WelcomeView {
         final ClassLoader classLoader = getClass().getClassLoader();
         final URL style = classLoader.getResource("css/option-menu-style.css");
         final URL image = classLoader.getResource("image/system/more.png");
+        Cover cover;
 
         covers[0] = new Cover1();
         covers[1] = new Cover2();
         covers[2] = new Cover3();
         covers[3] = new Cover4();
         covers[4] = new Cover5();
-        container.getChildren().add(0, covers[masterConfig.getCoverOrRandom()]);
+
+        try {
+            cover = covers[masterConfig.getCoverOrDefault() - 1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            cover = covers[masterConfig.getCoverOrRandom() - 1];
+        }
+        container.getChildren().add(0, cover);
         if (image != null) {
             option.setImage(new Image(image.toString()));
         }

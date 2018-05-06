@@ -101,16 +101,29 @@ public class MasterConfig {
         }
     }
 
-    public int getCoverOrRandom() {
+    public int getCoverOrDefault() {
         try {
             final int cover = getUserConfig().getCover();
             if (cover > -1) {
                 return cover;
             } else {
-                return (int) ((Math.random() * 5));
+                return getDefaultConfig().getCover();
             }
         } catch (PropertyException e) {
-            return (int) ((Math.random() * 5));
+            return getDefaultConfig().getCover();
+        }
+    }
+
+    public int getCoverOrRandom() {
+        try {
+            final int cover = getUserConfig().getCover();
+            if (cover > 0) {
+                return cover;
+            } else {
+                return (int) ((Math.random() * 5)) + 1;
+            }
+        } catch (PropertyException e) {
+            return (int) ((Math.random() * 5)) + 1;
         }
     }
 

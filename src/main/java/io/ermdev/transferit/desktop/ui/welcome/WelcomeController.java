@@ -48,10 +48,10 @@ public class WelcomeController implements Initializable, WelcomeView {
         final URL image = classLoader.getResource("image/system/more.png");
         Cover cover;
 
-        covers[0] = new Cover1();
+        covers[3] = new Cover1();
         covers[1] = new Cover2();
         covers[2] = new Cover3();
-        covers[3] = new Cover4();
+        covers[0] = new Cover4();
         covers[4] = new Cover5();
 
         try {

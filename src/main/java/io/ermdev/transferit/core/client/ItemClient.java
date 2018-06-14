@@ -1,5 +1,9 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.client;
 
+import io.ermdev.transferit.core.Item;
+import io.ermdev.transferit.core.client.Client;
+import io.ermdev.transferit.core.client.ClientException;
+import io.ermdev.transferit.core.client.ClientListener;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 
 import java.io.BufferedInputStream;

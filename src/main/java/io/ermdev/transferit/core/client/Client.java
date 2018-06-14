@@ -1,4 +1,6 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.client;
+
+import io.ermdev.transferit.core.Endpoint;
 
 import java.io.File;
 import java.net.Socket;

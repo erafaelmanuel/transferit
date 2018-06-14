@@ -1,4 +1,6 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.client;
+
+import io.ermdev.transferit.core.ProtocolException;
 
 public class ClientException extends ProtocolException {
 

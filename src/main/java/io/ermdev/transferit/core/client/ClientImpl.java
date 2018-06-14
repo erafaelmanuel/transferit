@@ -11,17 +11,15 @@ public class ClientImpl implements Client {
 
     private Protocol protocol;
 
-    private State state;
-
     public ClientImpl(final State state) {
-        this.state = state;
         protocol = new Protocol(state);
     }
 
     @Override
     public void connect() throws ClientException {
         try {
-            protocol.setSocket(newSocket());
+            final Socket socket = new Socket(protocol.getState().getHost(), protocol.getState().getPort());
+            protocol.setSocket(socket);
             protocol.dispatch(Status.CREATE);
             protocol.listen();
         } catch (Exception e) {
@@ -32,7 +30,7 @@ public class ClientImpl implements Client {
     @Override
     public void disconnect() {
         try {
-            state.setConnected(false);
+            protocol.getState().setConnected(false);
             protocol.dispatch(Status.STOP);
             protocol.stopListening();
         } catch (Exception e) {
@@ -42,16 +40,7 @@ public class ClientImpl implements Client {
 
     @Override
     public State getState() {
-        return state;
-    }
-
-    @Override
-    public Socket newSocket() throws ClientException {
-        try {
-            return new Socket(state.getHost(), state.getPort());
-        } catch (Exception e) {
-            throw new ClientException("Failed to make a socket!");
-        }
+        return protocol.getState();
     }
 
     @Override

@@ -32,12 +32,12 @@ public class Protocol {
     public void dispatch(Status status) {
         if (socket != null) {
             try {
-                String message = "content-type=action"
+                final String message = "content-type=action"
                         .concat("?")
                         .concat("status=")
                         .concat(status.toString())
                         .concat(";");
-                OutputStream os = socket.getOutputStream();
+                final OutputStream os = socket.getOutputStream();
                 os.write(message.getBytes(StandardCharsets.UTF_8));
                 os.flush();
             } catch (Exception e) {
@@ -48,14 +48,14 @@ public class Protocol {
     public void dispatch(File file) {
         if (socket != null) {
             try {
-                String message = "content-type=file"
+                final String message = "content-type=file"
                         .concat("?")
                         .concat("file=")
                         .concat(file.getName())
                         .concat(":")
                         .concat(String.valueOf(file.length()))
                         .concat(";");
-                OutputStream os = socket.getOutputStream();
+                final OutputStream os = socket.getOutputStream();
                 os.write(message.getBytes(StandardCharsets.UTF_8));
                 os.flush();
             } catch (Exception e) {
@@ -92,9 +92,9 @@ public class Protocol {
 
     private void read(String message) {
         try {
-            String content = message.split("\\?")[0].split("content-type=")[1];
+            final String content = message.split("\\?")[0].split("content-type=")[1];
             if (content.equals("action")) {
-                int status = Integer.parseInt(message.split("\\?")[1].split("status=")[1]);
+                final int status = Integer.parseInt(message.split("\\?")[1].split("status=")[1]);
                 if (status == 100) {
                     if (protocolListener != null) {
                         protocolListener.onCreate();
@@ -115,9 +115,9 @@ public class Protocol {
                     throw new ProtocolException("Unknown status code");
                 }
             } else if (content.equals("file")) {
-                String file = message.split("\\?")[1].split("file=")[1];
-                String name = file.split(":")[0];
-                long size = Long.parseLong(file.split(":")[1]);
+                final String file = message.split("\\?")[1].split("file=")[1];
+                final String name = file.split(":")[0];
+                final long size = Long.parseLong(file.split(":")[1]);
                 protocolListener.onFile(name, size);
             }
         } catch (Exception e) {
@@ -135,17 +135,21 @@ public class Protocol {
     public static void reject(Socket socket) {
         if (socket != null) {
             try {
-                Status status = Status.REJECT;
-                String message = "content-type=action"
+                final Status status = Status.REJECT;
+                final String message = "content-type=action"
                         .concat("?")
                         .concat("status=")
                         .concat(status.toString())
                         .concat(";");
-                OutputStream os = socket.getOutputStream();
+                final OutputStream os = socket.getOutputStream();
                 os.write(message.getBytes(StandardCharsets.UTF_8));
                 os.flush();
             } catch (Exception e) {
             }
         }
+    }
+
+    public State getState() {
+        return state;
     }
 }

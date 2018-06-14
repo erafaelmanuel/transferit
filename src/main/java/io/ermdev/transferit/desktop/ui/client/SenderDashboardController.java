@@ -2,8 +2,8 @@ package io.ermdev.transferit.desktop.ui.client;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import io.ermdev.transferit.arch.Book;
-import io.ermdev.transferit.arch.Subscriber;
+import io.ermdev.transferit.core.arch.Book;
+import io.ermdev.transferit.core.arch.Subscriber;
 import io.ermdev.transferit.core.client.Client;
 import io.ermdev.transferit.core.client.ClientException;
 import io.ermdev.transferit.core.protocol.State;

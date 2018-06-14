@@ -13,7 +13,7 @@ public class ClientImpl implements Client {
 
     private State state;
 
-    public ClientImpl(State state) {
+    public ClientImpl(final State state) {
         this.state = state;
         protocol = new Protocol(state);
     }

@@ -1,8 +1,8 @@
 package io.ermdev.transferit.core.protocol;
 
-import io.ermdev.transferit.arch.Book;
-import io.ermdev.transferit.arch.Publisher;
-import io.ermdev.transferit.arch.Subscriber;
+import io.ermdev.transferit.core.arch.Book;
+import io.ermdev.transferit.core.arch.Publisher;
+import io.ermdev.transferit.core.arch.Subscriber;
 
 import java.util.HashSet;
 import java.util.Set;

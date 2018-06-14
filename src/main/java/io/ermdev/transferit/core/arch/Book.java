@@ -1,4 +1,4 @@
-package io.ermdev.transferit.arch;
+package io.ermdev.transferit.core.arch;
 
 public class Book<T> {
 

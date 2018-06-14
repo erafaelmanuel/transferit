@@ -1,7 +1,7 @@
 package io.ermdev.transferit.desktop.ui.server;
 
-import io.ermdev.transferit.arch.Book;
-import io.ermdev.transferit.arch.Subscriber;
+import io.ermdev.transferit.core.arch.Book;
+import io.ermdev.transferit.core.arch.Subscriber;
 import io.ermdev.transferit.core.protocol.Item;
 import io.ermdev.transferit.core.protocol.State;
 import io.ermdev.transferit.core.server.ItemServer;

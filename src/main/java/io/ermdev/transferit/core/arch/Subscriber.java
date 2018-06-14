@@ -1,4 +1,4 @@
-package io.ermdev.transferit.arch;
+package io.ermdev.transferit.core.arch;
 
 public interface Subscriber {
 

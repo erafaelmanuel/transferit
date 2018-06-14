@@ -1,4 +1,4 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.protocol;
 
 import io.ermdev.transferit.arch.Book;
 import io.ermdev.transferit.arch.ItemPublisher;

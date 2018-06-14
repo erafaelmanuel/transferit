@@ -1,23 +1,21 @@
 package io.ermdev.transferit.core.client;
 
-import io.ermdev.transferit.core.Endpoint;
-import io.ermdev.transferit.core.Protocol;
-import io.ermdev.transferit.core.Status;
-import io.ermdev.transferit.core.client.Client;
-import io.ermdev.transferit.core.client.ClientException;
+import io.ermdev.transferit.core.protocol.State;
+import io.ermdev.transferit.core.protocol.Protocol;
+import io.ermdev.transferit.core.protocol.Status;
 
 import java.io.File;
 import java.net.Socket;
 
-public class LinkClient implements Client {
+public class ClientImpl implements Client {
 
     private Protocol protocol;
 
-    private Endpoint endpoint;
+    private State state;
 
-    public LinkClient(Endpoint endpoint) {
-        this.endpoint = endpoint;
-        protocol = new Protocol(endpoint);
+    public ClientImpl(State state) {
+        this.state = state;
+        protocol = new Protocol(state);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class LinkClient implements Client {
     @Override
     public void disconnect() {
         try {
-            endpoint.setConnected(false);
+            state.setConnected(false);
             protocol.dispatch(Status.STOP);
             protocol.stopListening();
         } catch (Exception e) {
@@ -43,14 +41,14 @@ public class LinkClient implements Client {
     }
 
     @Override
-    public Endpoint getEndpoint() {
-        return endpoint;
+    public State getState() {
+        return state;
     }
 
     @Override
     public Socket newSocket() throws ClientException {
         try {
-            return new Socket(endpoint.getHost(), endpoint.getPort());
+            return new Socket(state.getHost(), state.getPort());
         } catch (Exception e) {
             throw new ClientException("Failed to make a socket!");
         }

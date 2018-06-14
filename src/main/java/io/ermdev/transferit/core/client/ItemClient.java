@@ -1,9 +1,6 @@
 package io.ermdev.transferit.core.client;
 
-import io.ermdev.transferit.core.Item;
-import io.ermdev.transferit.core.client.Client;
-import io.ermdev.transferit.core.client.ClientException;
-import io.ermdev.transferit.core.client.ClientListener;
+import io.ermdev.transferit.core.protocol.Item;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 
 import java.io.BufferedInputStream;
@@ -30,7 +27,7 @@ public class ItemClient {
 
     public Socket newSocket() throws ClientException {
         try {
-            return new Socket(client.getEndpoint().getHost(), client.getEndpoint().getPort() + 1);
+            return new Socket(client.getState().getHost(), client.getState().getPort() + 1);
         } catch (Exception e) {
             throw new ClientException("Failed to make a socket!");
         }

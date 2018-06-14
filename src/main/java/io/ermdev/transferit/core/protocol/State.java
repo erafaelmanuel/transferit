@@ -1,4 +1,4 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.protocol;
 
 import io.ermdev.transferit.arch.Book;
 import io.ermdev.transferit.arch.Publisher;
@@ -7,7 +7,7 @@ import io.ermdev.transferit.arch.Subscriber;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Endpoint implements Publisher {
+public class State implements Publisher {
 
     private String host;
 
@@ -17,9 +17,9 @@ public class Endpoint implements Publisher {
 
     private Set<Subscriber> subscribers = new HashSet<>();
 
-    public Endpoint() {}
+    public State() {}
 
-    public Endpoint(int port) {
+    public State(int port) {
         this.port = port;
     }
 

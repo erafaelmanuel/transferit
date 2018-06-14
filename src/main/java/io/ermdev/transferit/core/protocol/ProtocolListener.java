@@ -1,4 +1,4 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.protocol;
 
 public interface ProtocolListener {
 

@@ -2,7 +2,11 @@ package io.ermdev.transferit.desktop.ui.server;
 
 import io.ermdev.transferit.arch.Book;
 import io.ermdev.transferit.arch.Subscriber;
-import io.ermdev.transferit.core.*;
+import io.ermdev.transferit.core.protocol.Item;
+import io.ermdev.transferit.core.protocol.State;
+import io.ermdev.transferit.core.server.ItemServer;
+import io.ermdev.transferit.core.server.LinkServer;
+import io.ermdev.transferit.core.server.ServerListener;
 import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.ui.welcome.WelcomeStage;
 import io.ermdev.transferit.desktop.util.MasterConfig;
@@ -34,7 +38,7 @@ public class ReceiverController implements ServerListener, Subscriber, Initializ
 
     private Thread summoner;
 
-    private Endpoint endpoint;
+    private State state;
 
     final private MasterConfig masterConfig = new MasterConfig();
 
@@ -69,10 +73,10 @@ public class ReceiverController implements ServerListener, Subscriber, Initializ
         container.getChildren().clear();
         container.getChildren().add(browser);
 
-        endpoint = new Endpoint(masterConfig.getPortOrDefault());
-        endpoint.subscribe(this);
+        state = new State(masterConfig.getPortOrDefault());
+        state.subscribe(this);
 
-        linkServer = new LinkServer(endpoint);
+        linkServer = new LinkServer(state);
         linkServer.setServerListener(this);
         linkServer.open();
     }
@@ -83,7 +87,7 @@ public class ReceiverController implements ServerListener, Subscriber, Initializ
                 Platform.runLater(() -> {
                     invitationDialogStage.display();
                     invitationDialogStage.getController()
-                            .setLabelText("You want to accept " + endpoint.getHost() + "?");
+                            .setLabelText("You want to accept " + state.getHost() + "?");
                     summoner = null;
                 }));
         summoner.start();

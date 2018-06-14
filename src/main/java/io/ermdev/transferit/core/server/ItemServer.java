@@ -1,4 +1,6 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.server;
+
+import io.ermdev.transferit.core.protocol.Item;
 
 import java.io.*;
 import java.util.List;

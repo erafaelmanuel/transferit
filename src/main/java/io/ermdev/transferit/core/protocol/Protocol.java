@@ -1,4 +1,4 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.protocol;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Protocol {
 
-    private Endpoint endpoint;
+    private State state;
 
     private Socket socket;
 
@@ -17,8 +17,8 @@ public class Protocol {
 
     private ProtocolListener protocolListener;
 
-    public Protocol(Endpoint endpoint) {
-        this.endpoint = endpoint;
+    public Protocol(State state) {
+        this.state = state;
     }
 
     public void setSocket(Socket socket) {
@@ -82,7 +82,7 @@ public class Protocol {
                     }
                     postman = null;
                 } catch (Exception e) {
-                    endpoint.setConnected(false);
+                    state.setConnected(false);
                     stopListening();
                 }
             });
@@ -100,16 +100,16 @@ public class Protocol {
                         protocolListener.onCreate();
                     }
                 } else if (status == 101) {
-                    endpoint.setConnected(true);
+                    state.setConnected(true);
                 } else if (status == 103) {
                     if (protocolListener != null) {
                         protocolListener.onScan();
                     }
                 } else if (status == 200) {
-                    endpoint.setConnected(false);
+                    state.setConnected(false);
                     stopListening();
                 } else if (status == 201) {
-                    endpoint.setConnected(false);
+                    state.setConnected(false);
                     stopListening();
                 } else {
                     throw new ProtocolException("Unknown status code");

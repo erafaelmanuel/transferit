@@ -6,8 +6,8 @@ import io.ermdev.transferit.arch.Book;
 import io.ermdev.transferit.arch.Subscriber;
 import io.ermdev.transferit.core.client.Client;
 import io.ermdev.transferit.core.client.ClientException;
-import io.ermdev.transferit.core.Endpoint;
-import io.ermdev.transferit.core.client.LinkClient;
+import io.ermdev.transferit.core.protocol.State;
+import io.ermdev.transferit.core.client.ClientImpl;
 import io.ermdev.transferit.desktop.cover.CoverError;
 import io.ermdev.transferit.desktop.cover.CoverInfo;
 import io.ermdev.transferit.desktop.cover.CoverSuccess;
@@ -32,7 +32,7 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     private Client client;
 
-    private Endpoint endpoint;
+    private State state;
 
     private Thread connector;
 
@@ -61,8 +61,8 @@ public class SenderDashboardController implements Initializable, Subscriber {
         imgvback.setImage(new Image(getClass().getResource("/image/system/img_prev.png").toString()));
 
         sbs = new SenderBrowserStage();
-        endpoint = new Endpoint();
-        endpoint.subscribe(this);
+        state = new State();
+        state.subscribe(this);
     }
 
     @Override
@@ -108,9 +108,9 @@ public class SenderDashboardController implements Initializable, Subscriber {
                     btnConnect.setDisable(true);
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {
-                    endpoint.setHost(txtHost.getText());
-                    endpoint.setPort(masterConfig.getPortOrDefault());
-                    client = new LinkClient(endpoint);
+                    state.setHost(txtHost.getText());
+                    state.setPort(masterConfig.getPortOrDefault());
+                    client = new ClientImpl(state);
                     client.connect();
                 } else {
                     client.disconnect();

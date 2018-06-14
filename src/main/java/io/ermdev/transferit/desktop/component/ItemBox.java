@@ -3,7 +3,7 @@ package io.ermdev.transferit.desktop.component;
 import com.jfoenix.controls.JFXProgressBar;
 import io.ermdev.transferit.arch.Book;
 import io.ermdev.transferit.arch.ItemSubscriber;
-import io.ermdev.transferit.core.Item;
+import io.ermdev.transferit.core.protocol.Item;
 import io.ermdev.transferit.desktop.util.ImageUtil;
 import io.ermdev.transferit.desktop.util.TrafficUtil;
 import javafx.application.Platform;

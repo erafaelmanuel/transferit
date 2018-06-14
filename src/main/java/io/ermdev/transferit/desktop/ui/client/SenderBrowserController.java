@@ -2,7 +2,7 @@ package io.ermdev.transferit.desktop.ui.client;
 
 import io.ermdev.transferit.core.client.Client;
 import io.ermdev.transferit.core.client.ClientListener;
-import io.ermdev.transferit.core.Item;
+import io.ermdev.transferit.core.protocol.Item;
 import io.ermdev.transferit.core.client.ItemClient;
 import io.ermdev.transferit.desktop.component.ItemBox;
 import io.ermdev.transferit.desktop.util.TrafficUtil;

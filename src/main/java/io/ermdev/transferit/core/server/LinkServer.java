@@ -1,4 +1,9 @@
-package io.ermdev.transferit.core;
+package io.ermdev.transferit.core.server;
+
+import io.ermdev.transferit.core.protocol.State;
+import io.ermdev.transferit.core.protocol.Status;
+import io.ermdev.transferit.core.protocol.Protocol;
+import io.ermdev.transferit.core.protocol.ProtocolListener;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,7 +16,7 @@ public class LinkServer implements Server, ProtocolListener {
 
     private Protocol protocol;
 
-    private Endpoint endpoint;
+    private State state;
 
     private ServerListener serverListener;
 
@@ -21,12 +26,12 @@ public class LinkServer implements Server, ProtocolListener {
 
     private Thread opener;
 
-    public LinkServer(Endpoint endpoint) {
+    public LinkServer(State state) {
         try {
-            this.endpoint = endpoint;
-            server1 = new ServerSocket(endpoint.getPort());
-            server2 = new ServerSocket(endpoint.getPort() + 1);
-            protocol = new Protocol(endpoint);
+            this.state = state;
+            server1 = new ServerSocket(state.getPort());
+            server2 = new ServerSocket(state.getPort() + 1);
+            protocol = new Protocol(state);
             protocol.setListener(this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,8 +48,8 @@ public class LinkServer implements Server, ProtocolListener {
             while (true) {
                 try {
                     Socket socket = server1.accept();
-                    if (!endpoint.isConnected() && !protocol.isBusy()) {
-                        endpoint.setHost(socket.getInetAddress().getHostAddress());
+                    if (!state.isConnected() && !protocol.isBusy()) {
+                        state.setHost(socket.getInetAddress().getHostAddress());
                         protocol.setSocket(socket);
                         protocol.listen();
                     } else {
@@ -76,8 +81,8 @@ public class LinkServer implements Server, ProtocolListener {
         acceptor = new Thread(() -> {
             try {
                 protocol.dispatch(Status.ACCEPT);
-                endpoint.setConnected(true);
-                while (endpoint.isConnected()) {
+                state.setConnected(true);
+                while (state.isConnected()) {
                     Socket socket = server2.accept();
                     serverListener.onReceiveFile(socket.getInputStream());
                 }

@@ -9,14 +9,15 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.net.Socket;
 
-public class ItemClient {
+public class ClientItem {
 
     private Client client;
+
     private ClientListener listener;
 
     private volatile boolean okSend;
 
-    public ItemClient(Client client, ClientListener listener) {
+    public ClientItem(final Client client, final ClientListener listener) {
         this.client = client;
         this.listener = listener;
     }
@@ -25,34 +26,31 @@ public class ItemClient {
         return client;
     }
 
-    public Socket newSocket() throws ClientException {
-        try {
-            return new Socket(client.getState().getHost(), client.getState().getPort() + 1);
-        } catch (Exception e) {
-            throw new ClientException("Failed to make a socket!");
-        }
-    }
-
     public void sendItem(final Item item) {
         if (listener != null) {
             listener.onSendFileStart(item);
             okSend = true;
             try {
+                final Socket socket = new Socket(client.getState().getHost(), client.getState().getPort() + 1);
+                final BufferedInputStream bis = new BufferedInputStream(new FileInputStream(item.getFile()));
+                final DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+
                 int total = 0;
                 int read;
-                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(item.getFile()));
-                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(newSocket().getOutputStream()));
-                dos.writeUTF(item.getName());
 
-                byte buffer[] = new byte[10240];
-                long start = System.currentTimeMillis();
+                final byte buffer[] = new byte[10240];
+                final long start = System.currentTimeMillis();
+
+                dos.writeUTF(item.getName());
                 while ((read = bis.read(buffer)) != -1) {
                     while (!okSend) {
                     }
+                    final long cost = System.currentTimeMillis() - start;
+
                     dos.write(buffer, 0, read);
                     total += read;
+
                     listener.onSendFileUpdate(item, total);
-                    long cost = System.currentTimeMillis() - start;
                     if (cost > 0 && System.currentTimeMillis() % 10 == 0) {
                         listener.onTransferSpeed(new TrafficUtil().speed(total / cost));
                     }

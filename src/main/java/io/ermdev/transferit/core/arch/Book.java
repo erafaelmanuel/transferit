@@ -4,7 +4,7 @@ public class Book<T> {
 
     private final T t;
 
-    public Book(T t) {
+    public Book(final T t) {
         this.t = t;
     }
 

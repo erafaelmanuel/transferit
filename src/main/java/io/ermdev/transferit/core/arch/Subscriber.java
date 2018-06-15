@@ -2,5 +2,5 @@ package io.ermdev.transferit.core.arch;
 
 public interface Subscriber {
 
-    void onRelease(Book<?> book);
+    void onRelease(final Book<?> book);
 }

@@ -137,7 +137,7 @@ public class ItemBox extends HBox implements ItemSubscriber {
     }
 
     @Override
-    public void release(Book<?> book) {
+    public void onRelease(Book<?> book) {
         final double content = (Double) book.getContent();
         final double percent = (100 / item.getSize()) * content;
         Platform.runLater(() -> {

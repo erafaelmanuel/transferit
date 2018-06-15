@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class ReceiverController implements ServerListener, Subscriber, Initializable, InvitationDialogListener {
 
@@ -136,7 +137,7 @@ public class ReceiverController implements ServerListener, Subscriber, Initializ
     }
 
     @Override
-    public void release(Book<?> book) {
+    public void onRelease(Book<?> book) {
         if ((Boolean) book.getContent()) {
             Platform.runLater(() -> {
                 lblStatus.setText("Connected");

@@ -40,20 +40,15 @@ public class SenderDashboardController implements Initializable, Subscriber {
 
     private SenderBrowserStage sbs = new SenderBrowserStage();
 
-    @FXML
-    ImageView imgvback;
+    @FXML ImageView imgvback;
 
-    @FXML
-    JFXButton btnConnect;
+    @FXML JFXButton btnConnect;
 
-    @FXML
-    JFXButton btnSendFile;
+    @FXML JFXButton btnSendFile;
 
-    @FXML
-    JFXTextField txtHost;
+    @FXML JFXTextField txtHost;
 
-    @FXML
-    AnchorPane container;
+    @FXML AnchorPane container;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,30 +61,32 @@ public class SenderDashboardController implements Initializable, Subscriber {
     }
 
     @Override
-    public void release(Book<?> book) {
+    public void onRelease(Book<?> book) {
         Thread thread = new Thread(() -> {
             if (book.getContent() instanceof Boolean && (Boolean) book.getContent()) {
                 Platform.runLater(() -> {
                     container.getChildren().remove(0);
                     container.getChildren().add(0, new CoverSuccess());
+
                     btnConnect.setText("Disconnect");
                     btnConnect.setId("btnDisconnect");
                     btnConnect.setDisable(false);
+
                     btnSendFile.setDisable(false);
                     txtHost.setDisable(true);
-                    if (txtHost.getText().isEmpty()) {
-                        txtHost.setText("127.0.0.1");
-                    }
                 });
             } else {
                 Platform.runLater(() -> {
                     container.getChildren().remove(0);
                     container.getChildren().add(0, new CoverError());
+
                     btnConnect.setText("Connect");
                     btnConnect.setId("btnConnect");
                     btnConnect.setDisable(false);
+
                     btnSendFile.setDisable(true);
                     txtHost.setDisable(false);
+
                     sbs.close();
                 });
             }
@@ -103,9 +100,14 @@ public class SenderDashboardController implements Initializable, Subscriber {
             try {
                 Platform.runLater(() -> {
                     final CoverWait coverWait = new CoverWait();
+
                     container.getChildren().remove(0);
                     container.getChildren().add(0, coverWait);
                     btnConnect.setDisable(true);
+
+                    if (txtHost.getText().isEmpty()) {
+                        txtHost.setText("127.0.0.1");
+                    }
                 });
                 if (btnConnect.getText().equalsIgnoreCase("Connect")) {
                     state.setHost(txtHost.getText());

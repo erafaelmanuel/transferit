@@ -60,6 +60,6 @@ public class State implements Publisher {
 
     @Override
     public void notifyAll(final Book book) {
-        subscribers.parallelStream().forEach(subscriber -> subscriber.release(book));
+        subscribers.parallelStream().forEach(subscriber -> subscriber.onRelease(book));
     }
 }

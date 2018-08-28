@@ -12,6 +12,7 @@
     <modules>
         <module>base</module>
         <module>api</module>
+        <module>tcp</module>
     </modules>
 
     <properties>
@@ -30,6 +31,12 @@
             <dependency>
                 <groupId>transferit</groupId>
                 <artifactId>api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>transferit</groupId>
+                <artifactId>tcp</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

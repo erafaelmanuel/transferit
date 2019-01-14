@@ -17,6 +17,21 @@
         <maven.compiler.source>11</maven.compiler.source>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11</version>
+        </dependency>
+
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

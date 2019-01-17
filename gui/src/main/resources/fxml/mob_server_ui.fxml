@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.ui.server.ReceiverController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="lblStatus" alignment="CENTER" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: #fdcb6e;" text="Waiting" textFill="WHITE" />
+            <ScrollPane layoutY="64.0" prefHeight="336.0" prefWidth="247.0" style="-fx-background-color: transparent;">
+               <content>
+                  <VBox fx:id="container" prefHeight="334.0" prefWidth="228.0">
+                     <children>
+                        <StackPane fx:id="browser" prefHeight="336.0" prefWidth="228.0">
+                           <children>
+                              <Label fx:id="lblBrowser" style="-fx-border-color: #2d3436; -fx-border-style: dotted; -fx-background-color: #ecf0f1;" text="0 Receive file(s)" textFill="#5f5f61">
+                                 <padding>
+                                    <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="50.0" left="15.0" />
+                           </padding>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <Button fx:id="btnClear" layoutX="45.0" layoutY="32.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="76.0" text="Clear" />
+            <Button fx:id="btnCancel" layoutX="126.0" layoutY="32.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

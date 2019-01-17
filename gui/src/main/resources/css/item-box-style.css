@@ -1,0 +1,27 @@
+#parent {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 2, 0.0 , 0 , 1 );
+}
+
+#inside {
+    -fx-background-radius: 3;
+    -fx-background-color: #f1f2f6;
+    -fx-background-color: #fff;
+    -fx-border-color: #576574;
+    -fx-border-color: #0984e3;
+}
+
+#title {
+    -fx-text-fill: #000;
+}
+
+#percent {
+    -fx-text-fill: #000;
+    -fx-text-fill: #636e72;
+}
+
+#detail {
+    -fx-text-fill: #636e72;
+}
+
+#thumbnail {
+}

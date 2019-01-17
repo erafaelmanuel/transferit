@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>base</module>
+        <module>gui</module>
     </modules>
 
     <properties>
@@ -30,6 +31,12 @@
             <version>11</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -37,6 +44,12 @@
             <dependency>
                 <groupId>transferit</groupId>
                 <artifactId>base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>transferit</groupId>
+                <artifactId>gui</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

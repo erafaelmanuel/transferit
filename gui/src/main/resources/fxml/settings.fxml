@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.ermdev.transferit.desktop.ui.option.SettingController">
+   <children>
+      <Label layoutX="130.0" layoutY="9.0" text="Settings" />
+      <Label layoutX="21.0" layoutY="54.0" text="Save to: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="21.0" layoutY="113.0" text="Port: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txDir" editable="false" focusColor="DODGERBLUE" focusTraversable="false" layoutX="21.0" layoutY="71.0" onMouseClicked="#onBrowse" prefHeight="25.0" prefWidth="257.0" />
+      <JFXTextField fx:id="txPort" focusColor="DODGERBLUE" focusTraversable="false" layoutX="21.0" layoutY="130.0" prefHeight="25.0" prefWidth="257.0" />
+      <JFXButton fx:id="btnSave" buttonType="RAISED" focusTraversable="false" layoutX="57.0" layoutY="246.0" onAction="#onSave" prefHeight="25.0" prefWidth="87.0" text="Save" />
+      <JFXButton fx:id="btnCancel" buttonType="RAISED" focusTraversable="false" layoutX="158.0" layoutY="246.0" onAction="#onCancel" prefHeight="25.0" prefWidth="87.0" text="Cancel" />
+      <Label layoutX="21.0" layoutY="171.0" text="IP Address: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txIP" editable="false" focusColor="DODGERBLUE" focusTraversable="false" layoutX="21.0" layoutY="188.0" prefHeight="25.0" prefWidth="257.0" />
+   </children>
+</AnchorPane>

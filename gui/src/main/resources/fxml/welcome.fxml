@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="transferit.gui.controller.WelcomeController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <VBox prefHeight="174.0" prefWidth="247.0">
+               <children>
+                  <AnchorPane fx:id="container" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="option" fitHeight="15.0" fitWidth="14.0" layoutX="226.0" layoutY="12.0" onMouseClicked="#onOption" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/system/more.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <JFXButton fx:id="btnSend" buttonType="RAISED" focusTraversable="false" layoutX="56.0" layoutY="265.0" onAction="#onSend" prefHeight="27.0" prefWidth="135.0" ripplerFill="WHITE" style=": ;" text="Send" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnReceive" buttonType="RAISED" focusTraversable="false" layoutX="56.0" layoutY="304.0" onAction="#onReceive" prefHeight="28.0" prefWidth="135.0" ripplerFill="WHITE" text="Receive" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </JFXButton>
+            <Label alignment="CENTER" layoutX="58.0" layoutY="210.0" prefHeight="17.0" prefWidth="135.0" text="Transferit">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label layoutX="101.0" layoutY="230.0" text="IO.ERMDEV" textFill="#807b7b">
+               <font>
+                  <Font name="Calibri" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
